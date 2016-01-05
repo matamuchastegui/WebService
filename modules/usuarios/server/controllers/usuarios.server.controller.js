@@ -6,6 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Usuario = mongoose.model('Usuario'),
+  nodemailer = require('nodemailer'),
+  config = require('../../../../config/config'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -97,19 +99,42 @@ exports.recuperarcontrasenia = function (req, res) {
         RespMessage: 'Usuario registrado a través de facebook'
       });
     }
-    if(usuario.Password && usuario.Password !== req.body.Password){
-      return res.status(400).send({
-        RespCode: 1,
-        RespMessage: 'Password incorrecta',
-        Usuario: usuario
+      console.log('usuario',usuario);
+      console.log('pwd',usuario.Password);
+      //Enviar mail
+      res.render('modules/core/server/views/templates/forgot-password', {
+        pwd: usuario.Password
+      }, function(err, emailHTML) {
+        var smtpTransport = nodemailer.createTransport('smtps://decompras.noreply%40gmail.com:FWew8lKW@smtp.gmail.com');
+        var mailOptions = {
+          to: usuario.Email,
+          from: config.mailer.from,
+          subject: 'Solicitud de recuperar contraseña',
+          html: emailHTML
+        };
+        console.log('mailer',mailOptions);
+        smtpTransport.sendMail(mailOptions, function(err, data) {
+          console.log('data',data);
+          if (!err) {
+            res.json({
+              RespCode: 0,
+              RespMessage: 'Ok, se le ha reenviado su contraseña a su email'
+            });
+          } else {
+             console.log('err',err);
+            return res.status(400).send({
+              message1: 'Error: no se ha podido enviar email.' 
+            });
+          }
+        });
+        
+      },function(err) {
+        if (err)
+          return res.status(400).send({
+            message2: 'Error: no se ha podido enviar email.'
+          });
       });
-    } else{
-      res.json({
-        RespCode: 0,
-        RespMessage: 'Ok',
-        Usuario: usuario
-      });
-    }
+      //Fin enviar mail
   });
 };
 

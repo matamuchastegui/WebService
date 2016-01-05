@@ -1,7 +1,7 @@
 'use strict';
 
 var defaultEnvConfig = require('./default');
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 module.exports = {
   db: {
     uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
@@ -54,17 +54,29 @@ module.exports = {
     clientSecret: process.env.PAYPAL_SECRET || 'CLIENT_SECRET',
     callbackURL: '/api/auth/paypal/callback',
     sandbox: true
-  },
-  mailer: {
-    from: process.env.MAILER_FROM || 'MAILER_FROM',
+  },mailer: {
+    //from: process.env.MAILER_FROM || 'brandigital5211@gmail.com',
+    from: process.env.MAILER_FROM || 'decompras.noreply@gmail.com',
     options: {
-      service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+      service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
       auth: {
-        user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-        pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
-      }
+        user: process.env.MAILER_EMAIL_ID || 'decompras.noreply@gmail.com',
+        pass: process.env.MAILER_PASSWORD || 'FWew8lKW'
+      },
+      host: 'smtp-relay.google.com',
+      port: 25
     }
   },
+  // mailer: {
+  //   from: process.env.MAILER_FROM || 'MAILER_FROM',
+  //   options: {
+  //     service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+  //     auth: {
+  //       user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
+  //       pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+  //     }
+  //   }
+  // },
   livereload: true,
   seedDB: process.env.MONGO_SEED || false
 };
