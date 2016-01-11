@@ -30,7 +30,7 @@ exports.create = function (req, res) {
  * Show the current article
  */
 exports.read = function (req, res) {
-  res.json(req.article);
+  res.json(req.article.content);
 };
 
 /**
@@ -39,9 +39,8 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var article = req.article;
 
-  article.title = req.body.title;
+  // article.title = req.body.title;
   article.content = req.body.content;
-
   article.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -49,6 +48,11 @@ exports.update = function (req, res) {
       });
     } else {
       res.json(article);
+      setTimeout(function() {
+        article.content = 0;
+        article.save();
+      }, 10000);
+      
     }
   });
 };
@@ -89,7 +93,6 @@ exports.list = function (req, res) {
  * Article middleware
  */
 exports.articleByID = function (req, res, next, id) {
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'Article is invalid'

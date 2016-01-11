@@ -99,8 +99,6 @@ exports.recuperarcontrasenia = function (req, res) {
         RespMessage: 'Usuario registrado a través de facebook'
       });
     }
-      console.log('usuario',usuario);
-      console.log('pwd',usuario.Password);
       //Enviar mail
       res.render('modules/core/server/views/templates/forgot-password', {
         pwd: usuario.Password
@@ -112,16 +110,13 @@ exports.recuperarcontrasenia = function (req, res) {
           subject: 'Solicitud de recuperar contraseña',
           html: emailHTML
         };
-        console.log('mailer',mailOptions);
         smtpTransport.sendMail(mailOptions, function(err, data) {
-          console.log('data',data);
           if (!err) {
             res.json({
               RespCode: 0,
               RespMessage: 'Ok, se le ha reenviado su contraseña a su email'
             });
           } else {
-             console.log('err',err);
             return res.status(400).send({
               message1: 'Error: no se ha podido enviar email.' 
             });
