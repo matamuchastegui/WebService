@@ -25,10 +25,14 @@ module.exports = function (app) {
 
   // Single usuario routes
   app.route('/api/usuarios/:usuarioId').all(usuariosPolicy.isAllowed)
-    .get(usuarios.read)
+    // .get(usuarios.read)
     // .put(usuarios.update)
     .delete(usuarios.delete);
 
+  app.route('/api/getDetailCustomer/:IdUsuario').all(usuariosPolicy.isAllowed)
+    .get(usuarios.getDetailCustomer);    
+
   // Finish by binding the usuario middleware
   app.param('usuarioId', usuarios.usuarioByID);
+  app.param('IdUsuario', usuarios.usuarioByIdUsuario);
 };

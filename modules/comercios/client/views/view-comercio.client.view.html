@@ -1,0 +1,22 @@
+<section ng-controller="ComerciosController" ng-init="findOne()">
+  <div class="page-header">
+    <h1 ng-bind="comercio.title"></h1>
+  </div>
+  <div class="pull-right" ng-show="authentication.user._id == comercio.user._id">
+    <a class="btn btn-primary" ui-sref="comercios.edit({comercioId: comercio._id})">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="comercio.created | date:'mediumDate'"></span>
+      by
+      <span ng-bind="comercio.user.displayName"></span>
+    </em>
+  </small>
+  <p class="lead" ng-bind="comercio.content"></p>
+</section>

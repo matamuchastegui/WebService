@@ -1,0 +1,28 @@
+<section ng-controller="ComentariosController" ng-init="findOne()">
+  <div class="page-header">
+    <h1>Edit Comentario</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="comentarioForm" class="form-horizontal" ng-submit="update(comentarioForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="title">Title</label>
+          <input name="title" type="text" ng-model="comentario.title" id="title" class="form-control" placeholder="Title" >
+          <div ng-messages="comentarioForm.title.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Comentario title is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea name="content" ng-model="comentario.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Update" class="btn btn-default">
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+<section ng-controller="CuponesController" ng-init="find()">
+  <div class="page-header">
+    <h1>Cupones</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="Cupon in cupones" ui-sref="cupones.view({CuponId: Cupon._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="Cupon.created | date:'mediumDate'"></span>
+        by
+        <span ng-bind="Cupon.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="Cupon.title"></h4>
+      <p class="list-group-item-text" ng-bind="Cupon.content"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="cupones.$resolved && !cupones.length">
+    No cupones yet, why don't you <a ui-sref="cupones.create">create one</a>?
+  </div>
+</section>

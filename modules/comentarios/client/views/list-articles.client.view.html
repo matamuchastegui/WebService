@@ -1,0 +1,20 @@
+<section ng-controller="ComentariosController" ng-init="find()">
+  <div class="page-header">
+    <h1>Comentarios</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="comentario in comentarios" ui-sref="comentarios.view({comentarioId: comentario._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="comentario.created | date:'mediumDate'"></span>
+        by
+        <span ng-bind="comentario.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="comentario.title"></h4>
+      <p class="list-group-item-text" ng-bind="comentario.content"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="comentarios.$resolved && !comentarios.length">
+    No comentarios yet, why don't you <a ui-sref="comentarios.create">create one</a>?
+  </div>
+</section>

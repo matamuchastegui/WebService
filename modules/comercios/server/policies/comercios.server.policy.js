@@ -9,61 +9,47 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Usuarios Permissions
+ * Invoke Comercios Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/usuarios',
+      resources: '/api/comercios',
       permissions: '*'
     }, {
-      resources: '/api/usuarios/:usuarioId',
+      resources: '/api/comercios/:comercioId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/usuarios',
+      resources: '/api/comercios',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/registrarusuario',
-      permissions: ['get', 'post']
-    }, {
-      resources: '/api/login',
-      permissions: ['get', 'post']
-    }, {
-      resources: '/api/recuperarcontrasenia',
-      permissions: ['get', 'post']
-    }, {
-      resources: '/api/editarperfil',
-      permissions: ['get', 'post']
-    }, {
-      resources: '/api/usuarios/:usuarioId',
-      permissions: ['get']
-    }, {
-      resources: '/api/getDetailCustomer/:usuarioId',
+      resources: '/api/comercios/:comercioId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/usuarios',
+      resources: '/api/comercios',
       permissions: ['get']
     }, {
-      resources: '/api/usuarios/:usuarioId',
+      resources: '/api/comercios/:comercioId',
       permissions: ['get']
     }]
   }]);
 };
 
 /**
- * Check If Usuarios Policy Allows
+ * Check If Comercios Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
-  // If an usuario is being processed and the current user created it then allow any manipulation
-  if (req.usuario && req.user && req.usuario.user.id === req.user.id) {
+
+  // If an comercio is being processed and the current user created it then allow any manipulation
+  if (req.comercio && req.user && req.comercio.user.id === req.user.id) {
     return next();
   }
 
@@ -75,11 +61,11 @@ exports.isAllowed = function (req, res, next) {
     } else {
       // if (isAllowed) {
       //   // Access granted! Invoke next middleware
-         return next();
+        return next();
       // } else {
-      //   return res.status(403).json({
-      //     message: 'User is not authorized'
-      //   });
+      //  return res.status(403).json({
+      //    message: 'User is not authorizedq'
+      //  });
       // }
     }
   });
