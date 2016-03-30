@@ -180,13 +180,44 @@ exports.login = function (req, res) {
 };
 
 exports.getDetailCustomer = function (req, res) {
-  res.json({
-    RespCode: 0,
-    RespMessage: 'Ok',
-    Usuario: req.usuario,
-    Agenda: req.Agenda,
-    Cupon: req.Cupon
+  Usuario.findOne({IdUsuario: req.body.usuarioId}).exec(function (err, usuario) {
+    // Usuario.findOne({IdUsuario: id}).exec(function (err, usuario) {
+    if (!usuario) {
+      if(req.body.TipoRegistracion === 'F'){
+        return res.status(400).send({
+          RespCode: 1,
+          RespMessage: 'Usuario no registrado logueado a través de facebook'
+        });
+      } else{
+        return res.status(404).send({
+          RespCode: 1,
+          RespMessage: 'El usuario no existe'
+        });
+      }
+    } else if (err) {
+      return res.status(400).send({
+        RespCode: 1,
+        RespMessage: errorHandler.getErrorMessage(err)
+      });
+    }
+    if(usuario.Password && usuario.Password !== req.body.Password){
+      return res.status(400).send({
+        RespCode: 1,
+        RespMessage: 'Password incorrecta',
+        Usuario: usuario
+      });
+    } else{
+      res.json({
+        RespCode: 0,
+        RespMessage: 'Ok',
+        Usuario: req.usuario,
+        Agenda: req.Agenda,
+        Cupon: req.Cupon
+      });
+    }
   });
+
+  
 };
 
 exports.recuperarcontrasenia = function (req, res) {

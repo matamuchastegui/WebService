@@ -29,8 +29,8 @@ module.exports = function (app) {
     // .put(usuarios.update)
     .delete(usuarios.delete);
 
-  app.route('/api/getDetailCustomer/:IdUsuario').all(usuariosPolicy.isAllowed)
-    .get(usuarios.getDetailCustomer);    
+  app.route('/api/getDetailCustomer').all(usuariosPolicy.isAllowed)
+    .post(usuarios.getDetailCustomer);    
 
   // Finish by binding the usuario middleware
   app.param('usuarioId', usuarios.usuarioByID);

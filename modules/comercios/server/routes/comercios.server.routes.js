@@ -13,10 +13,10 @@ module.exports = function (app) {
     .post(comercios.create);
 
   // Single comercio routes
-  app.route('/api/comercios/:comercioId')//.all(comerciosPolicy.isAllowed)
-    .get(comercios.read)
-    .put(comercios.update)
-    .delete(comercios.delete);
+  // app.route('/api/comercios/:comercioId')//.all(comerciosPolicy.isAllowed)
+  //   .get(comercios.read)
+  //   .put(comercios.update)
+  //   .delete(comercios.delete);
 
   app.route('/api/agendarComercio').all(comerciosPolicy.isAllowed)
     .post(comercios.agendarComercio);
@@ -33,8 +33,8 @@ module.exports = function (app) {
   app.route('/api/getLastComerciosAdheridos').all(comerciosPolicy.isAllowed)
     .get(comercios.getLastComerciosAdheridos);
 
-  app.route('/api/getProductosPorComercio/:IdComercio').all(comerciosPolicy.isAllowed)
-    .get(comercios.getProductosPorComercio);
+  app.route('/api/getProductosPorComercio').all(comerciosPolicy.isAllowed)
+    .post(comercios.getProductosPorComercio);
 
   // Finish by binding the comercio middleware
   app.param('IdComercio', comercios.comercioByID);

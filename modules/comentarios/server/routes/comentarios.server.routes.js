@@ -18,8 +18,8 @@ module.exports = function (app) {
     .put(comentarios.update)
     .delete(comentarios.delete);
 
-  app.route('/api/getComentarios/:TypeComent/:IdEntity').all(comentariosPolicy.isAllowed)
-    .get(comentarios.getComentarios);
+  app.route('/api/getComentarios').all(comentariosPolicy.isAllowed)
+    .post(comentarios.getComentarios);
 
 
   // Finish by binding the comentario middleware
