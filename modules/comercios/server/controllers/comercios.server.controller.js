@@ -7,6 +7,8 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Comercio = mongoose.model('Comercio'),
   Usuario = mongoose.model('Usuario'),
+  multer = require('multer'),
+  fs = require('fs'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 var hcAgenda = [  
@@ -91,7 +93,10 @@ var hcAgenda = [
  * Create a comercio
  */
 exports.create = function (req, res) {
+  console.log('Comercio');
+  console.log(req.body);
   var comercio = new Comercio(req.body);
+
   comercio.user = req.user;
 
   comercio.save(function (err) {
@@ -278,89 +283,95 @@ exports.setlikecomercio = function (req, res) {
 };
 
 exports.getComercio = function (req, res) {
-  res.json({
+
+  res.jsonp({
     RespCode:0,
     RespMessage:'Ok',
-    Comercio:{
-      IdComercio:123,
-      NombreComercio:'nombre',
-      UbicacionLat:'1231',
-      UbicacionLon:'1231',
-      UrlImageComercio:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-      UrlImageLogo:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-      ImagenesPromociones:[
-        {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-        {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-        {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-        {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-        {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
-      ],
-      Slogan:'tuComercio',
-      CantSeguidores:'',
-      CantPublicaciones:'',
-      PuntuaciónEstrellas:3,
-      Telefonos:[
-        {Numero:'351261265'},
-        {Numero:'351261265'},
-        {Numero:'351261265'},
-        {Numero:'351261265'},
-        {Numero:'351261265'},
-      ],
-      Email:'email@mail.com',
-      Web:'web',
-      Facebook:'feibu',
-      FacebookLiked:true,
-      Instagram:'instagram',
-      Twitter:'twitter',
-      TwitterFallow:true,
-      Tarjeta:[
-        {
-          NombreTarjeta:'naranja',
-          Descripcion:'hasta 12 cuotas sin interés'
-        }
-      ],
-      EnvioADomicilio:true
-      },
-      Cupon:[
-      {
-      IdCupon:'1234',
-      CuponBarcode:'1234242342',
-      CuponType:'WELKOM',
-      CuponStatus:'Expired',
-      Description:'',
-      ValidFrom:'',
-      ValidTo:'',
-      CuponUrl:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-      IdComercio:'2123',
-      CuponUsado:false,
-      Temporizado:false
-      }
-      ],
-      LastTenProducts:[
-      {
-      IdProducto:'1234',
-      NombreProducto:'Vestite como se debe en verano!!!',
-      Descripcion:'camisa, pantalón y zapatos',
-      FechaUltimaActualizacion:'12-3-2016 12:51',
-      Puntuacion:5,
-      UrlPreviewPpal:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-      ImagenGaleria:[
-      {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-      {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-      {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-      {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-      {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
-      ],
-      PrecioLista:'52.23',
-      Oferta:true,
-      Temporizada:true,
-      OfertaValidaHasta:'12-6-1995 12:56',
-      OfertaValidaDesde:'12-6-1995 14:26',
-      PrecioOferta:'30.25'
-      }
-      ]
-
+    Comercio: req.comercio
   });
+  // res.json({
+  //   RespCode:0,
+  //   RespMessage:'Ok',
+  //   Comercio:{
+  //     IdComercio:123,
+  //     NombreComercio:'nombre',
+  //     UbicacionLat:'1231',
+  //     UbicacionLon:'1231',
+  //     UrlImageComercio:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
+  //     UrlImageLogo:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
+  //     ImagenesPromociones:[
+  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
+  //     ],
+  //     Slogan:'tuComercio',
+  //     CantSeguidores:'',
+  //     CantPublicaciones:'',
+  //     PuntuaciónEstrellas:3,
+  //     Telefonos:[
+  //       {Numero:'351261265'},
+  //       {Numero:'351261265'},
+  //       {Numero:'351261265'},
+  //       {Numero:'351261265'},
+  //       {Numero:'351261265'},
+  //     ],
+  //     Email:'email@mail.com',
+  //     Web:'web',
+  //     Facebook:'feibu',
+  //     FacebookLiked:true,
+  //     Instagram:'instagram',
+  //     Twitter:'twitter',
+  //     TwitterFallow:true,
+  //     Tarjeta:[
+  //       {
+  //         NombreTarjeta:'naranja',
+  //         Descripcion:'hasta 12 cuotas sin interés'
+  //       }
+  //     ],
+  //     EnvioADomicilio:true
+  //     },
+  //     Cupon:[
+  //     {
+  //     IdCupon:'1234',
+  //     CuponBarcode:'1234242342',
+  //     CuponType:'WELKOM',
+  //     CuponStatus:'Expired',
+  //     Description:'',
+  //     ValidFrom:'',
+  //     ValidTo:'',
+  //     CuponUrl:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
+  //     IdComercio:'2123',
+  //     CuponUsado:false,
+  //     Temporizado:false
+  //     }
+  //     ],
+  //     LastTenProducts:[
+  //     {
+  //     IdProducto:'1234',
+  //     NombreProducto:'Vestite como se debe en verano!!!',
+  //     Descripcion:'camisa, pantalón y zapatos',
+  //     FechaUltimaActualizacion:'12-3-2016 12:51',
+  //     Puntuacion:5,
+  //     UrlPreviewPpal:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
+  //     ImagenGaleria:[
+  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
+  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
+  //     ],
+  //     PrecioLista:'52.23',
+  //     Oferta:true,
+  //     Temporizada:true,
+  //     OfertaValidaHasta:'12-6-1995 12:56',
+  //     OfertaValidaDesde:'12-6-1995 14:26',
+  //     PrecioOferta:'30.25'
+  //     }
+  //     ]
+
+  // });
 };
 
 exports.getLastComerciosAdheridos = function (req, res) {
@@ -411,18 +422,53 @@ exports.getProductosPorComercio = function (req, res) {
   });
 };
 
+exports.uploadImage = function (req, res) {
+  var user = req.user;
+  var message = null;
+  console.log('req',req.files);
+  fs.writeFile('./public/uploads/' + req.files.file.name, req.files.file.buffer, function (uploadError) {
+    if (uploadError) {
+      return res.status(400).send({
+        message: 'Error al subir la imagen'
+      });
+    } else {
+      res.json({ message:'Imagen subida con éxito', url: '/uploads/' + req.files.file.name });
+    }
+  });
+};
+
+exports.uploadImage2 = function (req, res) {
+  console.log('req',req.body);
+  var message = null;
+  var upload = multer({ dest:'./public/uploads/', limits: { fileSize: 1048576 } }).single('newProfilePicture');
+  var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
+
+  upload.fileFilter = profileUploadFileFilter;
+  upload(req, res, function (uploadError) {
+    console.log('err',uploadError);
+    if(uploadError) {
+      return res.status(400).send({
+        message: 'Error al subir la imagen'
+      });
+    } else {
+      res.json({ message:'Imagen subida con éxito', url: '/uploads/' + req.file.filename });
+    }
+  });
+};
 
 /**
  * Comercio middleware
  */
 exports.comercioByID = function (req, res, next, id) {
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //   return res.status(400).send({
-  //     message: 'El comercio es inválido'
-  //   });
-  // }
+  console.log('id',id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: 'El comercio es inválido'
+    });
+  }
 
-  Comercio.findOne({IdComercio: id}).populate('user', 'displayName').exec(function (err, comercio) {
+  Comercio.findOne({_id: id}).populate('user', 'displayName').exec(function (err, comercio) {
+    console.log('err',err,'comercio',comercio);
     if (err) {
       return next(err);
     } else if (!comercio) {

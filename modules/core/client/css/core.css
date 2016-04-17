@@ -1,3 +1,15 @@
+h1{
+  color:#F18E00;
+  font-family: 'Roboto Slab';
+}
+textarea{
+  min-height: 100px;
+}
+input[type='radio']{
+  -webkit-appearance: checkbox;
+  -moz-appearance: checkbox;
+  -ms-appearance: checkbox;
+}
 .content {
   margin-top: 50px;
 }
@@ -22,7 +34,7 @@
 a:hover .header-profile-image {
   opacity: 1;
 }
-.user-header-dropdown-toggle {
+.user-header-uib-dropdown-toggle {
   padding-top: 11px !important;
   padding-bottom: 11px !important;
 }
@@ -34,4 +46,149 @@ a:hover .header-profile-image {
 }
 .has-error .help-inline.error-text {
   display: inline;
+}
+.ng-invalid.ng-dirty {
+  border-color: #FA787E;
+}
+.ng-valid.ng-dirty {
+  border-color: #78FA89;
+}
+
+.characteristics{
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 20px -15px 40px -15px;
+  padding: 0 15px;
+  padding-top: 15px;
+}
+
+.characteristics .form-name{
+  top: -25px;
+  display: inline-block;
+  position: relative;
+  background: white;
+}
+
+.characteristics .form-submit{
+  bottom: -20px;
+  position: relative;
+  background: white;
+  float: right;
+}
+
+.characteristics .form-group{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.table.resolutionweight td{
+  padding:0;
+}
+
+.table.resolutionweight tr:first-child td{
+  border-top:0;
+}
+
+.loading{
+  width:30px;
+}
+.top3{
+  margin-top:25px;
+}
+.top2{
+  margin-top: -15px;
+}
+.top1{
+  margin-top:10px;
+}
+.mt5{
+  margin-top:5%;
+}
+.mt1{
+  margin-top:1%;
+}
+.mt2{
+  margin-top:2%;
+}
+.mt3{
+  margin-top:3%;
+}
+.mt4{
+  margin-top:4.1%;
+}
+.mt5{
+  margin-top:4.7%;
+}
+.mb2{
+  margin-bottom:2%;
+}
+.mt-15{
+  margin-top: -15%;
+}
+.mt-20{
+  margin-top: -20%;
+}
+.p5{
+  padding:5%;
+}
+.characteristics .characteristics{
+  margin:10px;
+}
+.margin{
+  margin:10px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file i input[type=file] {
+    top: -10px;
+    right: -13px;
+}
+.btn-default{
+  background: lightgray;
+}
+.btn-default.active{
+  background-color: gray!important;
+  color:white!important;
+}
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+.nv-file-over {
+  border: dotted 3px red;
+}
+.another-file-over-class {
+  border: dotted 3px green;
+}
+html, body {
+  height: 100%;
+}
+.file-icon{
+  font-size: 50px;
+  vertical-align: baseline;
+}
+.circle-number{
+  float: right;
+  background-color: #F18E00;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: white;
+}
+.btn-right{
+  float: right;
+  text-align: center;
+  padding: 5px;
+}
+.btn-close{
+  color: orange;
+  cursor: pointer;
+  font-weight: bold;
+}
+.glyphicon-off{
+  border-left: 1px solid white;
+  line-height: 1.5em;
+  padding-left: 7px;
 }

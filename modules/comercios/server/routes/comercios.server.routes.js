@@ -27,7 +27,7 @@ module.exports = function (app) {
   app.route('/api/setlikecomercio').all(comerciosPolicy.isAllowed)
     .post(comercios.setlikecomercio);
   
-  app.route('/api/getComercio').all(comerciosPolicy.isAllowed)
+  app.route('/api/getComercio/:IdComercio').all(comerciosPolicy.isAllowed)
     .get(comercios.getComercio);
   
   app.route('/api/getLastComerciosAdheridos').all(comerciosPolicy.isAllowed)
@@ -35,6 +35,9 @@ module.exports = function (app) {
 
   app.route('/api/getProductosPorComercio').all(comerciosPolicy.isAllowed)
     .post(comercios.getProductosPorComercio);
+
+  app.route('/api/comercios/upload').all(comerciosPolicy.isAllowed)
+    .post(comercios.uploadImage);
 
   // Finish by binding the comercio middleware
   app.param('IdComercio', comercios.comercioByID);

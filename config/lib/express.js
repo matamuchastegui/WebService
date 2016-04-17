@@ -17,6 +17,7 @@ var config = require('../config'),
   helmet = require('helmet'),
   flash = require('connect-flash'),
   consolidate = require('consolidate'),
+  busboy = require('connect-busboy'),
   path = require('path');
 
 /**
@@ -89,6 +90,7 @@ module.exports.initMiddleware = function (app) {
   app.use(cookieParser());
   app.use(flash());
 
+  app.use(busboy());
   // Add multipart handling middleware
   app.use(multer({
     dest: './uploads/',
