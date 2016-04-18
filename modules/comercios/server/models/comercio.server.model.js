@@ -116,73 +116,8 @@ var ComercioSchema = new Schema({
       },
   }],
   Productos: [{
-    IdProducto: {
-      type: String,
-      default:'',
-      trim: true
-    },
-    NombreProducto: {
-      type: String,
-      default:'',
-      trim: true
-    },
-    Descripcion: {
-      type: String,
-      default:'',
-      trim: true
-    },
-    FechaUltimaActualizacion: {
-      type: String,
-      default:'',
-      trim: true
-    },
-    Puntuacion: {
-      type: Number,
-      default:'',
-      trim: true
-    },
-    UrlPreviewPpal: {
-      type: String,
-      default:'',
-      trim: true
-    },
-    ImagenGaleria: [{
-      UrlImageGaleria: {
-        type: String,
-        default:'',
-        trim: true
-      },
-    }],
-    PrecioLista: {
-      type: Number,
-      default:'',
-      trim: true
-    },
-    Oferta: {
-      type: Boolean,
-      default:'',
-      trim: true
-    },
-    Temporizada: {
-      type: Boolean,
-      default:'',
-      trim: true
-    },
-    OfertaValidaHasta: {
-      type: Date,
-      default:'',
-      trim: true
-    },
-    OfertaValidaDesde: {
-      type: Date,
-      default:'',
-      trim: true
-    },
-    PrecioOferta: {
-      type: Number,
-      default:'',
-      trim: true
-    },
+    type: Schema.ObjectId,
+    ref: 'Producto'
   }],
   user: {
     type: Schema.ObjectId,

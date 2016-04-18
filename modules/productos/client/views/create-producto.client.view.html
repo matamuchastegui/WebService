@@ -1,0 +1,136 @@
+<section ng-controller="ProductosController">
+  <div class="page-header">
+    <h1>New Producto</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="productoForm" class="form-horizontal" ng-submit="create(productoForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="NombreProducto">NombreProducto</label>
+          <input name="NombreProducto" type="text" ng-model="NombreProducto" id="NombreProducto" class="form-control" placeholder="NombreProducto" required>
+          <div ng-messages="productoForm.NombreProducto.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El NombreProducto es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="Descripcion">Descripción</label>
+          <textarea name="Descripcion" type="text" ng-model="Descripcion" id="Descripcion" class="form-control" placeholder="Descripción" required></textarea>
+          <div ng-messages="productoForm.Descripcion.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El Descripción es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="PrecioLista">Precio Lista</label>
+          <input name="PrecioLista" type="text" ng-model="PrecioLista" id="PrecioLista" class="form-control" placeholder="Precio Lista" required>
+          <div ng-messages="productoForm.PrecioLista.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El Precio Lista es requerido.</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="form-group">
+            <label class="control-label">Oferta</label>
+            <div class="checkbox">
+              <label>
+                <input type="radio" id="Oferta" ng-value="true" data-ng-model="Oferta" data-ng-disabled="readonly"> Sí
+                <input type="radio" id="Oferta" ng-value="false" data-ng-model="Oferta" data-ng-disabled="readonly"> No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-3" show-errors ng-show="Oferta">
+          <label for="PrecioOferta">Precio Oferta</label>
+          <input name="PrecioOferta" type="text" ng-model="PrecioOferta" id="PrecioOferta" class="form-control" placeholder="Precio Oferta" required="Oferta">
+          <div ng-messages="productoForm.PrecioOferta.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El Precio Oferta es requerido.</p>
+          </div>
+        </div>
+        <div class="row" ng-if="Oferta">
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="input-group">
+              <label class="control-label">Oferta Válida Desde</label>
+              <input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="OfertaValidaDesde" is-open="opened" min-date="minDate" max-date="maxDate" current-text="Hoy" clear-text="Borrar" close-text="Cerrar" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <label class="control-label">Hora</label>
+            <div class="clearfix"></div>
+            <timepicker  show-spinners="false" data-ng-model="OfertaValidaDesde" date-format="dd-MMM-yyyy" ></timepicker>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="input-group">
+              <label class="control-label">Oferta Válida Hasta</label>
+              <input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="OfertaValidaHasta" is-open="openedH" min-date="minDate" max-date="maxDate" current-text="Hoy" clear-text="Borrar" close-text="Cerrar" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openH($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <label class="control-label">Hora</label>
+            <div class="clearfix"></div>
+            <timepicker  show-spinners="false" data-ng-model="OfertaValidaHasta" date-format="dd-MMM-yyyy" ></timepicker>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="control-label">Temporizada</label>
+            <div class="checkbox">
+              <label>
+                <input type="radio" id="Temporizada" ng-value="true" data-ng-model="Temporizada" data-ng-disabled="readonly"> Sí
+                <input type="radio" id="Temporizada" ng-value="false" data-ng-model="Temporizada" data-ng-disabled="readonly"> No
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ImagenGaleria -->
+        <!-- <div class="col-md-10">
+          <div ng-show="cantMin>8" class="col-md-10 col-md-offset-1 text-center mt2">
+            <img ng-src="/modules/core/client/img/buttons/btn-prev.png" alt="" class="btn q-prev">
+            <img ng-src="/modules/core/client/img/buttons/btn-next.png" alt="" class="btn q-next">
+          </div>
+          <div data-ng-show="loading" class="col-md-12">
+            <i class="col-md-2 col-md-offset-6 fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+          </div>
+          <h4 ng-show="Archivos.name.length" class="title col-md-12">Recursos Gráficos</h4>
+          <div ng-show="Archivos.name.length" class="col-md-12 graphic-resources">
+            <div class="col-sm-3 icono" ng-hide="loading" data-ng-repeat="item in Archivos.name">
+              <div class="btn file-icon">
+                <img ng-src="{{getIcon(item)}}" alt="">
+              </div>
+              {{item}}
+              <div class="center">
+                <a class="btn" data-ng-click="remove(item,$index)">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 text-center mt2" style="margin-left: 13.7%;">
+          <div class="col-md-5" data-ng-hide="saving">
+            <input type="submit" id="submit" value="GENERAR ESPECIFICACIONES" class="col-md-12 btn btn-orange" />
+          </div>
+          <div data-ng-hide="saving" data-ng-controller="UploaderController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+            <div class="col-md-5" >
+              <div ng-show="uploader.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                  CARGAR RECURSOS GRÁFICOS<input type="file" nv-file-select="" uploader="uploader" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group">
+          <input type="submit" class="btn btn-default">
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

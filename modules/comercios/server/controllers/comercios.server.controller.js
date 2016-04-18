@@ -467,7 +467,7 @@ exports.comercioByID = function (req, res, next, id) {
     });
   }
 
-  Comercio.findOne({_id: id}).populate('user', 'displayName').exec(function (err, comercio) {
+  Comercio.findOne({_id: id}).populate('user', 'displayName').populate('Productos').exec(function (err, comercio) {
     console.log('err',err,'comercio',comercio);
     if (err) {
       return next(err);
