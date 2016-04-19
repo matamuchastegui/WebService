@@ -85,9 +85,8 @@
             </div>
           </div>
         </div>
-        
         <!-- ImagenGaleria -->
-        <!-- <div class="col-md-10">
+        <div class="col-md-10">
           <div ng-show="cantMin>8" class="col-md-10 col-md-offset-1 text-center mt2">
             <img ng-src="/modules/core/client/img/buttons/btn-prev.png" alt="" class="btn q-prev">
             <img ng-src="/modules/core/client/img/buttons/btn-next.png" alt="" class="btn q-next">
@@ -95,16 +94,18 @@
           <div data-ng-show="loading" class="col-md-12">
             <i class="col-md-2 col-md-offset-6 fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
           </div>
-          <h4 ng-show="Archivos.name.length" class="title col-md-12">Recursos Gráficos</h4>
-          <div ng-show="Archivos.name.length" class="col-md-12 graphic-resources">
-            <div class="col-sm-3 icono" ng-hide="loading" data-ng-repeat="item in Archivos.name">
+          <h4 ng-show="ImagenGaleria.length" class="title col-md-12">Recursos Gráficos</h4>
+          <div ng-show="ImagenGaleria.length" class="col-md-12 graphic-resources">
+            <div class="col-sm-3 icono" ng-hide="loading" data-ng-repeat="item in ImagenGaleria">
               <div class="btn file-icon">
-                <img ng-src="{{getIcon(item)}}" alt="">
+                <img ng-src="{{item.url}}" alt="" style="height: 155px;">
               </div>
-              {{item}}
               <div class="center">
                 <a class="btn" data-ng-click="remove(item,$index)">
                   <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="btn" data-ng-click="ppal(item,$index)">
+                  <i class="glyphicon glyphicon-ok"></i>
                 </a>
               </div>
             </div>
@@ -114,7 +115,7 @@
           <div class="col-md-5" data-ng-hide="saving">
             <input type="submit" id="submit" value="GENERAR ESPECIFICACIONES" class="col-md-12 btn btn-orange" />
           </div>
-          <div data-ng-hide="saving" data-ng-controller="UploaderController" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+          <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
             <div class="col-md-5" >
               <div ng-show="uploader.isHTML5">
                 <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
@@ -123,7 +124,11 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
+
+
+
+
         <div class="form-group">
           <input type="submit" class="btn btn-default">
         </div>
