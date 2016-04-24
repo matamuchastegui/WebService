@@ -4,23 +4,11 @@
 angular.module('comercios').controller('ComerciosController', ['$scope', '$stateParams', '$location', '$window', '$timeout', 'Authentication', 'Comercios', 'FileUploader',
   function ($scope, $stateParams, $location, $window, $timeout, Authentication, Comercios, FileUploader) {
     $scope.authentication = Authentication;
-    $scope.UrlImageComercio = {
-      name: '',
-      url: ''
-    };
-    $scope.UrlImageLogo = {
-      name: '',
-      url: ''
-    };
+    $scope.UrlImageComercio = '';
+    $scope.UrlImageLogo = '';
     $scope.preview = {
-      UrlImageComercio: {
-        name: '',
-        url: ''
-      },
-      UrlImageLogo: {
-        name: '',
-        url: ''
-      }
+      UrlImageComercio: '',
+      UrlImageLogo: ''
     };
 
     // Create new Comercio
@@ -39,8 +27,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         NombreComercio: this.NombreComercio,
         UbicacionLat: this.UbicacionLat,
         UbicacionLon: this.UbicacionLon,
-        UrlImageComercio: this.preview.UrlImageComercio.url,
-        UrlImageLogo: this.preview.UrlImageLogo.url,
+        UrlImageComercio: this.preview.UrlImageComercio,
+        UrlImageLogo: this.preview.UrlImageLogo,
         ImagenesPromociones: this.ImagenesPromociones,
         Slogan: this.Slogan,
         Email: this.Email,
@@ -48,7 +36,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Facebook: this.Facebook,
         Instagram: this.Instagram,
         Twitter: this.Twitter,
-        EnvioADomicilio: this.EnvioADomicilios
+        EnvioADomicilio: this.EnvioADomicilio
         // Telefonos: this.Telefonos,
         // Tarjeta: this.Tarjeta
       });
@@ -84,6 +72,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     // Update existing Comercio
     $scope.update = function (isValid) {
+      console.log('nombre',this.comercio.NombreComercio);
       $scope.error = null;
 
       if (!isValid) {
@@ -91,11 +80,27 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
         return false;
       }
-
-      var comercio = $scope.comercio;
-
-      comercio.$update(function () {
-        $location.path('comercios/' + comercio._id);
+      // var comercio = $scope.comercio;
+      var comercio = new Comercios({
+        _id: $stateParams.IdComercio,
+        NombreComercio: this.comercio.NombreComercio,
+        UbicacionLat: this.comercio.UbicacionLat,
+        UbicacionLon: this.comercio.UbicacionLon,
+        UrlImageComercio: this.preview.UrlImageComercio?this.preview.UrlImageComercio:this.comercio.UrlImageComercio,
+        UrlImageLogo: this.preview.UrlImageLogo?this.preview.UrlImageLogo:this.comercio.UrlImageLogo,
+        ImagenesPromociones: this.comercio.ImagenesPromociones,
+        Slogan: this.comercio.Slogan,
+        Email: this.comercio.Email,
+        Web: this.comercio.Web,
+        Facebook: this.comercio.Facebook,
+        Instagram: this.comercio.Instagram,
+        Twitter: this.comercio.Twitter,
+        EnvioADomicilio: this.comercio.EnvioADomicilio
+      });
+      console.log('CCCC',comercio.NombreComercio);
+      comercio.$update(function (response) {
+        console.log('response',response.NombreComercio);
+        // $location.path('comercios/' + comercio._id);
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -109,7 +114,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     // Find existing Comercio
     $scope.findOne = function () {
       $scope.comercio = Comercios.get({
-        comercioId: $stateParams.comercioId
+        IdComercio: $stateParams.IdComercio
       });
     };
 
@@ -134,7 +139,11 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.onload = function (fileReaderEvent) {
           console.log('fileReaderEvent',fileReaderEvent);
           $timeout(function () {
-            $scope.UrlImageComercio.url = fileReaderEvent.target.result;
+            if($scope.comercio)
+              $scope.comercio.UrlImageComercio = fileReaderEvent.target.result;  
+            else
+              $scope.UrlImageComercio = fileReaderEvent.target.result;
+            
           }, 0);
         };
       }
@@ -142,9 +151,9 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
       console.log('response',response);
-      $scope.success = "La imagen del comercio se catgó correctamente";
-      $scope.UrlImageComercio.url = '';
-      $scope.preview.UrlImageComercio.url = response.url;
+      $scope.success = "La imagen del comercio se cargó correctamente";
+      $scope.UrlImageComercio = '';
+      $scope.preview.UrlImageComercio = response.url;
       $scope.uploader.clearQueue();
     };
 
@@ -182,7 +191,10 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.onload = function (fileReaderEvent) {
           console.log('fileReaderEvent',fileReaderEvent);
           $timeout(function () {
-            $scope.UrlImageLogo.url = fileReaderEvent.target.result;
+            if($scope.comercio)
+              $scope.comercio.UrlImageLogo = fileReaderEvent.target.result;  
+            else
+              $scope.UrlImageLogo = fileReaderEvent.target.result;
           }, 0);
         };
       }
@@ -190,9 +202,9 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     $scope.uploaderLogo.onSuccessItem = function (fileItem, response, status, headers) {
       console.log('response',response);
-      $scope.success = "La imagen del logo se catgó correctamente";
-      $scope.UrlImageComercio.url = '';
-      $scope.preview.UrlImageLogo.url = response.url;
+      $scope.success = "La imagen del logo se cargó correctamente";
+      $scope.UrlImageComercio = '';
+      $scope.preview.UrlImageLogo = response.url;
       $scope.uploaderLogo.clearQueue();
     };
 

@@ -63,11 +63,6 @@ exports.update = function (req, res) {
       });
     } else {
       res.json(Cupon);
-      setTimeout(function() {
-        Cupon.content = 0;
-        Cupon.save();
-      }, 10000);
-      
     }
   });
 };

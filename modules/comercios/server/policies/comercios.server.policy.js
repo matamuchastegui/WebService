@@ -18,7 +18,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/comercios',
       permissions: '*'
     }, {
-      resources: '/api/comercios/:comercioId',
+      resources: '/api/comercios/:IdComercio',
       permissions: '*'
     }]
   }, {
@@ -27,7 +27,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/comercios',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/comercios/:comercioId',
+      resources: '/api/comercios/:IdComercio',
       permissions: ['get']
     }]
   }, {
@@ -36,7 +36,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/comercios',
       permissions: ['get']
     }, {
-      resources: '/api/comercios/:comercioId',
+      resources: '/api/comercios/:IdComercio',
       permissions: ['get']
     }]
   }]);

@@ -48,11 +48,6 @@ exports.update = function (req, res) {
       });
     } else {
       res.json(producto);
-      setTimeout(function() {
-        producto.content = 0;
-        producto.save();
-      }, 10000);
-      
     }
   });
 };

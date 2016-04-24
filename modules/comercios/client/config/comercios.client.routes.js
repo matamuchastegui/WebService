@@ -22,11 +22,11 @@ angular.module('comercios').config(['$stateProvider',
         }
       })
       .state('comercios.view', {
-        url: '/:comercioId',
+        url: '/:IdComercio',
         templateUrl: 'modules/comercios/client/views/view-comercio.client.view.html'
       })
       .state('comercios.edit', {
-        url: '/:comercioId/edit',
+        url: '/:IdComercio/edit',
         templateUrl: 'modules/comercios/client/views/edit-comercio.client.view.html',
         data: {
           roles: ['user', 'admin']

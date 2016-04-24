@@ -1,22 +1,52 @@
 <section ng-controller="ComerciosController" ng-init="findOne()">
   <div class="page-header">
-    <h1 ng-bind="comercio.title"></h1>
+    <h1>{{comercio.NombreComercio}}</h1>
+    {{comercio}}
+    <br><br><br>
+    {{comercio.UrlImageLogo}} -- {{comercio.UrlImageComercio}}
+    <img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>
   </div>
-  <div class="pull-right" ng-show="authentication.user._id == comercio.user._id">
-    <a class="btn btn-primary" ui-sref="comercios.edit({comercioId: comercio._id})">
+  <img ng-src="{{comercio.UrlImageComercio}}" />
+
+  <div>
+    <p ng-model="comercio.Email"></p>
+  </div>
+  <table id="table-banners" class="table" data-ng-show="comercio.specifications.length > 0" cellspacing="10">
+    <thead class="table-head">
+      <tr>
+        <td><div class="borders-right">comercio</div></td>
+        <td><span>URL Especificaciones</span></td>
+        <td><span class="borders">Categoría</span></td>
+        <td><span class="borders">Resolución</span></td>
+        <td><span class="borders">Peso</span></td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="banner" data-ng-repeat="spec in comercio.specifications">
+        <td>
+          <div class="borders-right">
+            <span class="">{{spec.name}}</span>
+          </div>
+        </td>
+        <td>{{spec.url}}</td>
+        <td><span class="borders">{{spec.categoria}}</span></td>
+        <td><span class="borders">{{spec.resolution}}</span></td>
+        <td><span class="borders">{{spec.weight}}</span></td>
+        <td><span class="borders">
+          <a class="editar" data-ng-click="showSpec($index)">
+            <i class="glyphicon glyphicon-eye-open"></i>
+          </a>
+        </span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pull-right" data-ng-show="authentication.user">
+    <a class="btn btn-orange" id="edit" href="/comercios/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn btn-primary" ng-click="remove();">
+    <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="comercio.created | date:'mediumDate'"></span>
-      by
-      <span ng-bind="comercio.user.displayName"></span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="comercio.content"></p>
 </section>

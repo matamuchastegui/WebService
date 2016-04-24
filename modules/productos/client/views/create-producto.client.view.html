@@ -112,25 +112,18 @@
           </div>
         </div>
         <div class="col-md-8 text-center mt2" style="margin-left: 13.7%;">
-          <div class="col-md-5" data-ng-hide="saving">
-            <input type="submit" id="submit" value="GENERAR ESPECIFICACIONES" class="col-md-12 btn btn-orange" />
-          </div>
           <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
             <div class="col-md-5" >
               <div ng-show="uploader.isHTML5">
                 <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
-                  CARGAR RECURSOS GRÁFICOS<input type="file" nv-file-select="" uploader="uploader" multiple/>
+                  CARGAR IMÁGENES<input type="file" nv-file-select="" uploader="uploader" multiple/>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-
-
-        <div class="form-group">
-          <input type="submit" class="btn btn-default">
+          <div class="col-md-5" data-ng-hide="saving">
+            <input type="submit" id="submit" value="CREAR" class="col-md-12 btn btn-orange" />
+          </div>
         </div>
         <div ng-show="error" class="text-danger">
           <strong ng-bind="error"></strong>

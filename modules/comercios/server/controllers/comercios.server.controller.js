@@ -9,6 +9,7 @@ var path = require('path'),
   Usuario = mongoose.model('Usuario'),
   multer = require('multer'),
   fs = require('fs'),
+  _ = require('lodash'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 var hcAgenda = [  
@@ -114,29 +115,27 @@ exports.create = function (req, res) {
  * Show the current comercio
  */
 exports.read = function (req, res) {
-  res.json(parseInt(req.comercio.content));
+  console.log('comercio');
+  console.log(req.comercio);
+  res.json(req.comercio);
 };
 
 /**
  * Update a comercio
  */
 exports.update = function (req, res) {
+  console.log('comercioUpdate',req.comercio.NombreComercio);
   var comercio = req.comercio;
-
-  // comercio.title = req.body.title;
-  comercio.content = req.body.content;
+  comercio = _.extend(comercio, req.body);
+  
   comercio.save(function (err) {
     if (err) {
+      console.log('errUpload',err);
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(comercio);
-      setTimeout(function() {
-        comercio.content = 0;
-        comercio.save();
-      }, 10000);
-      
+      res.json(comercio);      
     }
   });
 };
@@ -425,21 +424,24 @@ exports.getProductosPorComercio = function (req, res) {
 exports.uploadImage = function (req, res) {
   var user = req.user;
   var message = null;
-  console.log('req',req.files);
-  fs.writeFile('./public/uploads/' + req.files.file.name, req.files.file.buffer, function (uploadError) {
+  var dir = './public/uploads/' + req.user._id + '/';
+  if (!fs.existsSync(dir))
+    fs.mkdirSync(dir);
+  fs.writeFile(dir + req.files.file.name, req.files.file.buffer, function (uploadError) {
     if (uploadError) {
       return res.status(400).send({
         message: 'Error al subir la imagen'
       });
     } else {
-      res.json({ message:'Imagen subida con éxito', url: '/uploads/' + req.files.file.name });
+      res.json({ message:'Imagen subida con éxito', url: 'uploads/' + req.user._id + '/' + req.files.file.name });
     }
   });
 };
 
 exports.uploadImage2 = function (req, res) {
-  console.log('req',req.body);
+  console.log('uploadImage2');
   var message = null;
+
   var upload = multer({ dest:'./public/uploads/', limits: { fileSize: 1048576 } }).single('newProfilePicture');
   var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
 
@@ -460,15 +462,16 @@ exports.uploadImage2 = function (req, res) {
  * Comercio middleware
  */
 exports.comercioByID = function (req, res, next, id) {
-  console.log('id',id);
+  console.log('comercioByID',req.comercio);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'El comercio es inválido'
     });
   }
 
-  Comercio.findOne({_id: id}).populate('user', 'displayName').populate('Productos').exec(function (err, comercio) {
-    console.log('err',err,'comercio',comercio);
+  Comercio.findById(id).populate('user', 'displayName').populate('Productos').exec(function(err, comercio) {
+    console.log('comercioQ',comercio,'req',req.comercio);
+  // Comercio.findOne({_id: id}).populate('user', 'displayName').populate('Productos').exec(function (err, comercio) {
     if (err) {
       return next(err);
     } else if (!comercio) {

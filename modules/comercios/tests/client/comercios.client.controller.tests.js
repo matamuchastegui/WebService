@@ -82,9 +82,9 @@
       expect(scope.comercios).toEqualData(sampleComercios);
     }));
 
-    it('$scope.findOne() should create an array with one comercio object fetched from XHR using a comercioId URL parameter', inject(function (Comercios) {
+    it('$scope.findOne() should create an array with one comercio object fetched from XHR using a IdComercio URL parameter', inject(function (Comercios) {
       // Set the URL parameter
-      $stateParams.comercioId = mockComercio._id;
+      $stateParams.IdComercio = mockComercio._id;
 
       // Set GET response
       $httpBackend.expectGET(/api\/comercios\/([0-9a-fA-F]{24})$/).respond(mockComercio);
@@ -186,7 +186,7 @@
         scope.remove(mockComercio);
       });
 
-      it('should send a DELETE request with a valid comercioId and remove the comercio from the scope', inject(function (Comercios) {
+      it('should send a DELETE request with a valid IdComercio and remove the comercio from the scope', inject(function (Comercios) {
         expect(scope.comercios.length).toBe(1);
       }));
     });

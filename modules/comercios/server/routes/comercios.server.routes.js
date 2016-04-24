@@ -13,10 +13,10 @@ module.exports = function (app) {
     .post(comercios.create);
 
   // Single comercio routes
-  // app.route('/api/comercios/:comercioId')//.all(comerciosPolicy.isAllowed)
-  //   .get(comercios.read)
-  //   .put(comercios.update)
-  //   .delete(comercios.delete);
+  app.route('/api/comercios/:IdComercio')//.all(comerciosPolicy.isAllowed)
+    .get(comercios.read)
+    .put(comercios.update)
+    .delete(comercios.delete);
 
   app.route('/api/agendarComercio').all(comerciosPolicy.isAllowed)
     .post(comercios.agendarComercio);

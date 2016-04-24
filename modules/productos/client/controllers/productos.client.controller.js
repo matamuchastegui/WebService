@@ -104,6 +104,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
       $scope.producto = Productos.get({
         productoId: $stateParams.productoId
       });
+      console.log($scope.producto);
     };
     var modalInstance;
   $scope.modalProgress = function() {

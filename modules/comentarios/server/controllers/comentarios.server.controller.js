@@ -47,12 +47,7 @@ exports.update = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(comentario);
-      setTimeout(function() {
-        comentario.content = 0;
-        comentario.save();
-      }, 10000);
-      
+      res.json(comentario);      
     }
   });
 };
