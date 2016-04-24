@@ -30,11 +30,13 @@ var ComercioSchema = new Schema({
   },
   UrlImageComercio: {
     type: String,
-    trim: true
+    trim: true,
+    required: 'Imagen del comercio requerida'
   },
   UrlImageLogo: {
     type: String,
-    trim: true
+    trim: true,
+    required: 'Logo requerido'
   },
   ImagenesPromociones: [{
     UrlImageGaleria: {
@@ -57,8 +59,9 @@ var ComercioSchema = new Schema({
     default: 0,
     trim: true
   },
-  PuntuaciónEstrellas: {
+  PuntuacionEstrellas: {
     type: Number,
+    default: 0,
     trim: true
   },
   Email: {

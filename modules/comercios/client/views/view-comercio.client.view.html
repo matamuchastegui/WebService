@@ -1,40 +1,95 @@
 <section ng-controller="ComerciosController" ng-init="findOne()">
+  <img class="col-md-10 fondo-comercio" ng-src="{{comercio.UrlImageComercio}}" />
   <div class="page-header">
-    <h1>{{comercio.NombreComercio}}</h1>
-    {{comercio}}
-    <br><br><br>
-    {{comercio.UrlImageLogo}} -- {{comercio.UrlImageComercio}}
-    <img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>
+    <h1><img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>{{comercio.NombreComercio}}</h1>    
   </div>
-  <img ng-src="{{comercio.UrlImageComercio}}" />
+  <div class="row">
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-3"><strong>Slogan</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Slogan"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Email</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Email"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Web</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Web"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Facebook</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Facebook"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Instagram</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Instagram"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Twitter</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Twitter"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Envio A Domicilio</strong></div>
+        <div class="col-md-6" ng-bind="comercio.EnvioADomicilio"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Telefonos</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Telefonos"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><strong>Tarjetas</strong></div>
+        <div class="col-md-6" ng-bind="comercio.Tarjeta"></div>
+      </div>
+    </div>
 
-  <div>
-    <p ng-model="comercio.Email"></p>
+    <div class="col-md-5">
+      <div class="row">
+        <div class="col-md-6"><strong>Seguidores</strong></div>
+        <div class="col-md-3" ng-bind="comercio.CantSeguidores"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-6"><strong>Publicaciones</strong></div>
+        <div class="col-md-3" ng-bind="comercio.CantPublicaciones"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-6"><strong>Estrellas</strong></div>
+        <div class="col-md-3" ng-bind="comercio.PuntuacionEstrellas"></div>
+      </div>
+    </div>
   </div>
-  <table id="table-banners" class="table" data-ng-show="comercio.specifications.length > 0" cellspacing="10">
+  <h1>Productos</h1>
+  <table id="table-banners" class="table" data-ng-show="comercio.Productos.length > 0" cellspacing="10">
     <thead class="table-head">
       <tr>
-        <td><div class="borders-right">comercio</div></td>
-        <td><span>URL Especificaciones</span></td>
-        <td><span class="borders">Categoría</span></td>
-        <td><span class="borders">Resolución</span></td>
-        <td><span class="borders">Peso</span></td>
+        <td><div class="borders-right">NombreProducto</div></td>
+        <td><span>Descripcion</span></td>
+        <td><span class="borders">Puntuacion</span></td>
+        <td><span class="borders">PrecioLista</span></td>
+        <td><span class="borders">Oferta</span></td>
         <td></td>
       </tr>
     </thead>
     <tbody>
-      <tr class="banner" data-ng-repeat="spec in comercio.specifications">
+      <tr class="banner" data-ng-repeat="prod in comercio.Productos">
         <td>
           <div class="borders-right">
-            <span class="">{{spec.name}}</span>
+            <span class="">{{prod.NombreProducto}}</span>
           </div>
         </td>
-        <td>{{spec.url}}</td>
-        <td><span class="borders">{{spec.categoria}}</span></td>
-        <td><span class="borders">{{spec.resolution}}</span></td>
-        <td><span class="borders">{{spec.weight}}</span></td>
+        <td>{{prod.Descripcion}}</td>
+        <td><span class="borders">{{prod.Puntuacion}}</span></td>
+        <td><span class="borders">$ {{prod.PrecioLista}}</span></td>
+        <td><span class="borders">{{prod.Oferta?'Si':'No'}}</span></td>
         <td><span class="borders">
-          <a class="editar" data-ng-click="showSpec($index)">
+          <a class="editar" href="/productos/{{prod._id}}">
             <i class="glyphicon glyphicon-eye-open"></i>
           </a>
         </span></td>
@@ -42,7 +97,10 @@
     </tbody>
   </table>
   <div class="pull-right" data-ng-show="authentication.user">
-    <a class="btn btn-orange" id="edit" href="/comercios/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
+    <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Editar comercio" popover-trigger="mouseenter">
+      <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a class="btn btn-orange" id="edit" href="/productos/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">

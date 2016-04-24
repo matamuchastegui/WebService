@@ -1,8 +1,8 @@
 'use strict';
 
 // Productos controller
-angular.module('productos').controller('ProductosController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', 'Authentication', 'Productos', 'FileUploader',
-  function ($scope, $stateParams, $location, $interval, $uibModal, Authentication, Productos, FileUploader) {
+angular.module('productos').controller('ProductosController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', 'Authentication', 'Productos', 'Comercios', 'FileUploader', 
+  function ($scope, $stateParams, $location, $interval, $uibModal, Authentication, Productos, Comercios, FileUploader) {
     $scope.authentication = Authentication;
     $scope.OfertaValidaDesde = new Date();
     $scope.OfertaValidaHasta = new Date().getTime() + 259200000;
@@ -41,11 +41,28 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
 
       // Redirect after save
       producto.$save(function (response) {
-        $location.path('productos/' + response._id);
-
-        // Clear form fields
-        $scope.title = '';
-        $scope.content = '';
+        var comercio = new Comercios.get({
+          IdComercio: $scope.comercio
+        });
+        // var products = [];
+        // prodcts = comercio.Productos;
+        // products.push(producto);
+        producto = new Productos.get({
+          productoId: response._id
+        });
+        setTimeout(function(){
+          if(comercio.Productos)
+            comercio.Productos.push(response);
+          else
+            comercio.Productos = producto;
+          // comercio.Productos = products;
+          comercio.$update(function () {
+            $location.path('productos/' + response._id);
+          }, function (errorResponse) {
+            $scope.error = errorResponse.data.message;
+          });
+        },1000);
+        
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -94,6 +111,12 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
       });
     };
 
+    $scope.findComercios = function (){
+      $scope.comercios = Comercios.query();
+      setTimeout(function() {
+        $scope.comercio = $scope.comercios[0]._id;
+      }, 100);
+    };
     // Find a list of Productos
     $scope.find = function () {
       $scope.productos = Productos.query();
@@ -104,7 +127,6 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
       $scope.producto = Productos.get({
         productoId: $stateParams.productoId
       });
-      console.log($scope.producto);
     };
     var modalInstance;
   $scope.modalProgress = function() {
@@ -155,7 +177,6 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
   uploader.onCompleteItem = function(fileItem, response, status, headers) {
     if (status > 0) {
       var file = fileItem._file.name.replace(/"/g, '');
-      console.log(file,response);
       $scope.ImagenGaleria.push({name:file,url:response.url,ppal:$scope.uploader.queue.length === 1});
     }
   };

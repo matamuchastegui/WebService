@@ -93,9 +93,7 @@ var hcAgenda = [
 /**
  * Create a comercio
  */
-exports.create = function (req, res) {
-  console.log('Comercio');
-  console.log(req.body);
+exports.create = function (req, res) {    
   var comercio = new Comercio(req.body);
 
   comercio.user = req.user;
@@ -115,22 +113,18 @@ exports.create = function (req, res) {
  * Show the current comercio
  */
 exports.read = function (req, res) {
-  console.log('comercio');
-  console.log(req.comercio);
   res.json(req.comercio);
 };
 
 /**
  * Update a comercio
  */
-exports.update = function (req, res) {
-  console.log('comercioUpdate',req.comercio.NombreComercio);
+exports.update = function (req, res) {  
   var comercio = req.comercio;
   comercio = _.extend(comercio, req.body);
   
   comercio.save(function (err) {
-    if (err) {
-      console.log('errUpload',err);
+    if (err) {      
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
@@ -438,16 +432,14 @@ exports.uploadImage = function (req, res) {
   });
 };
 
-exports.uploadImage2 = function (req, res) {
-  console.log('uploadImage2');
+exports.uploadImage2 = function (req, res) {  
   var message = null;
 
   var upload = multer({ dest:'./public/uploads/', limits: { fileSize: 1048576 } }).single('newProfilePicture');
   var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
 
   upload.fileFilter = profileUploadFileFilter;
-  upload(req, res, function (uploadError) {
-    console.log('err',uploadError);
+  upload(req, res, function (uploadError) {    
     if(uploadError) {
       return res.status(400).send({
         message: 'Error al subir la imagen'
@@ -461,17 +453,14 @@ exports.uploadImage2 = function (req, res) {
 /**
  * Comercio middleware
  */
-exports.comercioByID = function (req, res, next, id) {
-  console.log('comercioByID',req.comercio);
+exports.comercioByID = function (req, res, next, id) {  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'El comercio es inválido'
     });
   }
 
-  Comercio.findById(id).populate('user', 'displayName').populate('Productos').exec(function(err, comercio) {
-    console.log('comercioQ',comercio,'req',req.comercio);
-  // Comercio.findOne({_id: id}).populate('user', 'displayName').populate('Productos').exec(function (err, comercio) {
+  Comercio.findById(id).populate('user', 'displayName').populate('Productos').exec(function(err, comercio) {     
     if (err) {
       return next(err);
     } else if (!comercio) {

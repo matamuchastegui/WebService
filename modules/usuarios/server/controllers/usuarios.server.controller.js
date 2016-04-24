@@ -170,7 +170,6 @@ exports.login = function (req, res) {
         RespMessage: 'El usuario no existe'
       });
     } else{
-      console.log('next',usuario);
       req.usuario = usuario;
       req.Agenda = hcAgenda;
       req.Cupon = hcCupon;

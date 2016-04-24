@@ -65,7 +65,6 @@
             </div>
           </div>
         </div>
-        {{preview.UrlImageLogo}} -- {{comercio.UrlImageLogo}}
         <div class="col-md-6">
           <div data-ng-show="preview.UrlImageLogo || comercio.UrlImageLogo">
             <div class="form-group text-center" data-ng-show="comercio.UrlImageLogo">
@@ -79,9 +78,6 @@
             <span class="btn btn-orange btn-file mt5">
                 Seleccione logo de comercio <input type="file" name="UrlImageLogo" alias="asd" nv-file-select uploader="uploaderLogo" required="La imagen es requerida">
             </span>
-          </div>
-          <div ng-messages="comercioForm.UrlImageLogo.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Logo requerido.</p>
           </div>
           <div class="text-center form-group" ng-show="uploaderLogo.queue.length">
             <a class="btn btn-ok" ng-click="uploadLogo();">
@@ -106,9 +102,6 @@
                 Seleccione una imagen del comercio <input type="file" name="UrlImageComercio" alias="asd" nv-file-select uploader="uploader" required>
             </span>
           </div>
-          <div ng-messages="comercioForm.UrlImageComercio.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Imagen del comercio requerido.</p>
-          </div>
           <div class="text-center form-group" ng-show="uploader.queue.length">
             <a class="btn btn-ok" ng-click="uploadProfilePicture();">
               <i class="glyphicon glyphicon-ok"></i>
@@ -118,15 +111,15 @@
             </a>
           </div>
         </div>
+        <div ng-show="error" class="text-center text-danger col-md-12">
+          <strong ng-bind="error"></strong>
+        </div>
         <div ng-show="success" class="text-center text-success col-md-12">
             <strong ng-bind="success"></strong>
           </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <input type="submit" ng-click="update(comercioForm.$valid)"  value="ACTUALIZAR" class="col-md-12 btn btn-orange" >
-        </div>
-        <div ng-show="error" class="text-danger">
-          <strong ng-bind="error"></strong>
         </div>
       </fieldset>
     </form>

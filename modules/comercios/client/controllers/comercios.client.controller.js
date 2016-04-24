@@ -39,8 +39,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         EnvioADomicilio: this.EnvioADomicilio
         // Telefonos: this.Telefonos,
         // Tarjeta: this.Tarjeta
-      });
-      console.log('comercio',comercio);
+      });      
       // Redirect after save
       comercio.$save(function (response) {
         $location.path('comercios/' + response._id);
@@ -72,22 +71,19 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     // Update existing Comercio
     $scope.update = function (isValid) {
-      console.log('nombre',this.comercio.NombreComercio);
       $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'comercioForm');
-
         return false;
       }
-      // var comercio = $scope.comercio;
       var comercio = new Comercios({
         _id: $stateParams.IdComercio,
         NombreComercio: this.comercio.NombreComercio,
         UbicacionLat: this.comercio.UbicacionLat,
         UbicacionLon: this.comercio.UbicacionLon,
-        UrlImageComercio: this.preview.UrlImageComercio?this.preview.UrlImageComercio:this.comercio.UrlImageComercio,
-        UrlImageLogo: this.preview.UrlImageLogo?this.preview.UrlImageLogo:this.comercio.UrlImageLogo,
+        UrlImageComercio: this.preview.UrlImageComercio,
+        UrlImageLogo: this.preview.UrlImageLogo,
         ImagenesPromociones: this.comercio.ImagenesPromociones,
         Slogan: this.comercio.Slogan,
         Email: this.comercio.Email,
@@ -97,10 +93,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Twitter: this.comercio.Twitter,
         EnvioADomicilio: this.comercio.EnvioADomicilio
       });
-      console.log('CCCC',comercio.NombreComercio);
-      comercio.$update(function (response) {
-        console.log('response',response.NombreComercio);
-        // $location.path('comercios/' + comercio._id);
+      comercio.$update(function (response) {        
+        $location.path('comercios/' + comercio._id);
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
@@ -116,6 +110,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       $scope.comercio = Comercios.get({
         IdComercio: $stateParams.IdComercio
       });
+      $scope.preview.UrlImageLogo = $scope.comercio.UrlImageLogo;
+      $scope.preview.UrlImageComercio = $scope.comercio.UrlImageComercio;
     };
 
     $scope.uploader = new FileUploader({
@@ -133,11 +129,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     $scope.uploader.onAfterAddingFile = function (fileItem) {
       if ($window.FileReader) {
         var fileReader = new FileReader();
-        fileReader.readAsDataURL(fileItem._file);
-        console.log('up',fileItem,$scope.UrlImageComercio);
-        console.log('queue',$scope.uploader.queue);
-        fileReader.onload = function (fileReaderEvent) {
-          console.log('fileReaderEvent',fileReaderEvent);
+        fileReader.readAsDataURL(fileItem._file);                
+        fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
             if($scope.comercio)
               $scope.comercio.UrlImageComercio = fileReaderEvent.target.result;  
@@ -149,8 +142,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       }
     };
 
-    $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
-      console.log('response',response);
+    $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {      
       $scope.success = "La imagen del comercio se cargó correctamente";
       $scope.UrlImageComercio = '';
       $scope.preview.UrlImageComercio = response.url;
@@ -162,8 +154,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       $scope.error = response.message;
     };
 
-    $scope.uploadProfilePicture = function () {
-      console.log('uploadProfilePicture');
+    $scope.uploadProfilePicture = function () {      
       $scope.success = $scope.error = null;
       $scope.uploader.uploadAll();
     };
@@ -188,8 +179,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       if ($window.FileReader) {
         var fileReader = new FileReader();
         fileReader.readAsDataURL(fileItem._file);
-        fileReader.onload = function (fileReaderEvent) {
-          console.log('fileReaderEvent',fileReaderEvent);
+        fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
             if($scope.comercio)
               $scope.comercio.UrlImageLogo = fileReaderEvent.target.result;  
@@ -200,8 +190,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       }
     };
 
-    $scope.uploaderLogo.onSuccessItem = function (fileItem, response, status, headers) {
-      console.log('response',response);
+    $scope.uploaderLogo.onSuccessItem = function (fileItem, response, status, headers) {      
       $scope.success = "La imagen del logo se cargó correctamente";
       $scope.UrlImageComercio = '';
       $scope.preview.UrlImageLogo = response.url;
@@ -213,8 +202,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       $scope.error = response.message;
     };
 
-    $scope.uploadLogo = function () {
-      console.log('uploadProfilePicture');
+    $scope.uploadLogo = function () {      
       $scope.success = $scope.error = null;
       $scope.uploaderLogo.uploadAll();
     };
