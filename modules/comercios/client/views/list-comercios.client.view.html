@@ -2,19 +2,17 @@
   <div class="page-header">
     <h1>Comercios</h1>
   </div>
+
   <div class="list-group">
     <a ng-repeat="comercio in comercios" ui-sref="comercios.view({IdComercio: comercio._id})" class="list-group-item">
       <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="comercio.created | date:'mediumDate'"></span>
-        by
-        <span ng-bind="comercio.user.displayName"></span>
+        Creado el
+        <span ng-bind="comercio.created | date:'shortDate'"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="comercio.title"></h4>
-      <p class="list-group-item-text" ng-bind="comercio.content"></p>
+      <h4 class="list-group-item-heading" ng-bind="comercio.NombreComercio"></h4>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="comercios.$resolved && !comercios.length">
-    No comercios yet, why don't you <a ui-sref="comercios.create">create one</a>?
+    Todavía no hay comercios, crea uno <a ui-sref="comercios.create">aquí</a>
   </div>
 </section>

@@ -3,7 +3,7 @@
   <div class="page-header">
     <h1><img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>{{comercio.NombreComercio}}</h1>    
   </div>
-  <div class="row">
+  <div class="row" style="padding:1%">
     <div class="col-md-7">
       <div class="row">
         <div class="col-md-3"><strong>Slogan</strong></div>
@@ -33,16 +33,16 @@
       <div class="row">
         <div class="col-md-3"><strong>Twitter</strong></div>
         <div class="col-md-6" ng-bind="comercio.Twitter"></div>
-      </div>
+      </div><br/>
       <div class="row">
-        <div class="col-md-3"><strong>Envio A Domicilio</strong></div>
-        <div class="col-md-6" ng-bind="comercio.EnvioADomicilio"></div>
+        <div class="col-md-3"><strong>Envio a Domicilio</strong></div>
+        <div class="col-md-6" ng-bind="comercio.EnvioADomicilio?'Si':'No'"></div>
       </div>
-      <div class="row">
+      <div class="row" ng-if="comercio.Telefonos.length > 0">
         <div class="col-md-3"><strong>Telefonos</strong></div>
         <div class="col-md-6" ng-bind="comercio.Telefonos"></div>
       </div>
-      <div class="row">
+      <div class="row" ng-if="comercio.Tarjeta.length > 0">
         <div class="col-md-3"><strong>Tarjetas</strong></div>
         <div class="col-md-6" ng-bind="comercio.Tarjeta"></div>
       </div>
@@ -66,41 +66,42 @@
     </div>
   </div>
   <h1>Productos</h1>
-  <table id="table-banners" class="table" data-ng-show="comercio.Productos.length > 0" cellspacing="10">
-    <thead class="table-head">
-      <tr>
-        <td><div class="borders-right">NombreProducto</div></td>
-        <td><span>Descripcion</span></td>
-        <td><span class="borders">Puntuacion</span></td>
-        <td><span class="borders">PrecioLista</span></td>
-        <td><span class="borders">Oferta</span></td>
-        <td></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="banner" data-ng-repeat="prod in comercio.Productos">
-        <td>
-          <div class="borders-right">
-            <span class="">{{prod.NombreProducto}}</span>
-          </div>
-        </td>
-        <td>{{prod.Descripcion}}</td>
-        <td><span class="borders">{{prod.Puntuacion}}</span></td>
-        <td><span class="borders">$ {{prod.PrecioLista}}</span></td>
-        <td><span class="borders">{{prod.Oferta?'Si':'No'}}</span></td>
-        <td><span class="borders">
-          <a class="editar" href="/productos/{{prod._id}}">
-            <i class="glyphicon glyphicon-eye-open"></i>
-          </a>
-        </span></td>
-      </tr>
-    </tbody>
+
+  <table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="producto in $data">
+      <td>
+        <div class="item" ng-style="{'background':getColor(producto.entrega)}">
+      </td>
+      <td data-title="'Nombre'" filter="{ NombreProducto: 'text'}" sortable="'NombreProducto'">
+        {{producto.NombreProducto}}
+      </td>
+      <td data-title="'Descripción'" style="width: 25%;" sortable="'Descripcion'"><!--  filter="{ 'productos[0].created': 'text'}" No funciona por la versión de angular-->
+        <span class="borders">{{producto.Descripcion}}</span>
+      </td>
+      <td data-title="'Puntuación'" filter="{ Puntuacion: 'text'}" sortable="'Puntuacion'">
+        <span class="borders">{{producto.Puntuacion}}</span>
+      </td>
+      <td data-title="'PrecioLista'" filter="{'user': 'text'}" sortable="'PrecioLista'">
+        <span class="borders">{{producto.PrecioLista}}</span>
+      </td>
+      <td data-title="'Oferta'" filter="{'Oferta': 'text'}" sortable="'Oferta'">
+        <span class="borders">{{producto.Oferta?'Si':'No'}}</span>
+      </td>
+      <td data-title="''">
+        <span class="borders"><a data-ng-href="/productos/{{producto._id}}"><img src="/modules/core/client/img/buttons/details-camp.png" alt=""/></a></span>
+      </td>
+      <!-- <td>
+        <a class="editar" href="/productos/{{prod._id}}">
+          <i class="glyphicon glyphicon-eye-open"></i>
+        </a>
+      </td> -->
+    </tr>
   </table>
   <div class="pull-right" data-ng-show="authentication.user">
-    <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Editar comercio" popover-trigger="mouseenter">
+    <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Agregar producto" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-plus"></i>
     </a>
-    <a class="btn btn-orange" id="edit" href="/productos/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
+    <a class="btn btn-orange" id="edit" href="/comercios/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">

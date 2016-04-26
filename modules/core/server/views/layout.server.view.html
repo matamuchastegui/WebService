@@ -31,6 +31,13 @@
   <!-- Fav Icon -->
   <link href="{{url}}{{favicon}}" rel="shortcut icon" type="image/x-icon">
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700|Roboto' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <!-- ngTable -->
+  <link rel="stylesheet" type="text/css" href="lib/ng-table/dist/ng-table.min.css">
+
+
   <!-- Application CSS Files -->
   {% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
 </head>
@@ -53,6 +60,7 @@
 
   <!--Application JavaScript Files-->
   {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %} 
+  <script type="text/javascript" src="lib/ng-table/dist/ng-table.min.js"></script>
 
   {% if livereload %}
   <!--Livereload script rendered -->

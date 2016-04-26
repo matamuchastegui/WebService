@@ -7,7 +7,7 @@ a .popover {
 section {
   font-family: 'Open Sans', sans-serif; }
   section .fondo-comercio {
-    opacity: .3;
+    opacity: .2;
     position: fixed;
     z-index: -1;
     padding: 0;
@@ -236,7 +236,7 @@ fieldset fieldset {
     padding-right: 5px; }
 
 .table tbody {
-  color: #aaa; }
+  color: #333; }
   .table tbody a {
     cursor: pointer;
     color: #F18E00; }

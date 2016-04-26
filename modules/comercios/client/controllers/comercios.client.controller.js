@@ -1,8 +1,8 @@
 'use strict';
 
 // Comercios controller
-angular.module('comercios').controller('ComerciosController', ['$scope', '$stateParams', '$location', '$window', '$timeout', 'Authentication', 'Comercios', 'FileUploader',
-  function ($scope, $stateParams, $location, $window, $timeout, Authentication, Comercios, FileUploader) {
+angular.module('comercios').controller('ComerciosController', ['$scope', '$stateParams', '$location', '$window', '$timeout', 'Authentication', 'Comercios', 'FileUploader', 'NgTableParams',
+  function ($scope, $stateParams, $location, $window, $timeout, Authentication, Comercios, FileUploader, NgTableParams) {
     $scope.authentication = Authentication;
     $scope.UrlImageComercio = '';
     $scope.UrlImageLogo = '';
@@ -109,6 +109,12 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     $scope.findOne = function () {
       $scope.comercio = Comercios.get({
         IdComercio: $stateParams.IdComercio
+      },function(){
+        console.log($scope.comercio.Productos );
+        $scope.tableParams = new NgTableParams({
+          count:10,
+          sorting: { NombreProducto: 'asc' }
+        }, { data: $scope.comercio.Productos });
       });
       $scope.preview.UrlImageLogo = $scope.comercio.UrlImageLogo;
       $scope.preview.UrlImageComercio = $scope.comercio.UrlImageComercio;

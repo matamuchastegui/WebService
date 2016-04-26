@@ -1,8 +1,8 @@
 'use strict';
 
 // Productos controller
-angular.module('productos').controller('ProductosController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', 'Authentication', 'Productos', 'Comercios', 'FileUploader', 
-  function ($scope, $stateParams, $location, $interval, $uibModal, Authentication, Productos, Comercios, FileUploader) {
+angular.module('productos').controller('ProductosController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', 'Authentication', 'Productos', 'Comercios', 'FileUploader', 'NgTableParams',
+  function ($scope, $stateParams, $location, $interval, $uibModal, Authentication, Productos, Comercios, FileUploader, NgTableParams) {    
     $scope.authentication = Authentication;
     $scope.OfertaValidaDesde = new Date();
     $scope.OfertaValidaHasta = new Date().getTime() + 259200000;
@@ -119,7 +119,13 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
     };
     // Find a list of Productos
     $scope.find = function () {
-      $scope.productos = Productos.query();
+      console.log('asd');
+      $scope.productos = Productos.query(function(){
+        $scope.tableParams = new NgTableParams({
+          count:10,
+          sorting: { name: 'asc' }
+        }, { data: $scope.productos });
+      });
     };
 
     // Find existing Producto

@@ -155,7 +155,7 @@ exports.delete = function (req, res) {
  * List of Comercios
  */
 exports.list = function (req, res) {
-  Comercio.find().sort('-created').populate('user', 'displayName').exec(function (err, comercios) {
+  Comercio.find({user: req.user._id}).sort('-created').populate('user', 'displayName').exec(function (err, comercios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
