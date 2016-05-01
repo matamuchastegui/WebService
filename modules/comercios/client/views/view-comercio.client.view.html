@@ -1,5 +1,5 @@
 <section ng-controller="ComerciosController" ng-init="findOne()">
-  <img class="col-md-10 fondo-comercio" ng-src="{{comercio.UrlImageComercio}}" />
+  <img class="col-md-8 fondo-comercio" ng-src="{{comercio.UrlImageComercio}}" style="left:17%" />
   <div class="page-header">
     <h1><img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>{{comercio.NombreComercio}}</h1>    
   </div>
@@ -65,38 +65,40 @@
       </div>
     </div>
   </div>
+  <div class="productos" ng-if="comercio.Productos.length > 0">
   <h1>Productos</h1>
 
-  <table ng-table="tableParams" class="table" show-filter="true">
-    <tr ng-repeat="producto in $data">
-      <td>
-        <div class="item" ng-style="{'background':getColor(producto.entrega)}">
-      </td>
-      <td data-title="'Nombre'" filter="{ NombreProducto: 'text'}" sortable="'NombreProducto'">
-        {{producto.NombreProducto}}
-      </td>
-      <td data-title="'Descripción'" style="width: 25%;" sortable="'Descripcion'"><!--  filter="{ 'productos[0].created': 'text'}" No funciona por la versión de angular-->
-        <span class="borders">{{producto.Descripcion}}</span>
-      </td>
-      <td data-title="'Puntuación'" filter="{ Puntuacion: 'text'}" sortable="'Puntuacion'">
-        <span class="borders">{{producto.Puntuacion}}</span>
-      </td>
-      <td data-title="'PrecioLista'" filter="{'user': 'text'}" sortable="'PrecioLista'">
-        <span class="borders">{{producto.PrecioLista}}</span>
-      </td>
-      <td data-title="'Oferta'" filter="{'Oferta': 'text'}" sortable="'Oferta'">
-        <span class="borders">{{producto.Oferta?'Si':'No'}}</span>
-      </td>
-      <td data-title="''">
-        <span class="borders"><a data-ng-href="/productos/{{producto._id}}"><img src="/modules/core/client/img/buttons/details-camp.png" alt=""/></a></span>
-      </td>
-      <!-- <td>
-        <a class="editar" href="/productos/{{prod._id}}">
-          <i class="glyphicon glyphicon-eye-open"></i>
-        </a>
-      </td> -->
-    </tr>
-  </table>
+    <table ng-table="tableParams" class="table" show-filter="true">
+      <tr ng-repeat="producto in $data">
+        <td>
+          <div class="item" ng-style="{'background':getColor(producto.entrega)}">
+        </td>
+        <td data-title="'Nombre'" filter="{ NombreProducto: 'text'}" sortable="'NombreProducto'">
+          {{producto.NombreProducto}}
+        </td>
+        <td data-title="'Descripción'" style="width: 25%;" sortable="'Descripcion'"><!--  filter="{ 'productos[0].created': 'text'}" No funciona por la versión de angular-->
+          <span class="borders">{{producto.Descripcion}}</span>
+        </td>
+        <td data-title="'Puntuación'" filter="{ Puntuacion: 'text'}" sortable="'Puntuacion'">
+          <span class="borders">{{producto.Puntuacion}}</span>
+        </td>
+        <td data-title="'PrecioLista'" filter="{'user': 'text'}" sortable="'PrecioLista'">
+          <span class="borders">{{producto.PrecioLista}}</span>
+        </td>
+        <td data-title="'Oferta'" filter="{'Oferta': 'text'}" sortable="'Oferta'">
+          <span class="borders">{{producto.Oferta?'Si':'No'}}</span>
+        </td>
+        <td data-title="''">
+          <span class="borders"><a data-ng-href="/productos/{{producto._id}}"><img src="/modules/core/client/img/buttons/details-camp.png" alt=""/></a></span>
+        </td>
+        <!-- <td>
+          <a class="editar" href="/productos/{{prod._id}}">
+            <i class="glyphicon glyphicon-eye-open"></i>
+          </a>
+        </td> -->
+      </tr>
+    </table>
+  </div>
   <div class="pull-right" data-ng-show="authentication.user">
     <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Agregar producto" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-plus"></i>

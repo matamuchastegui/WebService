@@ -49,8 +49,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
         // products.push(producto);
         producto = new Productos.get({
           productoId: response._id
-        });
-        setTimeout(function(){
+        },function(){
           if(comercio.Productos)
             comercio.Productos.push(response);
           else
@@ -61,7 +60,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
           }, function (errorResponse) {
             $scope.error = errorResponse.data.message;
           });
-        },1000);
+        });
         
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
@@ -112,14 +111,12 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
     };
 
     $scope.findComercios = function (){
-      $scope.comercios = Comercios.query();
-      setTimeout(function() {
+      $scope.comercios = Comercios.query(function(){
         $scope.comercio = $scope.comercios[0]._id;
-      }, 100);
+      });
     };
     // Find a list of Productos
     $scope.find = function () {
-      console.log('asd');
       $scope.productos = Productos.query(function(){
         $scope.tableParams = new NgTableParams({
           count:10,
