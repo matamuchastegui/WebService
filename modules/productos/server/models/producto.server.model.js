@@ -40,11 +40,9 @@ var ProductoSchema = new Schema({
     trim: true
   },
   ImagenGaleria: [{
-    UrlImageGaleria: {
-      type: String,
-      default:'',
-      trim: true
-    },
+    type: String,
+    default:'',
+    trim: true
   }],
   PrecioLista: {
     type: Number,

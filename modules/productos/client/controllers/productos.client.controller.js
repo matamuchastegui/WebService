@@ -25,12 +25,20 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
         return false;
       }
 
+      var imagenes = [];
+      for (var i = this.ImagenGaleria.length - 1; i >= 0; i--) {
+        imagenes.push(this.ImagenGaleria[i].url);
+      }
+
+      if(!this.UrlPreviewPpal && this.ImagenGaleria.length > 0)
+        this.UrlPreviewPpal = this.ImagenGaleria[0].url;
+
       // Create new Producto object
       var producto = new Productos({
         NombreProducto: this.NombreProducto,
         Descripcion: this.Descripcion,
         UrlPreviewPpal: this.UrlPreviewPpal,
-        ImagenGaleria: this.ImagenGaleria,
+        ImagenGaleria: imagenes,
         PrecioLista: this.PrecioLista,
         Oferta: this.Oferta,
         Temporizada: this.Temporizada,

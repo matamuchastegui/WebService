@@ -1,20 +1,61 @@
 <section ng-controller="ProductosController" ng-init="findOne()">
   <div class="page-header">
-    <h1 ng-bind="producto.title"></h1>
+    <h1 ng-bind="producto.NombreProducto"></h1>
+  <div class="row" style="padding:1%">
+  
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-3"><strong>Descripcion</strong></div>
+        <div class="col-md-6" ng-bind="producto.Descripcion"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Puntuacion</strong></div>
+        <div class="col-md-6" ng-bind="producto.Puntuacion"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>PrecioLista</strong></div>
+        <div class="col-md-6" ng-bind="producto.PrecioLista"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Fecha Última Actualización</strong></div>
+        <div class="col-md-6" ng-bind="producto.FechaUltimaActualizacion | date: 'medium'"></div>
+      </div><br/>
+
+    </div>
+
+    <div class="col-md-5" ng-if="producto.Oferta">
+      <div class="row">
+        <div class="col-md-6"><strong>Oferta</strong></div>
+        <div class="col-md-3" ng-bind="producto.Oferta? 'Si':'No'"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-6"><strong>Precio Oferta</strong></div>
+        <div class="col-md-3" ng-bind="$producto.PrecioOferta"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-6"><strong>Oferta Valida Desde</strong></div>
+        <div class="col-md-3" ng-bind="producto.OfertaValidaDesde | date: 'medium'"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-6"><strong>Oferta Valida Hasta</strong></div>
+        <div class="col-md-3" ng-bind="producto.OfertaValidaHasta | date: 'medium'"></div>
+      </div>
+    </div>
   </div>
-  <div class="pull-right" ng-show="authentication.user._id == producto.user._id">
-    <a class="btn btn-primary" ui-sref="productos.edit({productoId: producto._id})">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn btn-primary" ng-click="remove();">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
+  <div class="galeria-imagenes" ng-repeat="item in producto.ImagenGaleria">
+    <img ng-src="{{item}}" style="height: 80px;margin-bottom: 5px">
   </div>
   <small>
     <em class="text-muted">
-      Posted on
+      Creado el
       <span ng-bind="producto.created | date:'mediumDate'"></span>
-      by
+      por
       <span ng-bind="producto.user.displayName"></span>
     </em>
   </small>
