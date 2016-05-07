@@ -70,9 +70,6 @@
 
     <table ng-table="tableParams" class="table" show-filter="true">
       <tr ng-repeat="producto in $data">
-        <td>
-          <div class="item" ng-style="{'background':getColor(producto.entrega)}">
-        </td>
         <td data-title="'Nombre'" filter="{ NombreProducto: 'text'}" sortable="'NombreProducto'">
           {{producto.NombreProducto}}
         </td>

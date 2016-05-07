@@ -2,38 +2,27 @@
   <div class="page-header">
     <h1>Productos</h1>
   </div>
-  <table id="table-banners" class="table" data-ng-show="productos.length > 0" cellspacing="10">
-    <thead class="table-head">
-      <tr>
-        <td><div class="borders-right">NombreProducto</div></td>
-        <td><span>Descripcion</span></td>
-        <td><span class="borders">Puntuacion</span></td>
-        <td><span class="borders">PrecioLista</span></td>
-        <td><span class="borders">Oferta</span></td>
-        <td><span class="borders">Acciones</span></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="banner" data-ng-repeat="prod in productos">
-        <td>
-          <div class="borders-right">
-            <span class="">{{prod.NombreProducto}}</span>
-          </div>
+  <table ng-table="tableParams" class="table" class="table" data-ng-show="productos.length > 0" cellspacing="10">
+    <tr ng-repeat="producto in $data">
+        <td data-title="'Nombre'" filter="{ NombreProducto: 'text'}" sortable="'NombreProducto'">
+          {{producto.NombreProducto}}
         </td>
-        <td>{{prod.Descripcion}}</td>
-        <td><span class="borders">{{prod.Puntuacion}}</span></td>
-        <td><span class="borders">$ {{prod.PrecioLista}}</span></td>
-        <td><span class="borders">{{prod.Oferta?'Si':'No'}}</span></td>
-        <td><span class="borders">
-          <a class="editar" href="/productos/{{prod._id}}">
-            <i class="glyphicon glyphicon-eye-open"></i>
-          </a>
-          <a class="editar" href="/productos/{{prod._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-        </span></td>
+        <td data-title="'Descripción'" style="width: 25%;" sortable="'Descripcion'"><!--  filter="{ 'productos[0].created': 'text'}" No funciona por la versión de angular-->
+          <span class="borders">{{producto.Descripcion}}</span>
+        </td>
+        <td data-title="'Puntuación'" filter="{ Puntuacion: 'text'}" sortable="'Puntuacion'">
+          <span class="borders">{{producto.Puntuacion}}</span>
+        </td>
+        <td data-title="'PrecioLista'" filter="{'user': 'text'}" sortable="'PrecioLista'">
+          <span class="borders">${{producto.PrecioLista}}</span>
+        </td>
+        <td data-title="'Oferta'" filter="{'Oferta': 'text'}" sortable="'Oferta'">
+          <span class="borders">{{producto.Oferta?'Si':'No'}}</span>
+        </td>
+        <td data-title="''">
+          <span class="borders"><a data-ng-href="/productos/{{producto._id}}"><img src="/modules/core/client/img/buttons/details-camp.png" alt=""/></a></span>
+        </td>
       </tr>
-    </tbody>
   </table>
   <div class="alert alert-warning text-center" ng-if="productos.$resolved && !productos.length">
     Todavía no hay productos, crea uno <a ui-sref="productos.create">aquí</a>
