@@ -75,6 +75,10 @@ ul.slick-dots li.slick-active button:before {
 uib-accordion a:hover, uib-accordion a:focus {
   text-decoration: none; }
 
+.form-group {
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
 fieldset fieldset {
   margin: 20px -15px 40px -15px;
   border: none;

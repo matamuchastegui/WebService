@@ -10,7 +10,60 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       UrlImageComercio: '',
       UrlImageLogo: ''
     };
+    $scope.EnvioADomicilio = false;
+    $scope.Tarjetas = [
+      {
+        NombreTarjeta: 'Visa',
+        Acepta: false
+      },
+      {
+        NombreTarjeta: 'MasterCard',
+        Acepta: false
+      },
+      {
+        NombreTarjeta: 'Naranja',
+        Acepta: false
+      }
+    ];
 
+    $scope.LunesViernes = {
+      cortado: false,
+      DM: new Date(0, 0, 0, 9, 0, 0, 0),
+      DT: new Date(0, 0, 0, 9, 0, 0, 0),
+      HM: new Date(0, 0, 0, 19, 0, 0, 0),
+      HT: new Date(0, 0, 0, 19, 0, 0, 0)
+    };
+
+    $scope.Sabado = {
+      cortado: false,
+      DM: new Date(0, 0, 0, 9, 0, 0, 0),
+      DT: new Date(0, 0, 0, 9, 0, 0, 0),
+      HM: new Date(0, 0, 0, 19, 0, 0, 0),
+      HT: new Date(0, 0, 0, 19, 0, 0, 0)
+    };
+
+    $scope.DomingoFeriado = {
+      cortado: false,
+      DM: new Date(0, 0, 0, 9, 0, 0, 0),
+      DT: new Date(0, 0, 0, 9, 0, 0, 0),
+      HM: new Date(0, 0, 0, 19, 0, 0, 0),
+      HT: new Date(0, 0, 0, 19, 0, 0, 0)  
+    };
+
+    $scope.changeCheck = function(item){
+      if(item.cortado){
+        item.DM = new Date(0, 0, 0, 9, 0, 0, 0);
+        item.DT = new Date(0, 0, 0, 16, 0, 0, 0);
+        item.HM = new Date(0, 0, 0, 13, 0, 0, 0);
+        item.HT = new Date(0, 0, 0, 22, 0, 0, 0);
+      }
+      else{
+        item.DM = new Date(0, 0, 0, 9, 0, 0, 0);
+        item.DT = new Date(0, 0, 0, 9, 0, 0, 0);
+        item.HM = new Date(0, 0, 0, 19, 0, 0, 0);
+        item.HT = new Date(0, 0, 0, 19, 0, 0, 0);
+      }
+    };
     // Create new Comercio
     $scope.create = function (isValid) {
       $scope.error = null;
@@ -36,9 +89,15 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Facebook: this.Facebook,
         Instagram: this.Instagram,
         Twitter: this.Twitter,
-        EnvioADomicilio: this.EnvioADomicilio
-        // Telefonos: this.Telefonos,
-        // Tarjeta: this.Tarjeta
+        EnvioADomicilio: this.EnvioADomicilio,
+        Horarios: {
+          Lunes: this.LunesViernes,
+          Sabado: this.Sabado,
+          DomingoFeriado: this.DomingoFeriadoAbierto ? this.DomingoFeriado : null
+        },
+        Direccion: this.Direccion,
+        Telefono: this.Telefono,
+        Tarjetas: this.Tarjeta
       });      
       // Redirect after save
       comercio.$save(function (response) {

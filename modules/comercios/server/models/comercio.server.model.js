@@ -104,6 +104,75 @@ var ComercioSchema = new Schema({
     default: false,
     trim: true
   },
+  Direccion: {
+    type: String,
+    trim: true,
+    required: "Dirección es requerido."
+  },
+  Horarios: {
+    Lunes: {
+        Corrido: {
+          type: Boolean,
+          default: false
+        },
+        DM: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        HM: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        HT: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        DT: {
+          type: Date,
+          required: 'Horarios requeridos'
+        }
+    },
+    Sabado: {
+        Corrido: {
+          type: Boolean,
+          default: false
+        },
+        DM: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        HM: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        HT: {
+          type: Date,
+          required: 'Horarios requeridos'
+        },
+        DT: {
+          type: Date,
+          required: 'Horarios requeridos'
+        }
+    },
+    DomingoFeriado: {
+        Corrido: {
+          type: Boolean,
+          default: false
+        },
+        DM: {
+          type: Date
+        },
+        HM: {
+          type: Date
+        },
+        HT: {
+          type: Date
+        },
+        DT: {
+          type: Date
+        }
+    },
+  },
   Telefonos: [{
     type: String,
     trim: true
@@ -113,8 +182,8 @@ var ComercioSchema = new Schema({
         type: String,
         trim: true
       },
-      Descripcion: {
-        type: String,
+      Acepta: {
+        type: Boolean,
         trim: true
       },
   }],

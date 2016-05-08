@@ -113,7 +113,10 @@ exports.create = function (req, res) {
  * Show the current comercio
  */
 exports.read = function (req, res) {
-  res.json(req.comercio);
+
+  res.json(
+    req.comercio
+  );
 };
 
 /**
