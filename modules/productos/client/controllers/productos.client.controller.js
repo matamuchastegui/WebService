@@ -140,62 +140,62 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
       });
     };
     var modalInstance;
-  $scope.modalProgress = function() {
-    modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: '/modules/core/client/views/templates/modal-progress.client.view.html',
-      controller: 'ModalProgressController',
-      scope: $scope
+    $scope.modalProgress = function() {
+      modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: '/modules/core/client/views/templates/modal-progress.client.view.html',
+        controller: 'ModalProgressController',
+        scope: $scope
+      });
+    };
+
+    var uploader = $scope.uploader = new FileUploader({
+      url: '/api/comercios/upload'
     });
-  };
 
-  var uploader = $scope.uploader = new FileUploader({
-    url: '/api/comercios/upload'
-  });
-
-  uploader.filters.push({
-    name: 'customFilter',
-    fn: function(item, options) {
-      return this.queue.length < 10;
-    }
-  });
-
-  uploader.onWhenAddingFileFailed = function(item, filter, options) {
-    console.info('onWhenAddingFileFailed', item, filter, options);
-  };
-
-  uploader.onErrorItem = function(fileItem, response, status, headers) {
-    console.info('onErrorItem', fileItem, response, status, headers);
-  };
-
-  uploader.onAfterAddingAll = function(files) {
-    uploader.uploadAll();
-    var stop;
-    if (angular.isDefined(stop)) return;
-    stop = $interval(function() {
-      if ($scope.uploader.queue.length > 0) {
-        $interval.cancel(stop);
-        $scope.modalProgress();
+    uploader.filters.push({
+      name: 'customFilter',
+      fn: function(item, options) {
+        return this.queue.length < 10;
       }
-    }, 100);
+    });
 
-  };
+    uploader.onWhenAddingFileFailed = function(item, filter, options) {
+      console.info('onWhenAddingFileFailed', item, filter, options);
+    };
 
-  uploader.onCompleteAll = function() {
-    $scope.uploader.queue.ready = true;
-  };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+      console.info('onErrorItem', fileItem, response, status, headers);
+    };
 
-  uploader.onCompleteItem = function(fileItem, response, status, headers) {
-    if (status > 0) {
-      var file = fileItem._file.name.replace(/"/g, '');
-      $scope.ImagenGaleria.push({name:file,url:response.url,ppal:$scope.uploader.queue.length === 1});
-    }
-  };
+    uploader.onAfterAddingAll = function(files) {
+      uploader.uploadAll();
+      var stop;
+      if (angular.isDefined(stop)) return;
+      stop = $interval(function() {
+        if ($scope.uploader.queue.length > 0) {
+          $interval.cancel(stop);
+          $scope.modalProgress();
+        }
+      }, 100);
 
-  $scope.remove = function(fileItem, index) {
-    $scope.Archivos.name.splice(index, 1);
-    $scope.uploader.queue[index].remove();
-  };
+    };
+
+    uploader.onCompleteAll = function() {
+      $scope.uploader.queue.ready = true;
+    };
+
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+      if (status > 0) {
+        var file = fileItem._file.name.replace(/"/g, '');
+        $scope.ImagenGaleria.push({name:file,url:response.url,ppal:$scope.uploader.queue.length === 1});
+      }
+    };
+
+    $scope.remove = function(fileItem, index) {
+      $scope.Archivos.name.splice(index, 1);
+      $scope.uploader.queue[index].remove();
+    };
   }
 
   

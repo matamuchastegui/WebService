@@ -187,7 +187,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 col-sm-6">
+          <div class="col-md-4 col-sm-4 col-xs-12">
             <div data-ng-show="preview.UrlImageLogo || UrlImageLogo">
               <div class=" text-center" data-ng-show="UrlImageLogo">
                 <img ng-src="{{UrlImageLogo}}" class="img-thumbnail user-profile-picture">
@@ -210,7 +210,16 @@
               </a>
             </div>
           </div>
-          <div class="col-md-6 col-sm-6">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div data-ng-hide="saving" nv-file-drop="" uploader="banners" filters="queueLimit, customFilter">
+              <div ng-show="banners.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file mt5" style="font-size: 14px;">
+                  Cargar Banners<input type="file" nv-file-select="" uploader="banners" multiple/>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div class="col-md-4 col-sm-4 col-xs-12">
             <div data-ng-show="preview.UrlImageComercio || UrlImageComercio">
               <div class=" text-center" data-ng-show="UrlImageComercio">
                 <img ng-src="{{UrlImageComercio}}" class="img-thumbnail user-profile-picture">

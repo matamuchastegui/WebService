@@ -38,12 +38,10 @@ var ComercioSchema = new Schema({
     trim: true,
     required: 'Logo requerido'
   },
-  ImagenesPromociones: [{
-    UrlImageGaleria: {
+  ImagenesBanners: [{
       type: String,
       default:'',
       trim: true
-    },
   }],
   Slogan: {
     type: String,
@@ -110,8 +108,8 @@ var ComercioSchema = new Schema({
     required: "Dirección es requerido."
   },
   Horarios: {
-    Lunes: {
-        Corrido: {
+    LunesViernes: {
+        Cortado: {
           type: Boolean,
           default: false
         },
@@ -133,7 +131,7 @@ var ComercioSchema = new Schema({
         }
     },
     Sabado: {
-        Corrido: {
+        Cortado: {
           type: Boolean,
           default: false
         },
@@ -155,7 +153,7 @@ var ComercioSchema = new Schema({
         }
     },
     DomingoFeriado: {
-        Corrido: {
+        Cortado: {
           type: Boolean,
           default: false
         },

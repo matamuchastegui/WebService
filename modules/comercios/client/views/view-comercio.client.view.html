@@ -1,71 +1,71 @@
 <section ng-controller="ComerciosController" ng-init="findOne()">
-  <img class="col-md-8 fondo-comercio" ng-src="{{comercio.UrlImageComercio}}" style="left:17%" />
+  <img class="col-md-8 fondo-comercio" ng-src="{{data.Comercio.UrlImageComercio}}" style="left:17%" />
   <div class="page-header">
-    <h1><img ng-src="{{comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>{{comercio.NombreComercio}}</h1>    
+    <h1><img ng-src="{{data.Comercio.UrlImageLogo}}" style="height: 50px;width: 50px"/>{{data.Comercio.NombreComercio}}</h1>  
   </div>
   <div class="row" style="padding:1%">
     <div class="col-md-7">
       <div class="row">
         <div class="col-md-3"><strong>Slogan</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Slogan"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Slogan"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-3"><strong>Email</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Email"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Email"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-3"><strong>Web</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Web"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Web"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-3"><strong>Facebook</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Facebook"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Facebook"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-3"><strong>Instagram</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Instagram"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Instagram"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-3"><strong>Twitter</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Twitter"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Twitter"></div>
       </div><br/>
       <div class="row">
         <div class="col-md-3"><strong>Envio a Domicilio</strong></div>
-        <div class="col-md-6" ng-bind="comercio.EnvioADomicilio?'Si':'No'"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.EnvioADomicilio?'Si':'No'"></div>
       </div>
-      <div class="row" ng-if="comercio.Telefonos.length > 0">
+      <div class="row" ng-if="data.Comercio.Telefonos.length > 0">
         <div class="col-md-3"><strong>Telefonos</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Telefonos"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Telefonos"></div>
       </div>
-      <div class="row" ng-if="comercio.Tarjeta.length > 0">
+      <div class="row" ng-if="data.Comercio.Tarjeta.length > 0">
         <div class="col-md-3"><strong>Tarjetas</strong></div>
-        <div class="col-md-6" ng-bind="comercio.Tarjeta"></div>
+        <div class="col-md-6" ng-bind="data.Comercio.Tarjeta"></div>
       </div>
     </div>
 
     <div class="col-md-5">
       <div class="row">
         <div class="col-md-6"><strong>Seguidores</strong></div>
-        <div class="col-md-3" ng-bind="comercio.CantSeguidores"></div>
+        <div class="col-md-3" ng-bind="data.Comercio.CantSeguidores"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-6"><strong>Publicaciones</strong></div>
-        <div class="col-md-3" ng-bind="comercio.CantPublicaciones"></div>
+        <div class="col-md-3" ng-bind="data.Comercio.CantPublicaciones"></div>
       </div>
       <hr/>
       <div class="row">
         <div class="col-md-6"><strong>Estrellas</strong></div>
-        <div class="col-md-3" ng-bind="comercio.PuntuacionEstrellas"></div>
+        <div class="col-md-3" ng-bind="data.Comercio.PuntuacionEstrellas"></div>
       </div>
     </div>
   </div>
-  <div class="productos" ng-if="comercio.Productos.length > 0">
+  <div class="productos" ng-if="data.Comercio.Productos.length > 0">
   <h1>Productos</h1>
 
     <table ng-table="tableParams" class="table" show-filter="true">
@@ -100,7 +100,7 @@
     <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Agregar producto" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-plus"></i>
     </a>
-    <a class="btn btn-orange" id="edit" href="/comercios/{{comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
+    <a class="btn btn-orange" id="edit" href="/comercios/{{data.Comercio._id}}/edit" uib-popover="Editar comercio" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">

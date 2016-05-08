@@ -1,8 +1,8 @@
 'use strict';
 
 // Comercios controller
-angular.module('comercios').controller('ComerciosController', ['$scope', '$stateParams', '$location', '$window', '$timeout', 'Authentication', 'Comercios', 'FileUploader', 'NgTableParams',
-  function ($scope, $stateParams, $location, $window, $timeout, Authentication, Comercios, FileUploader, NgTableParams) {
+angular.module('comercios').controller('ComerciosController', ['$scope', '$stateParams', '$location', '$window', '$timeout', '$interval', '$uibModal', 'Authentication', 'Comercios', 'FileUploader', 'NgTableParams',
+  function ($scope, $stateParams, $location, $window, $timeout, $interval, $uibModal, Authentication, Comercios, FileUploader, NgTableParams) {
     $scope.authentication = Authentication;
     $scope.UrlImageComercio = '';
     $scope.UrlImageLogo = '';
@@ -10,6 +10,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       UrlImageComercio: '',
       UrlImageLogo: ''
     };
+    $scope.ImagenesBanners = [];
     $scope.EnvioADomicilio = false;
     $scope.Tarjetas = [
       {
@@ -25,9 +26,9 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Acepta: false
       }
     ];
-
+    // $scope.data = {};
     $scope.LunesViernes = {
-      cortado: false,
+      Cortado: false,
       DM: new Date(0, 0, 0, 9, 0, 0, 0),
       DT: new Date(0, 0, 0, 9, 0, 0, 0),
       HM: new Date(0, 0, 0, 19, 0, 0, 0),
@@ -35,7 +36,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     $scope.Sabado = {
-      cortado: false,
+      Cortado: false,
       DM: new Date(0, 0, 0, 9, 0, 0, 0),
       DT: new Date(0, 0, 0, 9, 0, 0, 0),
       HM: new Date(0, 0, 0, 19, 0, 0, 0),
@@ -43,7 +44,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     $scope.DomingoFeriado = {
-      cortado: false,
+      Cortado: false,
       DM: new Date(0, 0, 0, 9, 0, 0, 0),
       DT: new Date(0, 0, 0, 9, 0, 0, 0),
       HM: new Date(0, 0, 0, 19, 0, 0, 0),
@@ -51,7 +52,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     $scope.changeCheck = function(item){
-      if(item.cortado){
+      if(item.Cortado){
         item.DM = new Date(0, 0, 0, 9, 0, 0, 0);
         item.DT = new Date(0, 0, 0, 16, 0, 0, 0);
         item.HM = new Date(0, 0, 0, 13, 0, 0, 0);
@@ -82,7 +83,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         UbicacionLon: this.UbicacionLon,
         UrlImageComercio: this.preview.UrlImageComercio,
         UrlImageLogo: this.preview.UrlImageLogo,
-        ImagenesPromociones: this.ImagenesPromociones,
+        ImagenesBanners: this.ImagenesBanners,
         Slogan: this.Slogan,
         Email: this.Email,
         Web: this.Web,
@@ -91,7 +92,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Twitter: this.Twitter,
         EnvioADomicilio: this.EnvioADomicilio,
         Horarios: {
-          Lunes: this.LunesViernes,
+          LunesViernes: this.LunesViernes,
           Sabado: this.Sabado,
           DomingoFeriado: this.DomingoFeriadoAbierto ? this.DomingoFeriado : null
         },
@@ -116,13 +117,13 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       if (comercio) {
         comercio.$remove();
 
-        for (var i in $scope.comercios) {
-          if ($scope.comercios[i] === comercio) {
-            $scope.comercios.splice(i, 1);
+        for (var i in $scope.data.Comercios) {
+          if ($scope.data.Comercios[i] === comercio) {
+            $scope.data.Comercios.splice(i, 1);
           }
         }
       } else {
-        $scope.comercio.$remove(function () {
+        $scope.data.Comercio.$remove(function () {
           $location.path('comercios');
         });
       }
@@ -138,19 +139,27 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       }
       var comercio = new Comercios({
         _id: $stateParams.IdComercio,
-        NombreComercio: this.comercio.NombreComercio,
-        UbicacionLat: this.comercio.UbicacionLat,
-        UbicacionLon: this.comercio.UbicacionLon,
+        NombreComercio: this.data.Comercio.NombreComercio,
+        UbicacionLat: this.data.Comercio.UbicacionLat,
+        UbicacionLon: this.data.Comercio.UbicacionLon,
         UrlImageComercio: this.preview.UrlImageComercio,
         UrlImageLogo: this.preview.UrlImageLogo,
-        ImagenesPromociones: this.comercio.ImagenesPromociones,
-        Slogan: this.comercio.Slogan,
-        Email: this.comercio.Email,
-        Web: this.comercio.Web,
-        Facebook: this.comercio.Facebook,
-        Instagram: this.comercio.Instagram,
-        Twitter: this.comercio.Twitter,
-        EnvioADomicilio: this.comercio.EnvioADomicilio
+        ImagenesBanners: this.data.Comercio.ImagenesBanners,
+        Slogan: this.data.Comercio.Slogan,
+        Email: this.data.Comercio.Email,
+        Web: this.data.Comercio.Web,
+        Facebook: this.data.Comercio.Facebook,
+        Instagram: this.data.Comercio.Instagram,
+        Twitter: this.data.Comercio.Twitter,
+        EnvioADomicilio: this.data.Comercio.EnvioADomicilio,
+        Horarios: {
+          LunesViernes: this.data.Comercio.LunesViernes,
+          Sabado: this.data.Comercio.Sabado,
+          DomingoFeriado: this.data.Comercio.DomingoFeriadoAbierto ? this.data.Comercio.DomingoFeriado : null
+        },
+        Direccion: this.data.Comercio.Direccion,
+        Telefono: this.data.Comercio.Telefono,
+        Tarjetas: this.data.Comercio.Tarjeta
       });
       comercio.$update(function (response) {        
         $location.path('comercios/' + comercio._id);
@@ -166,17 +175,26 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     // Find existing Comercio
     $scope.findOne = function () {
-      $scope.comercio = Comercios.get({
+      $scope.data = Comercios.get({
         IdComercio: $stateParams.IdComercio
       },function(){
-        console.log($scope.comercio.Productos );
+        $scope.preview.UrlImageLogo = $scope.data.Comercio.UrlImageLogo;
+        $scope.preview.UrlImageComercio = $scope.data.Comercio.UrlImageComercio;
         $scope.tableParams = new NgTableParams({
           count:10,
           sorting: { NombreProducto: 'asc' }
-        }, { data: $scope.comercio.Productos });
+        }, { data: $scope.data.Comercio.Productos });
       });
-      $scope.preview.UrlImageLogo = $scope.comercio.UrlImageLogo;
-      $scope.preview.UrlImageComercio = $scope.comercio.UrlImageComercio;
+    };
+
+    var modalInstance;
+    $scope.modalProgress = function() {
+      modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: '/modules/core/client/views/templates/modal-progress.client.view.html',
+        controller: 'ModalProgressController',
+        scope: $scope
+      });
     };
 
     $scope.uploader = new FileUploader({
@@ -197,8 +215,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.readAsDataURL(fileItem._file);                
         fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
-            if($scope.comercio)
-              $scope.comercio.UrlImageComercio = fileReaderEvent.target.result;  
+            if($scope.data && $scope.data.Comercio)
+              $scope.data.Comercio.UrlImageComercio = fileReaderEvent.target.result;  
             else
               $scope.UrlImageComercio = fileReaderEvent.target.result;
             
@@ -246,8 +264,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.readAsDataURL(fileItem._file);
         fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
-            if($scope.comercio)
-              $scope.comercio.UrlImageLogo = fileReaderEvent.target.result;  
+            if($scope.data && $scope.data.Comercio)
+              $scope.data.Comercio.UrlImageLogo = fileReaderEvent.target.result;  
             else
               $scope.UrlImageLogo = fileReaderEvent.target.result;
           }, 0);
@@ -274,6 +292,49 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     $scope.cancelUploadLogo = function () {
       $scope.uploaderLogo.clearQueue();
+    };
+
+    var banners = $scope.banners = new FileUploader({
+      url: '/api/comercios/upload'
+    });
+
+    banners.filters.push({
+      name: 'customFilter',
+      fn: function(item, options) {
+        return this.queue.length < 10;
+      }
+    });
+
+    banners.onWhenAddingFileFailed = function(item, filter, options) {
+      console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+
+    banners.onErrorItem = function(fileItem, response, status, headers) {
+      console.info('onErrorItem', fileItem, response, status, headers);
+    };
+
+    banners.onAfterAddingAll = function(files) {
+      banners.uploadAll();
+      var stop;
+      if (angular.isDefined(stop)) return;
+      stop = $interval(function() {
+        if ($scope.banners.queue.length > 0) {
+          $interval.cancel(stop);
+          $scope.modalProgress();
+        }
+      }, 100);
+
+    };
+
+    banners.onCompleteAll = function() {
+      $scope.banners.queue.ready = true;
+    };
+
+    banners.onCompleteItem = function(fileItem, response, status, headers) {
+      if (status > 0) {
+        var file = fileItem._file.name.replace(/"/g, '');
+        $scope.ImagenesBanners.push(response.url);
+      }
     };
 
   }

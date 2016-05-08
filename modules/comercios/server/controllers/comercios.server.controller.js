@@ -109,14 +109,36 @@ exports.create = function (req, res) {
   });
 };
 
+function isOpen(day){
+  var hora = new Date().getHours();
+  if((day.Cortado && ((hora >= day.DM.getHours() && hora <= day.HM.getHours()) || (hora >= day.DT.getHours() && hora <= day.HT.getHours()))) || (!day.Cortado && (hora >= day.DM.getHours() && hora <= day.HM.getHours())))
+    return true;
+  else 
+    return false;
+}
 /**
  * Show the current comercio
  */
 exports.read = function (req, res) {
-
-  res.json(
-    req.comercio
-  );
+  var horarios = req.comercio.Horarios;
+  var abierto;
+  switch(new Date().getDay()){
+    case 0: 
+      abierto = ((horarios.DomingoFeriado.DM ? true:false) && isOpen(horarios.DomingoFeriado));
+    break;
+    case 6:
+      abierto = isOpen(horarios.Sabado);
+    break;
+    default:
+      abierto = isOpen(horarios.LunesViernes);
+    break;
+  }
+  res.json({
+    RespCode:0, 
+    RespMessage:'OK',
+    Abierto: abierto,
+    Comercio: req.comercio
+  });
 };
 
 /**
