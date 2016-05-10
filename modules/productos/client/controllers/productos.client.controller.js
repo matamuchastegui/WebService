@@ -49,24 +49,22 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
 
       // Redirect after save
       producto.$save(function (response) {
-        var comercio = new Comercios.get({
-          IdComercio: $scope.comercio
-        });
-        // var products = [];
-        // prodcts = comercio.Productos;
-        // products.push(producto);
-        producto = new Productos.get({
-          productoId: response._id
-        },function(){
-          if(comercio.Productos)
-            comercio.Productos.push(response);
-          else
-            comercio.Productos = producto;
-          // comercio.Productos = products;
-          comercio.$update(function () {
-            $location.path('productos/' + response._id);
-          }, function (errorResponse) {
-            $scope.error = errorResponse.data.message;
+        new Comercios.get({
+          IdComercio: $scope.comercio,
+          update: true
+        },1,function(data){
+          producto = new Productos.get({
+            productoId: response._id
+          },function(){
+            if(data.Productos)
+              data.Productos.push(response);
+            else
+              data.Productos = producto;
+            data.$update(function () {
+              $location.path('productos/' + response._id);
+            }, function (errorResponse) {
+              $scope.error = errorResponse.data.message;
+            });
           });
         });
         

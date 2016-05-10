@@ -133,12 +133,15 @@ exports.read = function (req, res) {
       abierto = isOpen(horarios.LunesViernes);
     break;
   }
-  res.json({
-    RespCode:0, 
-    RespMessage:'OK',
-    Abierto: abierto,
-    Comercio: req.comercio
-  });
+  if(req.update)
+    res.json(req.comercio);
+  else
+    res.json({
+      RespCode:0, 
+      RespMessage:'OK',
+      Abierto: abierto,
+      Comercio: req.comercio
+    });
 };
 
 /**
@@ -307,89 +310,6 @@ exports.getComercio = function (req, res) {
     RespMessage:'Ok',
     Comercio: req.comercio
   });
-  // res.json({
-  //   RespCode:0,
-  //   RespMessage:'Ok',
-  //   Comercio:{
-  //     IdComercio:123,
-  //     NombreComercio:'nombre',
-  //     UbicacionLat:'1231',
-  //     UbicacionLon:'1231',
-  //     UrlImageComercio:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-  //     UrlImageLogo:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-  //     ImagenesPromociones:[
-  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //       {UrlImagePromocion:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
-  //     ],
-  //     Slogan:'tuComercio',
-  //     CantSeguidores:'',
-  //     CantPublicaciones:'',
-  //     PuntuaciónEstrellas:3,
-  //     Telefonos:[
-  //       {Numero:'351261265'},
-  //       {Numero:'351261265'},
-  //       {Numero:'351261265'},
-  //       {Numero:'351261265'},
-  //       {Numero:'351261265'},
-  //     ],
-  //     Email:'email@mail.com',
-  //     Web:'web',
-  //     Facebook:'feibu',
-  //     FacebookLiked:true,
-  //     Instagram:'instagram',
-  //     Twitter:'twitter',
-  //     TwitterFallow:true,
-  //     Tarjeta:[
-  //       {
-  //         NombreTarjeta:'naranja',
-  //         Descripcion:'hasta 12 cuotas sin interés'
-  //       }
-  //     ],
-  //     EnvioADomicilio:true
-  //     },
-  //     Cupon:[
-  //     {
-  //     IdCupon:'1234',
-  //     CuponBarcode:'1234242342',
-  //     CuponType:'WELKOM',
-  //     CuponStatus:'Expired',
-  //     Description:'',
-  //     ValidFrom:'',
-  //     ValidTo:'',
-  //     CuponUrl:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-  //     IdComercio:'2123',
-  //     CuponUsado:false,
-  //     Temporizado:false
-  //     }
-  //     ],
-  //     LastTenProducts:[
-  //     {
-  //     IdProducto:'1234',
-  //     NombreProducto:'Vestite como se debe en verano!!!',
-  //     Descripcion:'camisa, pantalón y zapatos',
-  //     FechaUltimaActualizacion:'12-3-2016 12:51',
-  //     Puntuacion:5,
-  //     UrlPreviewPpal:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg',
-  //     ImagenGaleria:[
-  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'},
-  //     {UrlImageGaleria:'https://s3-us-west-2.amazonaws.com/decomprasimg/test.jpg'}
-  //     ],
-  //     PrecioLista:'52.23',
-  //     Oferta:true,
-  //     Temporizada:true,
-  //     OfertaValidaHasta:'12-6-1995 12:56',
-  //     OfertaValidaDesde:'12-6-1995 14:26',
-  //     PrecioOferta:'30.25'
-  //     }
-  //     ]
-
-  // });
 };
 
 exports.getLastComerciosAdheridos = function (req, res) {
@@ -494,6 +414,7 @@ exports.comercioByID = function (req, res, next, id) {
         RespMessage: 'El comercio no existe'
       });
     }
+    req.update = req.url.split('?').pop().split('&').pop().split('&').pop() === 'update=true';
     req.comercio = comercio;
     next();
   });
