@@ -60,4 +60,15 @@
     </em>
   </small>
   <p class="lead" ng-bind="producto.content"></p>
+  <div class="pull-right" data-ng-show="authentication.user">
+    <a class="btn btn-orange" id="newProduct" href="/productos/create" uib-popover="Agregar producto" popover-trigger="mouseenter">
+      <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a class="btn btn-orange" id="edit" href="/productos/{{producto._id}}/edit" uib-popover="Editar producto" popover-trigger="mouseenter">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
 </section>
