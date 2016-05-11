@@ -98,8 +98,8 @@
             <span class="checkbox">
               <strong>Lunes a Viernes</strong>
               <span class="col-md-offset-2">Horario de cortado
-              <input type="radio" id="LunesViernes.cortado" ng-value="true" ng-change="changeCheck(LunesViernes)" data-ng-model="LunesViernes.cortado" data-ng-disabled="readonly"> Sí
-                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(LunesViernes)" data-ng-model="LunesViernes.cortado" data-ng-disabled="readonly"> No</span>
+              <input type="radio" id="LunesViernes.Cortado" ng-value="true" ng-change="changeCheck(LunesViernes)" data-ng-model="LunesViernes.Cortado" data-ng-disabled="readonly"> Sí
+                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(LunesViernes)" data-ng-model="LunesViernes.Cortado" data-ng-disabled="readonly"> No</span>
             </span>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-3">
@@ -112,12 +112,12 @@
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="LunesViernes.HM" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="LunesViernes.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="LunesViernes.Cortado">
             <label class="control-label">Desde</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="LunesViernes.DT" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="LunesViernes.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="LunesViernes.Cortado">
             <label class="control-label">Hasta</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="LunesViernes.HT" date-format="dd-MMM-yyyy" ></uib-timepicker>
@@ -128,8 +128,8 @@
             <span class="checkbox">
               <strong>Sábados</strong>
               <span class="col-md-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horario de cortado
-              <input type="radio" id="Sabado.cortado" ng-value="true" ng-change="changeCheck(Sabado)" data-ng-model="Sabado.cortado" data-ng-disabled="readonly"> Sí
-                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(Sabado)" data-ng-model="Sabado.cortado" data-ng-disabled="readonly"> No</span>
+              <input type="radio" id="Sabado.Cortado" ng-value="true" ng-change="changeCheck(Sabado)" data-ng-model="Sabado.Cortado" data-ng-disabled="readonly"> Sí
+                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(Sabado)" data-ng-model="Sabado.Cortado" data-ng-disabled="readonly"> No</span>
             </span>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-3">
@@ -142,12 +142,12 @@
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="Sabado.HM" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="Sabado.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="Sabado.Cortado">
             <label class="control-label">Desde</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="Sabado.DT" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="Sabado.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="Sabado.Cortado">
             <label class="control-label">Hasta</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="Sabado.HT" date-format="dd-MMM-yyyy" ></uib-timepicker>
@@ -161,8 +161,8 @@
               <input type="checkbox" id="DomingoFeriadoAbierto" ng-value="true" ng-init="DomingoFeriadoAbierto=true" data-ng-model="DomingoFeriadoAbierto" data-ng-disabled="readonly">
               </span>
               <span ng-if="DomingoFeriadoAbierto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horario de cortado
-              <input type="radio" id="DomingoFeriado.cortado" ng-value="true" ng-change="changeCheck(DomingoFeriado)" data-ng-model="DomingoFeriado.cortado" data-ng-disabled="readonly"> Sí
-                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(DomingoFeriado)" data-ng-model="DomingoFeriado.cortado" data-ng-disabled="readonly"> No</span>
+              <input type="radio" id="DomingoFeriado.Cortado" ng-value="true" ng-change="changeCheck(DomingoFeriado)" data-ng-model="DomingoFeriado.Cortado" data-ng-disabled="readonly"> Sí
+                <input type="radio" id="expandible" ng-value="false" ng-change="changeCheck(DomingoFeriado)" data-ng-model="DomingoFeriado.Cortado" data-ng-disabled="readonly"> No</span>
             </span>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-3" ng-if="DomingoFeriadoAbierto">
@@ -175,12 +175,12 @@
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="DomingoFeriado.HM" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="DomingoFeriadoAbierto && DomingoFeriado.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="DomingoFeriadoAbierto && DomingoFeriado.Cortado">
             <label class="control-label">Desde</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="DomingoFeriado.DT" date-format="dd-MMM-yyyy" ></uib-timepicker>
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="DomingoFeriadoAbierto && DomingoFeriado.cortado">
+          <div class="col-xs-12 col-sm-6 col-md-3" ng-if="DomingoFeriadoAbierto && DomingoFeriado.Cortado">
             <label class="control-label">Hasta</label>
             <div class="clearfix"></div>
             <uib-timepicker  show-spinners="false" data-ng-model="DomingoFeriado.HT" date-format="dd-MMM-yyyy" ></uib-timepicker>

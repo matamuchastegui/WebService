@@ -171,10 +171,10 @@ var ComercioSchema = new Schema({
         }
     },
   },
-  Telefonos: [{
+  Telefono:{
     type: String,
     trim: true
-  }],   
+  },   
   Tarjeta: [{
       NombreTarjeta: {
         type: String,

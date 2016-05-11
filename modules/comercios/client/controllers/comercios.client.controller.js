@@ -26,7 +26,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Acepta: false
       }
     ];
-    // $scope.data = {};
+    
     $scope.LunesViernes = {
       Cortado: false,
       DM: new Date(0, 0, 0, 9, 0, 0, 0),
@@ -51,7 +51,19 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       HT: new Date(0, 0, 0, 19, 0, 0, 0)  
     };
 
+    $scope.isRol = function(rol) {
+      var roles = $scope.authentication.user.roles;
+      var isRol = false;
+      for (var i in roles) {
+        if (roles[i] === rol) {
+          isRol = true;
+        }
+      }
+      return isRol;
+    };
+
     $scope.changeCheck = function(item){
+      console.log('item',item);
       if(item.Cortado){
         item.DM = new Date(0, 0, 0, 9, 0, 0, 0);
         item.DT = new Date(0, 0, 0, 16, 0, 0, 0);
@@ -92,9 +104,9 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         Twitter: this.Twitter,
         EnvioADomicilio: this.EnvioADomicilio,
         Horarios: {
-          LunesViernes: this.LunesViernes,
-          Sabado: this.Sabado,
-          DomingoFeriado: this.DomingoFeriadoAbierto ? this.DomingoFeriado : null
+          LunesViernes: this.Horarios.LunesViernes,
+          Sabado: this.Horarios.Sabado,
+          DomingoFeriado: this.Horarios.DomingoFeriadoAbierto ? this.DomingoFeriado : null
         },
         Direccion: this.Direccion,
         Telefono: this.Telefono,
@@ -117,13 +129,13 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       if (comercio) {
         comercio.$remove();
 
-        for (var i in $scope.data.Comercios) {
-          if ($scope.data.Comercios[i] === comercio) {
-            $scope.data.Comercios.splice(i, 1);
+        for (var i in $scope.comercios) {
+          if ($scope.comercios[i] === comercio) {
+            $scope.comercios.splice(i, 1);
           }
         }
       } else {
-        $scope.data.Comercio.$remove(function () {
+        $scope.comercio.$remove(function () {
           $location.path('comercios');
         });
       }
@@ -139,27 +151,27 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       }
       var comercio = new Comercios({
         _id: $stateParams.IdComercio,
-        NombreComercio: this.data.Comercio.NombreComercio,
-        UbicacionLat: this.data.Comercio.UbicacionLat,
-        UbicacionLon: this.data.Comercio.UbicacionLon,
+        NombreComercio: this.comercio.NombreComercio,
+        UbicacionLat: this.comercio.UbicacionLat,
+        UbicacionLon: this.comercio.UbicacionLon,
         UrlImageComercio: this.preview.UrlImageComercio,
         UrlImageLogo: this.preview.UrlImageLogo,
-        ImagenesBanners: this.data.Comercio.ImagenesBanners,
-        Slogan: this.data.Comercio.Slogan,
-        Email: this.data.Comercio.Email,
-        Web: this.data.Comercio.Web,
-        Facebook: this.data.Comercio.Facebook,
-        Instagram: this.data.Comercio.Instagram,
-        Twitter: this.data.Comercio.Twitter,
-        EnvioADomicilio: this.data.Comercio.EnvioADomicilio,
+        ImagenesBanners: this.ImagenesBanners,
+        Slogan: this.comercio.Slogan,
+        Email: this.comercio.Email,
+        Web: this.comercio.Web,
+        Facebook: this.comercio.Facebook,
+        Instagram: this.comercio.Instagram,
+        Twitter: this.comercio.Twitter,
+        EnvioADomicilio: this.comercio.EnvioADomicilio,
         Horarios: {
-          LunesViernes: this.data.Comercio.LunesViernes,
-          Sabado: this.data.Comercio.Sabado,
-          DomingoFeriado: this.data.Comercio.DomingoFeriadoAbierto ? this.data.Comercio.DomingoFeriado : null
+          LunesViernes: this.comercio.Horarios.LunesViernes,
+          Sabado: this.comercio.Horarios.Sabado,
+          DomingoFeriado: this.DomingoFeriadoAbierto ? this.comercio.Horarios.DomingoFeriado : null
         },
-        Direccion: this.data.Comercio.Direccion,
-        Telefono: this.data.Comercio.Telefono,
-        Tarjetas: this.data.Comercio.Tarjeta
+        Direccion: this.comercio.Direccion,
+        Telefono: this.comercio.Telefono,
+        Tarjetas: this.comercio.Tarjeta
       });
       comercio.$update(function (response) {        
         $location.path('comercios/' + comercio._id);
@@ -175,15 +187,17 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
 
     // Find existing Comercio
     $scope.findOne = function () {
-      $scope.data = Comercios.get({
-        IdComercio: $stateParams.IdComercio
+      $scope.comercio = Comercios.get({
+        IdComercio: $stateParams.IdComercio,
+        update: true
       },function(){
-        $scope.preview.UrlImageLogo = $scope.data.Comercio.UrlImageLogo;
-        $scope.preview.UrlImageComercio = $scope.data.Comercio.UrlImageComercio;
+        $scope.preview.UrlImageLogo = $scope.comercio.UrlImageLogo;
+        $scope.preview.UrlImageComercio = $scope.comercio.UrlImageComercio;
+        $scope.DomingoFeriadoAbierto = $scope.comercio.Horarios.DomingoFeriado.DM !== undefined;
         $scope.tableParams = new NgTableParams({
           count:10,
           sorting: { NombreProducto: 'asc' }
-        }, { data: $scope.data.Comercio.Productos });
+        }, { data: $scope.comercio.Productos });
       });
     };
 
@@ -215,8 +229,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.readAsDataURL(fileItem._file);                
         fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
-            if($scope.data && $scope.data.Comercio)
-              $scope.data.Comercio.UrlImageComercio = fileReaderEvent.target.result;  
+            if($scope.comercio)
+              $scope.comercio.UrlImageComercio = fileReaderEvent.target.result;  
             else
               $scope.UrlImageComercio = fileReaderEvent.target.result;
             
@@ -264,8 +278,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         fileReader.readAsDataURL(fileItem._file);
         fileReader.onload = function (fileReaderEvent) {          
           $timeout(function () {
-            if($scope.data && $scope.data.Comercio)
-              $scope.data.Comercio.UrlImageLogo = fileReaderEvent.target.result;  
+            if($scope.comercio)
+              $scope.comercio.UrlImageLogo = fileReaderEvent.target.result;  
             else
               $scope.UrlImageLogo = fileReaderEvent.target.result;
           }, 0);
