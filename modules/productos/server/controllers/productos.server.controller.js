@@ -30,6 +30,7 @@ exports.create = function (req, res) {
  * Show the current producto
  */
 exports.read = function (req, res) {
+  console.log('reqbo',req.bo);
   if(req.bo)
     res.json(req.producto);
   else
@@ -109,6 +110,7 @@ exports.productoByID = function (req, res, next, id) {
         message: 'No producto with that identifier has been found'
       });
     }
+    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
     req.producto = producto;
     next();
   });

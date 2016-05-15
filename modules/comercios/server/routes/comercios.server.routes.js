@@ -14,9 +14,7 @@
  *
  * @apiParam {ObjectId} id Comercios unique ID.
  *
- * @apiExample Ejemplo de uso:
- * curl -i http://52.36.173.82/api/comercios/572feac45e092de26d479487
- *
+ * @apiSuccess {Object} Comercio Comercio.
  * @apiSuccess {String} Comercio.NombreComercio Nombre del comercio.
  * @apiSuccess {String} Comercio.Slogan Frase del comercio.
  * @apiSuccess {Object} Comercio.Horarios  Horarios.

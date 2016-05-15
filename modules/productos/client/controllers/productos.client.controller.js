@@ -55,7 +55,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
         },1,function(data){
           producto = new Productos.get({
             productoId: response._id,
-            bo:true
+            bo: true
           },function(){
             if(data.Productos)
               data.Productos.push(response);
@@ -136,6 +136,9 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
     $scope.findOne = function () {
       $scope.producto = Productos.get({
         productoId: $stateParams.productoId
+        ,bo: true
+      },function(){
+        console.log('prod',$scope.producto);
       });
     };
     var modalInstance;

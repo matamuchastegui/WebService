@@ -4,12 +4,21 @@
  * @api {get} /getHome GET Pantalla principal
  * @apiName GetHome
  * @apiGroup Home
+ * @apiSampleRequest http://52.36.173.82/api/getHome
  * @apiSuccess {Object[]} Banners Devuelve los banners de portada.
  */
 /**
- * @api {get} /getVouchers GET Vouchers
+ * @api {POST} /getVouchers POST Vouchers
  * @apiName GetVouchers
  * @apiGroup Home
+ * @apiSampleRequest http://52.36.173.82/api/getVouchers
+ *
+ * @apiParam {String} voucherCode Código del voucher.
+ * @apiParam {String} voucherStatus Estado del voucher (EXPIRED,REDEEMED,VALID).
+ * @apiParam {String} voucherType Tipo de voucher (GIFT, WELCOME).
+ * @apiParam {String} promotionCode Código de promoción.
+ * @apiParam {ObjectId} IdComercio Comercio del voucher.
+ *
  * @apiSuccess {Object[]} vouchers Devuelve los vouchers.
  * @apiSuccess {String} vouchers Devuelve los vouchers.
  * @apiSuccess {String} vouchers.voucherCode Código del voucher

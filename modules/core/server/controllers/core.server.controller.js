@@ -14,12 +14,11 @@ exports.renderIndex = function (req, res) {
  */
 exports.renderServerError = function (req, res) {
   res.status(500).render('modules/core/server/views/500', {
-    error: 'Oops! Something went wrong...'
+    error: 'Oops! Algo salió mal...'
   });
 };
 
 exports.getVouchers = function(req, res){
-  // console.log('user',req.body.userId);
   res.json({
     respCode: 0,
     respMessage: "OK",

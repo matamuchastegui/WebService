@@ -18,16 +18,16 @@
         ]
       }
     },
-    "examples": [
-      {
-        "title": "Ejemplo de uso:",
-        "content": "curl -i http://52.36.173.82/api/comercios/572feac45e092de26d479487",
-        "type": "json"
-      }
-    ],
     "success": {
       "fields": {
         "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Comercio",
+            "description": "<p>Comercio.</p>"
+          },
           {
             "group": "Success 200",
             "type": "String",
@@ -498,6 +498,11 @@
     "title": "GET Pantalla principal",
     "name": "GetHome",
     "group": "Home",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/getHome"
+      }
+    ],
     "success": {
       "fields": {
         "Success 200": [
@@ -516,11 +521,57 @@
     "groupTitle": "Home"
   },
   {
-    "type": "get",
+    "type": "POST",
     "url": "/getVouchers",
-    "title": "GET Vouchers",
+    "title": "POST Vouchers",
     "name": "GetVouchers",
     "group": "Home",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/getVouchers"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "voucherCode",
+            "description": "<p>Código del voucher.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "voucherStatus",
+            "description": "<p>Estado del voucher (EXPIRED,REDEEMED,VALID).</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "voucherType",
+            "description": "<p>Tipo de voucher (GIFT, WELCOME).</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "promotionCode",
+            "description": "<p>Código de promoción.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "IdComercio",
+            "description": "<p>Comercio del voucher.</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -607,5 +658,223 @@
     "version": "0.0.0",
     "filename": "modules/core/server/routes/core.server.routes.js",
     "groupTitle": "Home"
+  },
+  {
+    "type": "get",
+    "url": "/productos/:id",
+    "title": "GET Producto",
+    "name": "GetProducto",
+    "group": "Productos",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/productos/57329f9dfa5c2baf7d2a4313"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Productos unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Producto",
+            "description": "<p>Producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Producto.NombreProducto",
+            "description": "<p>Nombre del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Producto.Horarios.DomingoFeriado.HM",
+            "description": "<p>Horario de cierre producto a la tarde (N/A para productos que están de corrido).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Producto.UrlImageProducto",
+            "description": "<p>Imagen principal del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Productos",
+            "description": "<p>Productos.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Producto.created",
+            "description": "<p>Fecha de creación del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Producto.PrecioOferta",
+            "description": "<p>Precio en caso de oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Producto.OfertaValidaDesde",
+            "description": "<p>Fecha desde que es válida la oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Producto.OfertaValidaHasta",
+            "description": "<p>Fecha que termina la oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Producto.Temporizada",
+            "description": "<p>?</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Producto.Oferta",
+            "description": "<p>Indica si tiene el producto tiene oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Producto.PrecioLista",
+            "description": "<p>Precio del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "Producto.ImagenGaleria",
+            "description": "<p>Imagenes del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Producto.UrlPreviewPpal",
+            "description": "<p>Imagen principal del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Producto.Puntuacion",
+            "description": "<p>Puntación del producto según criterio de los usuarios.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Producto.FechaUltimaActualizacion",
+            "description": "<p>Fecha de la ultima actualización del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Producto.Descripcion",
+            "description": "<p>Descripción del producto.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Abierto",
+            "description": "<p>Indica si el producto se encuentra abierto actualmente.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ProductoNotFound",
+            "description": "<p>El id de producto no existe.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ProductoBadRequest",
+            "description": "<p>El id de producto tiene un formato incorrecto.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response Not Found:",
+          "content": "HTTP/1.1 404 Not Found\n{\n   \"RespCode\": 1,\n   \"RespMessage\": \"El producto no existe\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response Bad Request:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"RespCode\": 1,\n   \"RespMessage\": \"El producto es inválido\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "modules/productos/server/routes/productos.server.routes.js",
+    "groupTitle": "Productos"
+  },
+  {
+    "type": "get",
+    "url": "/productos",
+    "title": "GET All Productos",
+    "name": "GetProductos",
+    "group": "Productos",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/productos"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Producto",
+            "description": "<p>Devuelve todos los productos.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/productos/server/routes/productos.server.routes.js",
+    "groupTitle": "Productos"
   }
 ]

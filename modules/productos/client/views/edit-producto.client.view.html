@@ -1,7 +1,7 @@
 <section ng-controller="ProductosController" data-ng-init="findOne()">
   <div class="page-header">
     <h1>Editar {{producto.NombreProducto}}</h1>
-    <div class="col-md-3 mt3">
+    <div class="col-md-3 mt3" data-ng-init="findComercios()">
         <select class="form-control" ng-model="comercio" ng-init="comercio = comercio || comercios[0]._id" ng-options="item._id as item.NombreComercio for item in comercios"  data-ng-disabled="readonly"></select>
     </div>
   </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="form-group" show-errors>
           <label for="PrecioLista">Precio Lista</label>
-          <input name="PrecioLista" type="text" ng-model="producto.PrecioLista" id="PrecioLista" class="form-control" placeholder="Precio Lista" required>
+          <input name="PrecioLista" type="number" ng-model="producto.PrecioLista" id="PrecioLista" class="form-control" placeholder="Precio Lista" required>
           <div ng-messages="productoForm.PrecioLista.$error" role="alert">
             <p class="help-block error-text" ng-message="required">El Precio Lista es requerido.</p>
           </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="form-group col-xs-12 col-sm-6 col-md-3" show-errors ng-show="producto.Oferta">
           <label for="PrecioOferta">Precio Oferta</label>
-          <input name="PrecioOferta" type="text" ng-model="producto.PrecioOferta" id="PrecioOferta" class="form-control" placeholder="Precio Oferta" required="Oferta">
+          <input name="PrecioOferta" type="number" ng-model="producto.PrecioOferta" id="PrecioOferta" class="form-control" placeholder="Precio Oferta" required="Oferta">
           <div ng-messages="productoForm.PrecioOferta.$error" role="alert">
             <p class="help-block error-text" ng-message="required">El Precio Oferta es requerido.</p>
           </div>
@@ -114,7 +114,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8 text-center mt2" style="margin-left: 13.7%;">
+        <div class="col-md-8 col-md-offset-3 text-center mt2">
           <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
             <div class="col-md-5" >
               <div ng-show="uploader.isHTML5">
