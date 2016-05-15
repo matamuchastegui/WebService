@@ -30,7 +30,14 @@ exports.create = function (req, res) {
  * Show the current producto
  */
 exports.read = function (req, res) {
-  res.json(req.producto);
+  if(req.bo)
+    res.json(req.producto);
+  else
+    res.json({
+      RespCode:0, 
+      RespMessage:'OK',
+      Producto: req.producto
+    });
 };
 
 /**

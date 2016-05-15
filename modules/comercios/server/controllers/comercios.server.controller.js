@@ -1,8 +1,5 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
 var path = require('path'),
   mongoose = require('mongoose'),
   Comercio = mongoose.model('Comercio'),
@@ -401,7 +398,8 @@ exports.uploadImage2 = function (req, res) {
 exports.comercioByID = function (req, res, next, id) {  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'El comercio es inválido'
+      RespCode:1,
+      RespMessage: 'El comercio es inválido'
     });
   }
 
@@ -409,7 +407,7 @@ exports.comercioByID = function (req, res, next, id) {
     if (err) {
       return next(err);
     } else if (!comercio) {
-      return res.status(400).send({
+      return res.status(404).send({
         RespCode:1,
         RespMessage: 'El comercio no existe'
       });

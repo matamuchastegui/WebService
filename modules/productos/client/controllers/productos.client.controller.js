@@ -54,7 +54,8 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
           update: true
         },1,function(data){
           producto = new Productos.get({
-            productoId: response._id
+            productoId: response._id,
+            bo:true
           },function(){
             if(data.Productos)
               data.Productos.push(response);

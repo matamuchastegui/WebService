@@ -93,10 +93,6 @@ var ComercioSchema = new Schema({
     default: false,
     trim: true
   },
-  IdComercio: {
-    type: Number,
-    trim: true
-  },
   EnvioADomicilio: {
     type: Boolean,
     default: false,

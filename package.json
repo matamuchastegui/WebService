@@ -1,10 +1,10 @@
 {
-  "name": "meanjs",
-  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
-  "version": "0.4.1",
+  "name": "ShopCenter",
+  "description": "Compras, comercios",
+  "version": "0.1.0",
   "meanjs-version": "0.4.1",
   "private": false,
-  "author": "https://github.com/meanjs/mean/graphs/contributors",
+  "author": "Matias Alejandro Amuchástegui, Julio Exequiel Zeballos",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,6 +18,10 @@
     "start": "grunt",
     "test": "grunt test",
     "postinstall": "bower install --config.interactive=false"
+  },
+  "apidoc": {
+    "title": "DOCUMENTACIÓN API",
+    "url" : "http://52.36.173.82/api"
   },
   "dependencies": {
     "acl": "~0.4.4",
@@ -63,7 +67,8 @@
     "socket.io": "^1.3.5",
     "swig": "^1.4.2",
     "validator": "^3.41.2",
-    "connect-busboy": "^0.0.1"
+    "connect-busboy": "^0.0.1",
+    "apidoc": "*"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

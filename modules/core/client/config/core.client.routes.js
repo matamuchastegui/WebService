@@ -37,6 +37,9 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       data: {
         ignoreState: true
       }
+    }).state('documentation', {
+      url: '/documentation',
+      templateUrl: 'documentation/index.html'
     });
   }
 ]);
