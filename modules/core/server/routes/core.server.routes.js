@@ -7,7 +7,7 @@
  * @apiSuccess {Object[]} Banners Devuelve los banners de portada.
  */
 /**
- * @api {get} /getHome GET Vouchers
+ * @api {get} /getVouchers GET Vouchers
  * @apiName GetVouchers
  * @apiGroup Home
  * @apiSuccess {Object[]} vouchers Devuelve los vouchers.

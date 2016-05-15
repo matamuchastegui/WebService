@@ -2,6 +2,7 @@
 
 /**
  * @api {get} /comercios GET All Comercios
+ * @apiSampleRequest http://52.36.173.82/api/comercios/572feac45e092de26d479487
  * @apiName GetComercios
  * @apiGroup Comercios
  * @apiSuccess {Object[]} Comercio Devuelve todos los comercios.

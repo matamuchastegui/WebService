@@ -468,6 +468,11 @@
     "type": "get",
     "url": "/comercios",
     "title": "GET All Comercios",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/comercios/572feac45e092de26d479487"
+      }
+    ],
     "name": "GetComercios",
     "group": "Comercios",
     "success": {
@@ -512,7 +517,7 @@
   },
   {
     "type": "get",
-    "url": "/getHome",
+    "url": "/getVouchers",
     "title": "GET Vouchers",
     "name": "GetVouchers",
     "group": "Home",
