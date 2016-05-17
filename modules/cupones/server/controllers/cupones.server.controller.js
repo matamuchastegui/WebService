@@ -10,7 +10,7 @@ var path = require('path'),
 
 var hcCupon = [  
   {  
-    CuponId:1234,
+    cuponId:1234,
     CuponBarcode:1234242342,
     CuponType:'WELKOM',
     CuponStatus:'Expired',
@@ -27,16 +27,16 @@ var hcCupon = [
  * Create a Cupon
  */
 exports.create = function (req, res) {
-  var Cupon = new Cupon(req.body);
-  Cupon.user = req.user;
+  console.log('req.body',req.body);
+  var cupon = new Cupon(req.body);
 
-  Cupon.save(function (err) {
+  cupon.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(Cupon);
+      res.json(cupon);
     }
   });
 };
@@ -45,24 +45,31 @@ exports.create = function (req, res) {
  * Show the current Cupon
  */
 exports.read = function (req, res) {
-  res.json(parseInt(req.Cupon.content));
+   if(req.bo)
+    res.json(req.cupon);
+  else
+    res.json({
+      RespCode:0, 
+      RespMessage:'OK',
+      Cupon: req.cupon
+    });
 };
 
 /**
  * Update a Cupon
  */
 exports.update = function (req, res) {
-  var Cupon = req.Cupon;
+  var cupon = req.cupon;
 
   // Cupon.title = req.body.title;
-  Cupon.content = req.body.content;
-  Cupon.save(function (err) {
+  cupon.content = req.body.content;
+  cupon.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(Cupon);
+      res.json(cupon);
     }
   });
 };
@@ -71,15 +78,15 @@ exports.update = function (req, res) {
  * Delete an Cupon
  */
 exports.delete = function (req, res) {
-  var Cupon = req.Cupon;
+  var cupon = req.cupon;
 
-  Cupon.remove(function (err) {
+  cupon.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(Cupon);
+      res.json(cupon);
     }
   });
 };
@@ -124,15 +131,16 @@ exports.CuponByID = function (req, res, next, id) {
     });
   }
 
-  Cupon.findById(id).populate('user', 'displayName').exec(function (err, Cupon) {
+  Cupon.findById(id).populate('user', 'displayName').exec(function (err, cupon) {
     if (err) {
       return next(err);
-    } else if (!Cupon) {
+    } else if (!cupon) {
       return res.status(404).send({
         message: 'No Cupon with that identifier has been found'
       });
     }
-    req.Cupon = Cupon;
+    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
+    req.cupon = cupon;
     next();
   });
 };

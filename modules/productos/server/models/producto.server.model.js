@@ -10,11 +10,6 @@ var mongoose = require('mongoose'),
  * Producto Schema
  */
 var ProductoSchema = new Schema({
-  // IdProducto: {
-  //   type: String,
-  //   default:'',
-  //   trim: true
-  // },
   NombreProducto: {
     type: String,
     default:'',

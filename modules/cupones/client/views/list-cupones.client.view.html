@@ -3,15 +3,15 @@
     <h1>Cupones</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="Cupon in cupones" ui-sref="cupones.view({CuponId: Cupon._id})" class="list-group-item">
+    <a ng-repeat="cupon in cupones" ui-sref="cupones.view({cuponId: cupon._id})" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
-        <span ng-bind="Cupon.created | date:'mediumDate'"></span>
+        <span ng-bind="cupon.created | date:'mediumDate'"></span>
         by
-        <span ng-bind="Cupon.user.displayName"></span>
+        <span ng-bind="cupon.user.displayName"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="Cupon.title"></h4>
-      <p class="list-group-item-text" ng-bind="Cupon.content"></p>
+      <h4 class="list-group-item-heading" ng-bind="cupon.title"></h4>
+      <p class="list-group-item-text" ng-bind="cupon.content"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="cupones.$resolved && !cupones.length">

@@ -494,6 +494,203 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/cupones/:id",
+    "title": "GET Cupon",
+    "name": "GetCupon",
+    "group": "Cupones",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/cupones/FALTACREARUNCUPON"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Cupones unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Cupon",
+            "description": "<p>Cupon.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.NombreCupon",
+            "description": "<p>Nombre del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Cupon.ValidFrom",
+            "description": "<p>Fecha de validez del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Cupon.ValidTo",
+            "description": "<p>Fecha de vencimiento del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Cupon.created",
+            "description": "<p>Fecha de creación del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Cupon.CuponBarcode",
+            "description": "<p>Código de barras.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Cupon.OfertaValidaDesde",
+            "description": "<p>Fecha desde que es válida la oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "Cupon.OfertaValidaHasta",
+            "description": "<p>Fecha que termina la oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Cupon.Temporizada",
+            "description": "<p>?</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.CuponStatus",
+            "description": "<p>Estado del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.CuponType",
+            "description": "<p>Tipo de cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.Description",
+            "description": "<p>Descripción del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.CuponUrl",
+            "description": "<p>Url del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Cupon.UrlImage",
+            "description": "<p>Imagen del cupón.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "Cupon.Comercio",
+            "description": "<p>Id del comercio.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CuponNotFound",
+            "description": "<p>El id de cupón no existe.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CuponBadRequest",
+            "description": "<p>El id de cupón tiene un formato incorrecto.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response Not Found:",
+          "content": "HTTP/1.1 404 Not Found\n{\n   \"RespCode\": 1,\n   \"RespMessage\": \"El cupón no existe\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response Bad Request:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"RespCode\": 1,\n   \"RespMessage\": \"El cupon es inválido\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "modules/cupones/server/routes/cupones.server.routes.js",
+    "groupTitle": "Cupones"
+  },
+  {
+    "type": "get",
+    "url": "/cupones",
+    "title": "GET All Cupones",
+    "name": "GetCupones",
+    "group": "Cupones",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/cupones"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Cupon",
+            "description": "<p>Devuelve todos los cupones.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/cupones/server/routes/cupones.server.routes.js",
+    "groupTitle": "Cupones"
+  },
+  {
+    "type": "get",
     "url": "/getHome",
     "title": "GET Pantalla principal",
     "name": "GetHome",

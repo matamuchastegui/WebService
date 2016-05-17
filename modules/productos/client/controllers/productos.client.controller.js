@@ -21,7 +21,6 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'productoForm');
-
         return false;
       }
 
@@ -51,7 +50,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
       producto.$save(function (response) {
         new Comercios.get({
           IdComercio: $scope.comercio,
-          update: true
+          bo: true
         },1,function(data){
           producto = new Productos.get({
             productoId: response._id,
@@ -135,8 +134,8 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
     // Find existing Producto
     $scope.findOne = function () {
       $scope.producto = Productos.get({
-        productoId: $stateParams.productoId
-        ,bo: true
+        productoId: $stateParams.productoId,
+        bo: true
       },function(){
         console.log('prod',$scope.producto);
       });

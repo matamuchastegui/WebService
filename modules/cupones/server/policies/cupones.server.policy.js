@@ -18,7 +18,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/cupones',
       permissions: '*'
     }, {
-      resources: '/api/cupones/:CuponId',
+      resources: '/api/cupones/:cuponId',
       permissions: '*'
     }]
   }, {
@@ -27,7 +27,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/cupones',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/cupones/:CuponId',
+      resources: '/api/cupones/:cuponId',
       permissions: ['get']
     }]
   }, {
@@ -36,7 +36,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/cupones',
       permissions: ['get']
     }, {
-      resources: '/api/cupones/:CuponId',
+      resources: '/api/cupones/:cuponId',
       permissions: ['get']
     }]
   }]);

@@ -75,7 +75,7 @@ var hcAgenda = [
       ];
   var hcCupon = [  
         {  
-          CuponId:1234,
+          cuponId:1234,
           CuponBarcode:1234242342,
           CuponType:'WELKOM',
           CuponStatus:'Expired',

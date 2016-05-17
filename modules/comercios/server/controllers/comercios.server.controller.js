@@ -74,7 +74,7 @@ var hcAgenda = [
       ];
   var hcCupon = [  
         {  
-          CuponId:1234,
+          cuponId:1234,
           CuponBarcode:1234242342,
           CuponType:'WELKOM',
           CuponStatus:'Expired',
@@ -130,7 +130,7 @@ exports.read = function (req, res) {
       abierto = isOpen(horarios.LunesViernes);
     break;
   }
-  if(req.update)
+  if(req.bo)
     res.json(req.comercio);
   else
     res.json({
@@ -149,6 +149,7 @@ exports.update = function (req, res) {
   comercio = _.extend(comercio, req.body);
   
   comercio.save(function (err) {
+    console.log('err',err);
     if (err) {      
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -412,7 +413,7 @@ exports.comercioByID = function (req, res, next, id) {
         RespMessage: 'El comercio no existe'
       });
     }
-    req.update = req.url.split('?').pop().split('&').pop().split('&').pop() === 'update=true';
+    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
     req.comercio = comercio;
     next();
   });

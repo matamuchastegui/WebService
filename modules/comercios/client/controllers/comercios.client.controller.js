@@ -189,7 +189,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     $scope.findOne = function () {
       $scope.comercio = Comercios.get({
         IdComercio: $stateParams.IdComercio,
-        update: true
+        bo: true
       },function(){
         $scope.preview.UrlImageLogo = $scope.comercio.UrlImageLogo;
         $scope.preview.UrlImageComercio = $scope.comercio.UrlImageComercio;

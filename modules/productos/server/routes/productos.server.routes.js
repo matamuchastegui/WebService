@@ -31,7 +31,6 @@
  * @apiSuccess {Number} Producto.Puntuacion Puntación del producto según criterio de los usuarios.
  * @apiSuccess {Date} Producto.FechaUltimaActualizacion Fecha de la ultima actualización del producto.
  * @apiSuccess {String} Producto.Descripcion Descripción del producto.
- * @apiSuccess {String} Producto.NombreProducto Nombre del producto.
  * @apiSuccess {Boolean} Abierto Indica si el producto se encuentra abierto actualmente.
  *
  * @apiError ProductoNotFound El id de producto no existe.

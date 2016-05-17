@@ -12,6 +12,7 @@ var path = require('path'),
  * Create a producto
  */
 exports.create = function (req, res) {
+  console.log('reqb',req.body);
   var producto = new Producto(req.body);
   producto.user = req.user;
 
@@ -30,7 +31,6 @@ exports.create = function (req, res) {
  * Show the current producto
  */
 exports.read = function (req, res) {
-  console.log('reqbo',req.bo);
   if(req.bo)
     res.json(req.producto);
   else

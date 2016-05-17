@@ -3,7 +3,7 @@
 // Setting up route
 angular.module('cupones').config(['$stateProvider',
   function ($stateProvider) {
-    // Cupones state routing
+    
     $stateProvider
       .state('cupones', {
         abstract: true,
@@ -16,18 +16,18 @@ angular.module('cupones').config(['$stateProvider',
       })
       .state('cupones.create', {
         url: '/create',
-        templateUrl: 'modules/cupones/client/views/create-Cupon.client.view.html',
+        templateUrl: 'modules/cupones/client/views/create-cupon.client.view.html',
         data: {
           roles: ['user', 'admin']
         }
       })
       .state('cupones.view', {
-        url: '/:CuponId',
-        templateUrl: 'modules/cupones/client/views/view-Cupon.client.view.html'
+        url: '/:cuponId',
+        templateUrl: 'modules/cupones/client/views/view-cupon.client.view.html'
       })
       .state('cupones.edit', {
-        url: '/:CuponId/edit',
-        templateUrl: 'modules/cupones/client/views/edit-Cupon.client.view.html',
+        url: '/:cuponId/edit',
+        templateUrl: 'modules/cupones/client/views/edit-cupon.client.view.html',
         data: {
           roles: ['user', 'admin']
         }

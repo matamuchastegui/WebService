@@ -185,6 +185,10 @@ var ComercioSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Producto'
   }],
+  Cupones: [{
+    type: Schema.ObjectId,
+    ref: 'Cupon'
+  }],
   user: {
     type: Schema.ObjectId,
     ref: 'User'

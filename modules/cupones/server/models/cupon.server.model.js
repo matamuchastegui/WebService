@@ -14,21 +14,65 @@ var CuponSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
+  NombreCupon: {
     type: String,
     default: '',
-    trim: true
-    //required: 'Title cannot be blank'
+    trim: true,
+    required: 'Nombre requerido'
   },
-  content: {
+  CuponBarcode:{
+    type: Number,
+    trim: true,
+    required: 'El código de barras es requerido'
+  },
+  ValidFrom: {
+    type: Date,
+    trim: true,
+    required: 'La fecha de validez es requerida'
+  },
+  ValidTo: {
+    type: Date,
+    trim: true,
+    required: 'La fecha de vencimiento es requerida'
+  },
+  Description: {
     type: String,
-    default: '0',
+    trim: true,
+    required: 'La descripción es requerida'
+  },
+  CuponType: {
+    type: String,
+    trim: true,
+    required: 'Tipo de cupón es requerido'
+  },
+  CuponStatus: {
+    type: String,
     trim: true
   },
-  user: {
+  CuponUrl: {
+    type: String,
+    trim: true
+  },
+  CuponUsado: {
+    type: Boolean,
+    trim: true,
+    default: false
+  },
+  Temporizado: {
+    type: Boolean,
+    trim: true,
+    default: false
+  },
+  UrlImage: {
+    type: String,
+    trim: true
+  },
+  Comercio: {
     type: Schema.ObjectId,
-    ref: 'User'
+    ref: 'Comercio'
   }
 });
 
 mongoose.model('Cupon', CuponSchema);
+
+
