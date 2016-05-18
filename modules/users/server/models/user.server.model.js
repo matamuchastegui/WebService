@@ -32,13 +32,13 @@ var UserSchema = new Schema({
     type: String,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyProperty, 'Please fill in your first name']
+    validate: [validateLocalStrategyProperty, 'Nombre es requerido']
   },
   lastName: {
     type: String,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyProperty, 'Please fill in your last name']
+    validate: [validateLocalStrategyProperty, 'Apellido es requerido']
   },
   displayName: {
     type: String,
@@ -50,12 +50,12 @@ var UserSchema = new Schema({
     lowercase: true,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
+    validate: [validateLocalStrategyEmail, 'Email es requerido']
   },
   username: {
     type: String,
-    unique: 'Username already exists',
-    required: 'Please fill in a username',
+    unique: 'El usuario ya existe',
+    required: 'Usuario es requerido',
     lowercase: true,
     trim: true
   },
@@ -79,10 +79,10 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin']
+      enum: ['user', 'admin', 'dev', 'comerciante', 'vendedor', 'call']
     }],
     default: ['user'],
-    required: 'Please provide at least one role'
+    required: 'Se necesita al menos de un rol'
   },
   updated: {
     type: Date

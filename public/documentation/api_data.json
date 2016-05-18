@@ -500,7 +500,7 @@
     "group": "Cupones",
     "sampleRequest": [
       {
-        "url": "http://52.36.173.82/api/cupones/FALTACREARUNCUPON"
+        "url": "http://52.36.173.82/api/cupones/573bcee3a9a7c45d2e03f19f"
       }
     ],
     "parameter": {

@@ -11,7 +11,7 @@
  * @api {get} /cupones/:id GET Cupon
  * @apiName GetCupon
  * @apiGroup Cupones
- * @apiSampleRequest http://52.36.173.82/api/cupones/FALTACREARUNCUPON
+ * @apiSampleRequest http://52.36.173.82/api/cupones/573bcee3a9a7c45d2e03f19f
  * @apiParam {ObjectId} id Cupones unique ID.
  *
  * @apiSuccess {Object} Cupon Cupon.
