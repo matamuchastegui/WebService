@@ -73,7 +73,9 @@ exports.delete = function (req, res) {
  * List of Comentarios
  */
 exports.list = function (req, res) {
-  Comentario.find().sort('-created').populate('user', 'displayName').exec(function (err, comentarios) {
+  var RegXPag = req.query.RegXPag;
+  var Pag = req.query.Pag;
+  Comentario.find().sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, comentarios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

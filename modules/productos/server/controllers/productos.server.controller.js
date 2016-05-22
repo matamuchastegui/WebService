@@ -81,7 +81,9 @@ exports.delete = function (req, res) {
  * List of Productos
  */
 exports.list = function (req, res) {
-  Producto.find().sort('-created').populate('user', 'displayName').exec(function (err, productos) {
+  var RegXPag = req.query.RegXPag;
+  var Pag = req.query.Pag;
+  Producto.find().sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, productos) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -110,7 +112,7 @@ exports.productoByID = function (req, res, next, id) {
         message: 'No producto with that identifier has been found'
       });
     }
-    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
+    req.bo = req.query.bo;
     req.producto = producto;
     next();
   });

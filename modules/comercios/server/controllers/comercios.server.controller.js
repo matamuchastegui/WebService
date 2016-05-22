@@ -181,7 +181,9 @@ exports.delete = function (req, res) {
  * List of Comercios
  */
 exports.list = function (req, res) {
-  Comercio.find({user: req.user._id}).sort('-created').populate('user', 'displayName').exec(function (err, comercios) {
+  var RegXPag = req.query.RegXPag;
+  var Pag = req.query.Pag;
+  Comercio.find({user: req.user._id}).sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, comercios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -311,6 +313,16 @@ exports.getComercio = function (req, res) {
 };
 
 exports.getLastComerciosAdheridos = function (req, res) {
+  Comercio.find({user: req.user._id}).sort('-created').populate('user', 'displayName').exec(function (err, comercios) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(comercios);
+    }
+  });
+  
   res.json({
     RespCode:0,
     RespMessage:'Ok',
@@ -413,7 +425,7 @@ exports.comercioByID = function (req, res, next, id) {
         RespMessage: 'El comercio no existe'
       });
     }
-    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
+    req.bo = req.query.bo;
     req.comercio = comercio;
     next();
   });

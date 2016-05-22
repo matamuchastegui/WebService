@@ -8,10 +8,5 @@ angular.module('users.admin').run(['Menus',
       state: 'admin.users'
     });
 
-    Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Documentación API',
-      state: 'documentation'
-    });
-
   }
 ]);

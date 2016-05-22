@@ -63,10 +63,6 @@ var CuponSchema = new Schema({
     trim: true,
     default: false
   },
-  UrlImage: {
-    type: String,
-    trim: true
-  },
   Comercio: {
     type: Schema.ObjectId,
     ref: 'Comercio'

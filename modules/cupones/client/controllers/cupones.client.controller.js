@@ -39,7 +39,6 @@ angular.module('cupones').controller('CuponesController', ['$scope', '$statePara
         CuponStatus: this.CuponStatus, 
         CuponUrl: this.CuponUrl, 
         CuponUsado: this.CuponUsado, 
-        UrlImage: this.UrlImage, 
         Comercio: this.comercio
       });
 

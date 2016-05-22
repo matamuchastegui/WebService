@@ -608,13 +608,6 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "Cupon.CuponUrl",
-            "description": "<p>Url del cupón.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "Cupon.UrlImage",
             "description": "<p>Imagen del cupón.</p>"
           },
           {
@@ -709,6 +702,104 @@ define({ "api": [
             "optional": false,
             "field": "Banners",
             "description": "<p>Devuelve los banners de portada.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Banners.Image",
+            "description": "<p>Url de la imagen.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Banners.Url",
+            "description": "<p>Url que linkea la imagen.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "UltimosAdheridos",
+            "description": "<p>Devuelve los comercios destacados.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "UltimosAdheridos.NombreComercio",
+            "description": "<p>Nombre del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "UltimosAdheridos.Image",
+            "description": "<p>Logo del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "UltimosAdheridos._id",
+            "description": "<p>Id del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "OfertasDestacadas",
+            "description": "<p>Devuelve las ofertas destacadas.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "OfertasDestacadas.Image",
+            "description": "<p>Imagen de la oferta.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "OfertasDestacadas.Url",
+            "description": "<p>Url que linkea la imagen.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Favoritos",
+            "description": "<p>Devuelve los comercios destacados.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Favoritos.Label",
+            "description": "<p>Título.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Favoritos.Items",
+            "description": "<p>Items.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Favoritos.Items.Image",
+            "description": "<p>Imagen.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Favoritos.Items.Precio",
+            "description": "<p>Precio.</p>"
           }
         ]
       }

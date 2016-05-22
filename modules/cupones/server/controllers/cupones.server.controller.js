@@ -95,7 +95,9 @@ exports.delete = function (req, res) {
  * List of Cupones
  */
 exports.list = function (req, res) {
-  Cupon.find().sort('-created').populate('user', 'displayName').exec(function (err, cupones) {
+  var RegXPag = req.query.RegXPag;
+  var Pag = req.query.Pag;
+  Cupon.find().sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, cupones) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -139,7 +141,7 @@ exports.CuponByID = function (req, res, next, id) {
         message: 'No Cupon with that identifier has been found'
       });
     }
-    req.bo = req.url.split('?').pop().split('&').pop().split('&').pop() === 'bo=true';
+    req.bo = req.query.bo;
     req.cupon = cupon;
     next();
   });

@@ -360,7 +360,9 @@ exports.recuperarcontrasenia = function (req, res) {
  * List of Usuarios
  */
  exports.list = function (req, res) {
-  Usuario.find().sort('-created').populate('user', 'displayName').exec(function (err, usuarios) {
+  var RegXPag = req.query.RegXPag;
+  var Pag = req.query.Pag;
+  Usuario.find().sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, usuarios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

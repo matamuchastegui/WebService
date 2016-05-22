@@ -26,8 +26,7 @@
  * @apiSuccess {String} Cupon.CuponStatus Estado del cupón.
  * @apiSuccess {String} Cupon.CuponType Tipo de cupón.
  * @apiSuccess {String} Cupon.Description Descripción del cupón.
- * @apiSuccess {String} Cupon.CuponUrl Url del cupón.
- * @apiSuccess {String} Cupon.UrlImage Imagen del cupón.
+ * @apiSuccess {String} Cupon.CuponUrl Imagen del cupón.
  * @apiSuccess {ObjectId} Cupon.Comercio Id del comercio.
  *
  * @apiError CuponNotFound El id de cupón no existe.

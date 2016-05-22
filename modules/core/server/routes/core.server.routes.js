@@ -6,6 +6,20 @@
  * @apiGroup Home
  * @apiSampleRequest http://52.36.173.82/api/getHome
  * @apiSuccess {Object[]} Banners Devuelve los banners de portada.
+ * @apiSuccess {String} Banners.Image Url de la imagen.
+ * @apiSuccess {String} Banners.Url Url que linkea la imagen.
+ * @apiSuccess {Object[]} UltimosAdheridos Devuelve los comercios destacados.
+ * @apiSuccess {String} UltimosAdheridos.NombreComercio Nombre del comercio.
+ * @apiSuccess {String} UltimosAdheridos.Image Logo del comercio.
+ * @apiSuccess {ObjectId} UltimosAdheridos._id Id del comercio.
+ * @apiSuccess {Object[]} OfertasDestacadas Devuelve las ofertas destacadas.
+ * @apiSuccess {String} OfertasDestacadas.Image Imagen de la oferta.
+ * @apiSuccess {String} OfertasDestacadas.Url Url que linkea la imagen.
+ * @apiSuccess {Object[]} Favoritos Devuelve los comercios destacados.
+ * @apiSuccess {String} Favoritos.Label Título.
+ * @apiSuccess {Object[]} Favoritos.Items Items.
+ * @apiSuccess {String} Favoritos.Items.Image Imagen.
+ * @apiSuccess {Number} Favoritos.Items.Precio Precio.
  */
 /**
  * @api {POST} /getVouchers POST Vouchers
