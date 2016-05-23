@@ -12,15 +12,14 @@
  * @apiName GetProducto
  * @apiGroup Productos
  * @apiSampleRequest http://52.36.173.82/api/productos/57329f9dfa5c2baf7d2a4313
- * @apiParam {ObjectId} id Productos unique ID.
+ * @apiParam {ObjectId} _id Productos unique ID.
  *
  * @apiSuccess {Object} Producto Producto.
  * @apiSuccess {String} Producto.NombreProducto Nombre del producto.
- * @apiSuccess {Date} Producto.Horarios.DomingoFeriado.HM Horario de cierre producto a la tarde (N/A para productos que están de corrido).
  * @apiSuccess {String} Producto.UrlImageProducto Imagen principal del producto.
  * @apiSuccess {Object[]} Productos Productos.            
  * @apiSuccess {Date} Producto.created Fecha de creación del producto.
- * @apiSuccess {Number} Producto.PrecioOferta Precio en caso de oferta.
+ * @apiSuccess {Number} Producto.PorcentajeOferta Precio en caso de oferta.
  * @apiSuccess {Date} Producto.OfertaValidaDesde Fecha desde que es válida la oferta.
  * @apiSuccess {Date} Producto.OfertaValidaHasta Fecha que termina la oferta.
  * @apiSuccess {Boolean} Producto.Temporizada ?

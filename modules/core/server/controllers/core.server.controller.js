@@ -65,7 +65,7 @@ exports.getVouchers = function(req, res){
 };
 
 exports.getHome = function(req, res){
-  Comercio.find({user: req.user._id}).sort('-created').limit(8).populate('user', 'displayName').exec(function (err, comercios) {
+  Comercio.find().sort('-created').limit(8).populate('user', 'displayName').exec(function (err, comercios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

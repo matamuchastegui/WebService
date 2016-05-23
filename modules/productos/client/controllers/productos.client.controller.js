@@ -43,7 +43,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
         Temporizada: this.Temporizada,
         OfertaValidaHasta: this.OfertaValidaHasta,
         OfertaValidaDesde: this.OfertaValidaDesde,
-        PrecioOferta: this.PrecioOferta
+        PorcentajeOferta: this.PorcentajeOferta
       });
 
       // Redirect after save

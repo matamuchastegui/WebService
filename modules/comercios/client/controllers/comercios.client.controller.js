@@ -15,42 +15,46 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     $scope.Tarjetas = [
       {
         NombreTarjeta: 'Visa',
+        Descripcion: 'Hasta 3 cuotas sin interés',
         Acepta: false
       },
       {
         NombreTarjeta: 'MasterCard',
+        Descripcion: 'Hasta 3 cuotas sin interés',
         Acepta: false
       },
       {
         NombreTarjeta: 'Naranja',
+        Descripcion: 'Hasta 3 cuotas sin interés',
         Acepta: false
       }
     ];
     
-    $scope.LunesViernes = {
-      Cortado: false,
-      DM: new Date(0, 0, 0, 9, 0, 0, 0),
-      DT: new Date(0, 0, 0, 9, 0, 0, 0),
-      HM: new Date(0, 0, 0, 19, 0, 0, 0),
-      HT: new Date(0, 0, 0, 19, 0, 0, 0)
+    $scope.Horarios = 
+    {
+      LunesViernes: {
+        Cortado: false,
+        DM: new Date(0, 0, 0, 9, 0, 0, 0),
+        DT: new Date(0, 0, 0, 9, 0, 0, 0),
+        HM: new Date(0, 0, 0, 19, 0, 0, 0),
+        HT: new Date(0, 0, 0, 19, 0, 0, 0)
+      },
+      Sabado: {
+        Cortado: false,
+        DM: new Date(0, 0, 0, 9, 0, 0, 0),
+        DT: new Date(0, 0, 0, 9, 0, 0, 0),
+        HM: new Date(0, 0, 0, 19, 0, 0, 0),
+        HT: new Date(0, 0, 0, 19, 0, 0, 0)
+      },
+      DomingoFeriado: {
+        Cortado: false,
+        DM: new Date(0, 0, 0, 9, 0, 0, 0),
+        DT: new Date(0, 0, 0, 9, 0, 0, 0),
+        HM: new Date(0, 0, 0, 19, 0, 0, 0),
+        HT: new Date(0, 0, 0, 19, 0, 0, 0)  
+      }
     };
-
-    $scope.Sabado = {
-      Cortado: false,
-      DM: new Date(0, 0, 0, 9, 0, 0, 0),
-      DT: new Date(0, 0, 0, 9, 0, 0, 0),
-      HM: new Date(0, 0, 0, 19, 0, 0, 0),
-      HT: new Date(0, 0, 0, 19, 0, 0, 0)
-    };
-
-    $scope.DomingoFeriado = {
-      Cortado: false,
-      DM: new Date(0, 0, 0, 9, 0, 0, 0),
-      DT: new Date(0, 0, 0, 9, 0, 0, 0),
-      HM: new Date(0, 0, 0, 19, 0, 0, 0),
-      HT: new Date(0, 0, 0, 19, 0, 0, 0)  
-    };
-
+    
     $scope.isRol = function(rol) {
       var roles = $scope.authentication.user.roles;
       var isRol = false;
@@ -62,8 +66,19 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
       return isRol;
     };
 
+    if($scope.isRol('dev')){
+      $scope.Telefono = '3513098679';
+      $scope.Web = 'http://52.36.173.82/';
+      $scope.NombreComercio = 'TEST';
+      $scope.Slogan = 'TEST';
+      $scope.Email = 'TEST@TEST';
+      $scope.Facebook = 'http://52.36.173.82/';
+      $scope.Twitter = 'http://52.36.173.82/';
+      $scope.Instagram = 'http://52.36.173.82/';
+      $scope.Direccion = 'TEST';
+    }
+
     $scope.changeCheck = function(item){
-      console.log('item',item);
       if(item.Cortado){
         item.DM = new Date(0, 0, 0, 9, 0, 0, 0);
         item.DT = new Date(0, 0, 0, 16, 0, 0, 0);
@@ -87,6 +102,14 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         return false;
       }
 
+      var Tarjetas = [];
+      for (var i = this.Tarjetas.length - 1; i >= 0; i--) {
+        if(this.Tarjetas[i].Acepta)
+          Tarjetas.push({
+            NombreTarjeta: this.Tarjetas[i].NombreTarjeta,
+            Descripcion: this.Tarjetas[i].Descripcion
+          });
+      }
       // Create new Comercio object
       var comercio = new Comercios({
         // IdComercio: this.IdComercio,
@@ -110,7 +133,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
         },
         Direccion: this.Direccion,
         Telefono: this.Telefono,
-        Tarjetas: this.Tarjeta
+        Tarjetas: Tarjetas
       });      
       // Redirect after save
       comercio.$save(function (response) {
@@ -347,7 +370,8 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     banners.onCompleteItem = function(fileItem, response, status, headers) {
       if (status > 0) {
         var file = fileItem._file.name.replace(/"/g, '');
-        $scope.ImagenesBanners.push(response.url);
+        console.log('asdasd');
+        $scope.ImagenesBanners.push({Image:response.url,Url: ''});
       }
     };
 

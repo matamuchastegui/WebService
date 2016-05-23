@@ -12,7 +12,7 @@
  * @apiName GetCupon
  * @apiGroup Cupones
  * @apiSampleRequest http://52.36.173.82/api/cupones/573bcee3a9a7c45d2e03f19f
- * @apiParam {ObjectId} id Cupones unique ID.
+ * @apiParam {ObjectId} _id Cupones unique ID.
  *
  * @apiSuccess {Object} Cupon Cupon.
  * @apiSuccess {String} Cupon.NombreCupon Nombre del cupón.

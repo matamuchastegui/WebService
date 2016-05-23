@@ -12,7 +12,7 @@
  * @apiName GetComercio
  * @apiGroup Comercios
  *
- * @apiParam {ObjectId} id Comercios unique ID.
+ * @apiParam {ObjectId} _id Comercios unique ID.
  *
  * @apiSuccess {Object} Comercio Comercio.
  * @apiSuccess {String} Comercio.NombreComercio Nombre del comercio.
@@ -39,7 +39,9 @@
  * @apiSuccess {Date} Comercio.Horarios.DomingoFeriado.HM Horario de cierre comercio a la tarde (N/A para comercios que están de corrido).
  * @apiSuccess {String} Comercio.UrlImageComercio Imagen principal del comercio.
  * @apiSuccess {String} Comercio.UrlImageLogo Logo del comercio.
- * @apiSuccess {String[]} Comercio.ImagenesBanners Array de imágenes de banners del comercio.
+ * @apiSuccess {Object[]} Comercio.ImagenesBanners Array de imágenes de banners del comercio.
+ * @apiSuccess {String} Comercio.ImagenesBanners.Image Url de la imagen.
+ * @apiSuccess {String} Comercio.ImagenesBanners.Url Url que linkea la imagen.
  * @apiSuccess {String} Comercio.Web Url del sitio web del comercio.
  * @apiSuccess {String} Comercio.Facebook Url de la página de Facebook del comercio.
  * @apiSuccess {Boolean} Comercio.FacebookLikes Comercio sincronizado con Facebook.
@@ -61,7 +63,7 @@
  * @apiSuccess {String} Comercio.user.DisplayName Nombre del dueño de comercio.
  * @apiSuccess {Object[]} Comercio.Productos Productos del comercio.            
  * @apiSuccess {Date} Comercio.Producto.created Fecha de creación del producto.
- * @apiSuccess {Number} Comercio.Producto.PrecioOferta Precio en caso de oferta.
+ * @apiSuccess {Number} Comercio.Producto.PorcentajeOferta Precio en caso de oferta.
  * @apiSuccess {Date} Comercio.Producto.OfertaValidaDesde Fecha desde que es válida la oferta.
  * @apiSuccess {Date} Comercio.Producto.OfertaValidaHasta Fecha que termina la oferta.
  * @apiSuccess {Boolean} Comercio.Producto.Temporizada ?
@@ -103,7 +105,7 @@
  *                  "user": "56de0016231b51773e00c796",
  *                  "__v": 0,
  *                  "created": "2016-05-11T02:57:33.869Z",
- *                  "PrecioOferta": 4444,
+ *                  "PorcentajeOferta": 4444,
  *                  "OfertaValidaDesde": "2016-05-11T02:57:09.777Z",
  *                  "OfertaValidaHasta": "2016-05-14T02:57:09.777Z",
  *                  "Temporizada": true,
@@ -124,7 +126,7 @@
  *                  "user": "56de0016231b51773e00c796",
  *                  "__v": 0,
  *                  "created": "2016-05-11T02:59:21.569Z",
- *                  "PrecioOferta": 0,
+ *                  "PorcentajeOferta": 0,
  *                  "OfertaValidaDesde": "2016-05-11T02:59:24.536Z",
  *                  "OfertaValidaHasta": "2016-05-14T02:59:24.536Z",
  *                  "Temporizada": false,
@@ -167,10 +169,17 @@
  *          "CantPublicaciones": 0,
  *          "CantSeguidores": 0,
  *          "ImagenesBanners": [
- *              "uploads/56de0016231b51773e00c796/43b8e7d7eb75b3632bedac98123f5992.jpg",
- *              "uploads/56de0016231b51773e00c796/4ee7cd4502ec759dfd8045169479342a.jpg",
- *              "uploads/56de0016231b51773e00c796/18fd1272d7ba91da60ae62ff2c682d73.jpg"
- *          ],
+ *              {
+ *                Image: "uploads/56de0016231b51773e00c796/43b8e7d7eb75b3632bedac98123f5992.jpg",
+ *                Url: "http://google.com"
+ *              },
+ *                Image: "uploads/56de0016231b51773e00c796/4ee7cd4502ec759dfd8045169479342a.jpg",
+ *                Url: "http://google.com"
+ *              },
+ *                Image: "uploads/56de0016231b51773e00c796/18fd1272d7ba91da60ae62ff2c682d73.jpg"
+ *                Url: "http://google.com"
+ *              }
+ *          }],
  *          "NombreComercio": "Riky Sarkany",
  *          "created": "2016-05-09T01:41:24.362Z"
  *      }

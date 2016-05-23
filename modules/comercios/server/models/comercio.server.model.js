@@ -39,9 +39,16 @@ var ComercioSchema = new Schema({
     required: 'Logo requerido'
   },
   ImagenesBanners: [{
+    Image:{
       type: String,
       default:'',
       trim: true
+    },
+    Url:{
+      type: String,
+      default:'',
+      trim: true
+    }
   }],
   Slogan: {
     type: String,
@@ -171,13 +178,13 @@ var ComercioSchema = new Schema({
     type: String,
     trim: true
   },   
-  Tarjeta: [{
+  Tarjetas: [{
       NombreTarjeta: {
         type: String,
         trim: true
       },
-      Acepta: {
-        type: Boolean,
+      Descripcion: {
+        type: String,
         trim: true
       },
   }],

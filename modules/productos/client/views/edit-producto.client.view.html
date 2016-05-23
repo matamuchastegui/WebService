@@ -41,10 +41,10 @@
           </div>
         </div>
         <div class="form-group col-xs-12 col-sm-6 col-md-3" show-errors ng-show="producto.Oferta">
-          <label for="PrecioOferta">Precio Oferta</label>
-          <input name="PrecioOferta" type="number" ng-model="producto.PrecioOferta" id="PrecioOferta" class="form-control" placeholder="Precio Oferta" required="Oferta">
-          <div ng-messages="productoForm.PrecioOferta.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">El Precio Oferta es requerido.</p>
+          <label for="PorcentajeOferta">Porcentaje Oferta</label>
+          <input name="PorcentajeOferta" type="number" ng-model="producto.PorcentajeOferta" id="PorcentajeOferta" class="form-control" placeholder="Porcentaje Oferta" required="Oferta">
+          <div ng-messages="productoForm.PorcentajeOferta.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El Porcentaje Oferta es requerido.</p>
           </div>
         </div>
         <div class="row" ng-if="producto.Oferta">

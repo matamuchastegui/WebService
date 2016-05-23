@@ -64,7 +64,7 @@ var ProductoSchema = new Schema({
     default:'',
     trim: true
   },
-  PrecioOferta: {
+  PorcentajeOferta: {
     type: Number,
     default:'',
     trim: true

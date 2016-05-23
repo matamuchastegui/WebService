@@ -364,7 +364,7 @@ exports.getProductosPorComercio = function (req, res) {
       Temporizada:true,
       OfertaValidaHasta: fechaHasta,
       OfertaValidaDesde: fechaDesde,
-      PrecioOferta:'30.25'
+      PorcentajeOferta:'30.25'
       }
     ]
   });
