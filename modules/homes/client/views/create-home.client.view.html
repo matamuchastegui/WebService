@@ -1,0 +1,97 @@
+<section ng-controller="HomesController">
+  <div class="page-header">
+    <div class="row">
+      <h1 class="col-md-4">Nuevo Home</h1>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <form name="homeForm" class="form-horizontal" ng-submit="create(homeForm.$valid)" novalidate>
+      <fieldset>
+        <h3>Favoritos</h3>
+        <div class="row" ng-repeat="fav in Favoritos">
+          <div class="form-group" show-errors>
+            <label for="fav.Label">Label</label>
+            <input name="fav.Label" type="text" ng-model="fav.Label" id="fav.Label" class="form-control" placeholder="Label" required>
+            <div ng-messages="homeForm.fav.Label.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">El Label es requerido.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div ng-repeat="item in fav.Items" class="col-md-3 miniatures">
+              <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+              <input name="item.Precio" type="number" ng-model="item.Precio" class="form-control" placeholder="Precio" required>
+              <a class="btn btn-x" ng-click="removeFav($index);">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-if="favOn">
+          <div class="col-md-8 col-md-offset-4 text-center mt2">
+            <div data-ng-hide="saving" nv-file-drop="" uploader="favoritos" filters="queueLimit, customFilter">
+              <div class="col-md-5" >
+                <div ng-show="favoritos.isHTML5">
+                  <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                    CARGAR IMÁGENES FAVORITOS<input type="file" nv-file-select="" uploader="favoritos" multiple/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn btn-ok" ng-click="addFav();favOn=true">
+          <i class="glyphicon glyphicon-plus"></i>
+        </a>
+        
+        <div class="row">
+          <div ng-repeat="item in Banners" class="col-md-3 miniatures">
+            <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+            <input name="item.Url" type="url" ng-model="item.Url" class="form-control" placeholder="Url que linkea" required>
+            <a class="btn btn-x" ng-click="removeBanner($index);">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4 text-center mt2">
+          <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+            <div class="col-md-5" >
+              <div ng-show="uploader.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                  CARGAR BANNERS<input type="file" nv-file-select="" uploader="uploader" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div ng-repeat="item in OfertasDestacadas" class="col-md-3 miniatures">
+            <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+            <input name="item.Url" type="url" ng-model="item.Url" class="form-control" placeholder="Url que linkea" required>
+            <a class="btn btn-x" ng-click="removeOferta($index);">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4 text-center mt2">
+          <div data-ng-hide="saving" nv-file-drop="" uploader="ofertas" filters="queueLimit, customFilter">
+            <div class="col-md-5" >
+              <div ng-show="ofertas.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                  CARGAR OFERTAS<input type="file" nv-file-select="" uploader="ofertas" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3" data-ng-hide="saving">
+            <input type="submit" id="submit" value="CREAR" class="col-md-12 btn btn-orange mt5" />
+          </div>
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

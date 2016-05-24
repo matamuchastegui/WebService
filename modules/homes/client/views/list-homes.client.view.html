@@ -1,0 +1,30 @@
+<section ng-controller="HomesController" ng-init="find()">
+  <div class="page-header">
+    <h1>Homes</h1>
+  </div>
+  <table ng-table="tableParams" class="table" class="table" data-ng-show="homes.length > 0" cellspacing="10">
+    <tr ng-repeat="home in $data">
+        <td data-title="'Nombre'" filter="{ NombreHome: 'text'}" sortable="'NombreHome'">
+          {{home.NombreHome}}
+        </td>
+        <td data-title="'Descripción'" style="width: 25%;" sortable="'Descripcion'"><!--  filter="{ 'homes[0].created': 'text'}" No funciona por la versión de angular-->
+          <span class="borders">{{home.Descripcion}}</span>
+        </td>
+        <td data-title="'Puntuación'" filter="{ Puntuacion: 'text'}" sortable="'Puntuacion'">
+          <span class="borders">{{home.Puntuacion}}</span>
+        </td>
+        <td data-title="'PrecioLista'" filter="{'user': 'text'}" sortable="'PrecioLista'">
+          <span class="borders">${{home.PrecioLista}}</span>
+        </td>
+        <td data-title="'Oferta'" filter="{'Oferta': 'text'}" sortable="'Oferta'">
+          <span class="borders">{{home.Oferta?'Si':'No'}}</span>
+        </td>
+        <td data-title="''">
+          <span class="borders"><a data-ng-href="/homes/{{home._id}}"><img src="/modules/core/client/img/buttons/details-camp.png" alt=""/></a></span>
+        </td>
+      </tr>
+  </table>
+  <div class="alert alert-warning text-center" ng-if="homes.$resolved && !homes.length">
+    Todavía no hay homes, crea uno <a ui-sref="homes.create">aquí</a>
+  </div>
+</section>

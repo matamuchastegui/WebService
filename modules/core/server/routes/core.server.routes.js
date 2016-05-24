@@ -93,7 +93,7 @@ module.exports = function (app) {
   // Define error pages
   app.route('/server-error').get(core.renderServerError);
 
-  app.route('/api/getHome').get(core.getHome);
+  // app.route('/api/getHome').get(core.getHome);
 
   app.route('/api/getVouchers').post(core.getVouchers);
 
