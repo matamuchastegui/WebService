@@ -23,3 +23,17 @@ input[type="submit"].btn{
 	    background-color: #419641;
 	}
 }
+.btn-blue{
+	background-color: #08d;
+	color: white !important;
+	-webkit-transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-o-transition: all 0.5s ease-out;
+	transition: all 0.5s ease-out;
+	&:hover{
+	    background-color: #0ad;
+	}
+}
+.fz20 {
+	font-size: 20px;
+}

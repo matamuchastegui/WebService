@@ -187,9 +187,6 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            {{ImagenesBanners}} 
-          </div>
           <div ng-repeat="item in ImagenesBanners" class="col-md-3 miniatures">
             <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
             <input name="item.Url" type="url" ng-model="item.Url" class="form-control" placeholder="Url que linkea" required>

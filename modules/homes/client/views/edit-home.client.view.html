@@ -1,131 +1,96 @@
 <section ng-controller="HomesController" data-ng-init="findOne()">
   <div class="page-header">
-    <h1>Editar {{home.NombreHome}}</h1>
-    <div class="col-md-3 mt3" data-ng-init="findComercios()">
-        <select class="form-control" ng-model="comercio" ng-init="comercio = comercio || comercios[0]._id" ng-options="item._id as item.NombreComercio for item in comercios"  data-ng-disabled="readonly"></select>
-    </div>
+    <h1>Editar Home</h1>
   </div>
   <div class="col-md-12">
-    <form name="homeForm" class="form-horizontal" ng-submit="create(homeForm.$valid)" novalidate>
+    <form name="homeForm" class="form-horizontal" novalidate>
       <fieldset>
-        <div class="form-group" show-errors>
-          <label for="NombreHome">NombreHome</label>
-          <input name="NombreHome" type="text" ng-model="home.NombreHome" id="NombreHome" class="form-control" placeholder="NombreHome" required>
-          <div ng-messages="homeForm.NombreHome.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">El NombreHome es requerido.</p>
+        <h3>Favoritos</h3>
+        <div class="row" ng-repeat="(indexFav,fav) in home.Favoritos">
+          <div class="form-group" show-errors>
+            <label for="fav.Label">Label</label>
+            <div class="row">
+              <input class="col-md-4 mr-5" name="fav.Label" type="text" ng-model="fav.Label" id="fav.Label" class="form-control" placeholder="Label" required>
+              <a class="btn btn-blue fz20" ng-click="addFavImage(indexFav);">
+                <i class="glyphicon glyphicon-upload"></i>
+              </a>
+            </div>
+           
+            <div ng-messages="homeForm.fav.Label.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">El Label es requerido.</p>
+            </div>
           </div>
-        </div>
-        <div class="form-group" show-errors>
-          <label for="Descripcion">Descripción</label>
-          <textarea name="Descripcion" type="text" ng-model="home.Descripcion" id="Descripcion" class="form-control" placeholder="Descripción" required></textarea>
-          <div ng-messages="homeForm.Descripcion.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">El Descripción es requerido.</p>
-          </div>
-        </div>
-        <div class="form-group" show-errors>
-          <label for="PrecioLista">Precio Lista</label>
-          <input name="PrecioLista" type="number" ng-model="home.PrecioLista" id="PrecioLista" class="form-control" placeholder="Precio Lista" required>
-          <div ng-messages="homeForm.PrecioLista.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">El Precio Lista es requerido.</p>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-          <div class="form-group">
-            <label class="control-label">Oferta</label>
-            <div class="checkbox">
-              <label>
-                <input type="radio" id="Oferta" ng-value="true" data-ng-model="home.Oferta" data-ng-disabled="readonly"> Sí
-                <input type="radio" id="Oferta" ng-value="false" data-ng-model="home.Oferta" data-ng-disabled="readonly"> No
-              </label>
+          <div class="row">
+            <div ng-repeat="item in fav.Items" class="col-md-3 miniatures">
+              <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+              <input name="item.Precio" type="number" ng-model="item.Precio" class="form-control" placeholder="Precio" required>
+              <a class="btn btn-x" ng-click="removeFav(indexFav,$index,true);">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-12 col-sm-6 col-md-3" show-errors ng-show="home.Oferta">
-          <label for="PorcentajeOferta">Porcentaje Oferta</label>
-          <input name="PorcentajeOferta" type="number" ng-model="home.PorcentajeOferta" id="PorcentajeOferta" class="form-control" placeholder="Porcentaje Oferta" required="Oferta">
-          <div ng-messages="homeForm.PorcentajeOferta.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">El Porcentaje Oferta es requerido.</p>
-          </div>
-        </div>
-        <div class="row" ng-if="home.Oferta">
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="input-group">
-              <label class="control-label">Oferta Válida Desde</label>
-              <input type="text" class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="home.OfertaValidaDesde" is-open="opened" min-date="minDate" max-date="maxDate" current-text="Hoy" clear-text="Borrar" close-text="Cerrar" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <label class="control-label">Hora</label>
-            <div class="clearfix"></div>
-            <uib-timepicker  show-spinners="false" data-ng-model="home.OfertaValidaDesde" date-format="dd-MMM-yyyy" ></uib-timepicker>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="input-group">
-              <label class="control-label">Oferta Válida Hasta</label>
-              <input type="text" class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="home.OfertaValidaHasta" is-open="openedH" min-date="minDate" max-date="maxDate" current-text="Hoy" clear-text="Borrar" close-text="Cerrar" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openH($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-3">
-            <label class="control-label">Hora</label>
-            <div class="clearfix"></div>
-            <uib-timepicker  show-spinners="false" data-ng-model="home.OfertaValidaHasta" date-format="dd-MMM-yyyy" ></uib-timepicker>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label class="control-label">Temporizada</label>
-            <div class="checkbox">
-              <label>
-                <input type="radio" id="Temporizada" ng-value="true" data-ng-model="home.Temporizada" data-ng-disabled="readonly"> Sí
-                <input type="radio" id="Temporizada" ng-value="false" data-ng-model="home.Temporizada" data-ng-disabled="readonly"> No
-              </label>
-            </div>
-          </div>
-        </div>
-        <!-- ImagenGaleria -->
-        <div class="col-md-10">
-          <div ng-show="cantMin>8" class="col-md-10 col-md-offset-1 text-center mt2">
-            <img ng-src="/modules/core/client/img/buttons/btn-prev.png" alt="" class="btn q-prev">
-            <img ng-src="/modules/core/client/img/buttons/btn-next.png" alt="" class="btn q-next">
-          </div>
-          <div data-ng-show="loading" class="col-md-12">
-            <i class="col-md-2 col-md-offset-6 fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
-          </div>
-          <h4 ng-show="ImagenGaleria.length" class="title col-md-12">Recursos Gráficos</h4>
-          <div ng-show="ImagenGaleria.length" class="col-md-12 graphic-resources">
-            <div class="col-sm-3 icono" ng-hide="loading" data-ng-repeat="item in ImagenGaleria">
-              <div class="btn file-icon">
-                <img ng-src="{{item.url}}" alt="" style="height: 155px;">
-              </div>
-              <div class="center">
-                <a class="btn" data-ng-click="remove(item,$index)">
-                  <i class="glyphicon glyphicon-trash"></i>
-                </a>
-                <a class="btn" data-ng-click="ppal(item,$index)">
-                  <i class="glyphicon glyphicon-ok"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8 col-md-offset-3 text-center mt2">
-          <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
-            <div class="col-md-5" >
-              <div ng-show="uploader.isHTML5">
-                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
-                  CARGAR IMÁGENES<input type="file" nv-file-select="" uploader="uploader" multiple/>
+        <div class="row"  ng-show="favOn">
+          <div class="col-md-8 col-md-offset-4 text-center mt2">
+            <div data-ng-hide="saving" nv-file-drop="" uploader="favoritos" filters="queueLimit, customFilter">
+              <div class="col-md-5" >
+                <div ng-show="favoritos.isHTML5">
+                  <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                    CARGAR IMÁGENES FAVORITOS<input id="cargarFav" type="file" nv-file-select="" uploader="favoritos" multiple/>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-5" data-ng-hide="saving">
-            <input type="submit" id="submit" value="ACTUALIZAR" class="col-md-12 btn btn-orange" />
+        </div>
+        <a class="btn btn-ok" ng-click="addFav(true);" uib-popover="Agregar Favoritos" popover-trigger="mouseenter">
+          <i class="glyphicon glyphicon-plus"></i>
+        </a>
+        <h3>Banners</h3>
+        <div class="row">
+          <div ng-repeat="item in home.Banners" class="col-md-3 miniatures">
+            <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+            <input name="item.Url" type="url" ng-model="item.Url" class="form-control" placeholder="Url que linkea" required>
+            <a class="btn btn-x" ng-click="removeBanner(indexFav,$index,true);">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4 text-center mt2">
+          <div data-ng-hide="saving" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+            <div class="col-md-5" >
+              <div ng-show="uploader.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                  CARGAR BANNERS<input type="file" nv-file-select="" uploader="uploader" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Ofertas Destacadas</h3>
+        <div class="row">
+          <div ng-repeat="item in home.OfertasDestacadas" class="col-md-3 miniatures">
+            <img ng-src="{{item.Image}}" class="img-thumbnail user-profile-picture miniature"> 
+            <input name="item.Url" type="url" ng-model="item.Url" class="form-control" placeholder="Url que linkea" required>
+            <a class="btn btn-x" ng-click="removeOferta(indexFav,$index,true);">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-offset-4 text-center mt2">
+          <div data-ng-hide="saving" nv-file-drop="" uploader="ofertas" filters="queueLimit, customFilter">
+            <div class="col-md-5" >
+              <div ng-show="ofertas.isHTML5">
+                <div class="col-md-12 btn btn-orange btn-file" style="font-size: 14px;">
+                  CARGAR OFERTAS<input type="file" nv-file-select="" uploader="ofertas" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <input type="submit" ng-click="update(homeForm.$valid)"  value="ACTUALIZAR" class="col-md-12 btn btn-orange mt2" >
           </div>
         </div>
         <div ng-show="error" class="text-danger">

@@ -1,73 +1,50 @@
-<section ng-controller="HomesController" ng-init="findOne()">
-  <div class="page-header">
-    <h1 ng-bind="home.NombreHome"></h1>
-  <div class="row" style="padding:1%">
-  
-    <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-3"><strong>Descripcion</strong></div>
-        <div class="col-md-6" ng-bind="home.Descripcion"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Puntuacion</strong></div>
-        <div class="col-md-6" ng-bind="home.Puntuacion"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>PrecioLista</strong></div>
-        <div class="col-md-6" ng-bind="home.PrecioLista"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Fecha Última Actualización</strong></div>
-        <div class="col-md-6" ng-bind="home.FechaUltimaActualizacion | date: 'medium'"></div>
-      </div><br/>
-
-    </div>
-
-    <div class="col-md-5" ng-if="home.Oferta">
-      <div class="row">
-        <div class="col-md-6"><strong>Oferta</strong></div>
-        <div class="col-md-3" ng-bind="home.Oferta? 'Si':'No'"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-6"><strong>Porcentaje Oferta</strong></div>
-        <div class="col-md-3" ng-bind="$home.PorcentajeOferta"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-6"><strong>Oferta Valida Desde</strong></div>
-        <div class="col-md-3" ng-bind="home.OfertaValidaDesde | date: 'medium'"></div>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-6"><strong>Oferta Valida Hasta</strong></div>
-        <div class="col-md-3" ng-bind="home.OfertaValidaHasta | date: 'medium'"></div>
-      </div>
-    </div>
-  </div>
-  <div class="galeria-imagenes" ng-repeat="item in home.ImagenGaleria">
-    <img ng-src="{{item}}" style="height: 80px;margin-bottom: 5px">
-  </div>
-  <small>
-    <em class="text-muted">
-      Creado el
-      <span ng-bind="home.created | date:'mediumDate'"></span>
-      por
-      <span ng-bind="home.user.displayName"></span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="home.content"></p>
-  <div class="pull-right" data-ng-show="authentication.user">
-    <a class="btn btn-orange" id="newProduct" href="/homes/create" uib-popover="Agregar home" popover-trigger="mouseenter">
-      <i class="glyphicon glyphicon-plus"></i>
+<section ng-controller="HomesController" ng-init="findOne();isActive()">
+  <div class="page-header text-center">
+    <h1 ng-bind="activo ? 'ACTIVO':'INACTIVO'"></h1>
+    <a ng-if="!activo" class="btn btn-x" ng-click="activate();">
+      <i class="glyphicon glyphicon-off"></i>
     </a>
+  </div>
+  <div class="row" style="padding:1%">
+    <div class="row">
+      <h1>Favoritos</h1>
+      <div class="col-md-7" ng-repeat="fav in home.Favoritos">
+        <div class="row">
+          
+          <div class="col-md-6" ng-bind="fav.Label"></div>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-md-4" ng-repeat="item in fav.Items">
+            <img class="img-thumbnail user-profile-picture" src="{{item.Image}}">
+            <p><strong>Precio:</strong> ${{item.Precio}}</p>
+          </div>
+        </div>
+        <hr/>
+      </div>
+    </div>
+    <div class="row">
+      <h1>Banners</h1>
+      <div class="col-md-4" ng-repeat="item in home.Banners">
+          <img class="img-thumbnail user-profile-picture" src="{{item.Image}}">
+          <input type="text" ng-model="item.Url">
+        <hr/>
+      </div>
+    </div>
+    <div class="row">
+      <h1>Ofertas Destacadas</h1>
+      <div class="col-md-4" ng-repeat="item in home.OfertasDestacadas">
+          <img class="img-thumbnail user-profile-picture" src="{{item.Image}}">
+          <p><strong>Url:</strong> {{item.Url}}</p>
+        <hr/>
+      </div>
+    </div>
+
+  <div class="pull-right" data-ng-show="authentication.user">
     <a class="btn btn-orange" id="edit" href="/homes/{{home._id}}/edit" uib-popover="Editar home" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a data-ng-show="isRol('admin')" class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar comercio" popover-trigger="mouseenter">
+    <a class="btn btn-orange" id="delete" data-ng-click="modalDelete(0);" uib-popover="Borrar home" popover-trigger="mouseenter">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>

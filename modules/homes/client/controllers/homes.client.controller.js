@@ -1,22 +1,37 @@
 'use strict';
 
 // Homes controller
-angular.module('homes').controller('HomesController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', 'Authentication', 'Homes', 'Comercios', 'FileUploader', 'NgTableParams',
-  function ($scope, $stateParams, $location, $interval, $uibModal, Authentication, Homes, Comercios, FileUploader, NgTableParams) {    
+angular.module('homes').controller('HomesController', ['$scope', '$stateParams', '$location', '$interval', '$uibModal', '$anchorScroll', 'Authentication', 'Homes', 'FileUploader', '$document',
+  function ($scope, $stateParams, $location, $interval, $uibModal, $anchorScroll, Authentication, Homes, FileUploader, $document) {    
     $scope.authentication = Authentication;
     $scope.Favoritos = [];
     $scope.Banners = [];
     $scope.OfertasDestacadas = [];
     var iFav = -1;
 
-    $scope.addFav = function() {
-      iFav++;
-      $scope.Favoritos.push({
-        Label: '',
-        Items: []
-      });
+    $scope.addFav = function(edit) {
+      if(edit){
+        iFav = $scope.home.Favoritos.length;
+        $scope.home.Favoritos.push({
+          Label: '',
+          Items: []
+        });
+      }
+      else{
+        iFav = $scope.Favoritos.length;
+        $scope.Favoritos.push({
+          Label: '',
+          Items: []
+        });
+      }
     };
 
+    $scope.addFavImage = function (index){
+      iFav = index;
+      angular.element($document[0].querySelector('#cargarFav').click());
+      // angular.element('#cargarFav').click();
+      // $anchorScroll();
+    };
     // Create new Home
     $scope.create = function (isValid) {
       $scope.error = null;
@@ -25,22 +40,13 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
         $scope.$broadcast('show-errors-check-validity', 'homeForm');
         return false;
       }
-      console.log('$scope.Favoritos',$scope.Favoritos);
-      console.log('$scope.Banners',$scope.Banners);
-      console.log('$scope.OfertasDestacadas',$scope.OfertasDestacadas);
-      // var imagenes = [];
-      // for (var i = this.ImagenGaleria.length - 1; i >= 0; i--) {
-      //   imagenes.push(this.ImagenGaleria[i].url);
-      // }
 
-      // Create new Home object
       var home = new Homes({
         Favoritos: this.Favoritos,
         Banners: this.Banners,
         OfertasDestacadas: this.OfertasDestacadas
       });
 
-      // Redirect after save
       home.$save(function (response) {
           $location.path('homes/' + response._id);
         }, function (errorResponse) {
@@ -65,8 +71,25 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
       }
     };
 
+    $scope.activate = function (){
+      Homes.query({RegXPag:1}, function(response){
+        $scope.home.Orden = response[0].Orden + 1;
+        $scope.update(true,true);
+      });
+    };
+
+    $scope.isActive = function (){
+      Homes.query({RegXPag:1}, function(response){
+        if($scope.home._id === response[0]._id)
+          $scope.activo = true;
+        else 
+          $scope.activo = false;
+      });
+    };
+
     // Update existing Home
-    $scope.update = function (isValid) {
+    $scope.update = function (isValid,activate) {
+      console.log('update');
       $scope.error = null;
 
       if (!isValid) {
@@ -76,10 +99,15 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
       }
 
       var home = $scope.home;
-
-      home.$update(function () {
-        $location.path('homes/' + home._id);
+      console.log('hom',home);
+      home.$update(function (response) {
+        console.log('re',response);
+        if(activate)
+          $scope.activo = true;
+        else
+          $location.path('homes/' + home._id);
       }, function (errorResponse) {
+        console.log('err',errorResponse);
         $scope.error = errorResponse.data.message;
       });
     };
@@ -99,7 +127,8 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
       $scope.home = Homes.get({
         homeId: $stateParams.homeId,
         bo: true
-      },function(){
+      },function(response){
+        iFav = $scope.home.Favoritos.length - 1;
         console.log('prod',$scope.home);
       });
     };
@@ -140,9 +169,14 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     };
 
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
+      console.log('banneradd',$scope.Banners);
       if (status > 0) {
+        console.log('stat',response.url);
         var file = fileItem._file.name.replace(/"/g, '');
-        $scope.Banners.push({Image:response.url,Url: ''});
+        if($scope.home)
+          $scope.home.Banners.push({Image:response.url,Url: ''});
+        else
+          $scope.Banners.push({Image:response.url,Url: ''});
       }
     };
 
@@ -184,7 +218,10 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     ofertas.onCompleteItem = function(fileItem, response, status, headers) {
       if (status > 0) {
         var file = fileItem._file.name.replace(/"/g, '');
-        $scope.OfertasDestacadas.push({Image:response.url,Url: ''});
+        if($scope.home)
+          $scope.home.OfertasDestacadas.push({Image:response.url,Url: ''});
+        else
+          $scope.OfertasDestacadas.push({Image:response.url,Url: ''});
       }
     };
 
@@ -225,28 +262,43 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
 
     favoritos.onCompleteItem = function(fileItem, response, status, headers) {
       if (status > 0) {
+        console.log('ifav',iFav);
         var file = fileItem._file.name.replace(/"/g, '');
-        $scope.Favoritos[iFav].Items.push({Image:response.url,Precio: 0});
+        if($scope.home)
+          $scope.home.Favoritos[iFav].Items.push({Image:response.url,Precio: 0});
+        else
+          $scope.Favoritos[iFav].Items.push({Image:response.url,Precio: 0});
       }
     };
 
-    $scope.removeBanner = function(index) {
-      console.log('index',index);
-      $scope.Banners.splice(index,1); 
-      $scope.uploader.queue[index].remove();
+    $scope.removeBanner = function(iFav,index,edit) {
+      if(edit)
+        $scope.home.Banners.splice(index,1); 
+      else{
+        $scope.Banners.splice(index,1); 
+        $scope.uploader.queue[index].remove();
+      }
     };
 
-    $scope.removeOfertas = function(index) {
-      $scope.OfertasDestacadas.splice(index,1);
-      $scope.ofertas.queue[index].remove();
+    $scope.removeOfertas = function(iFav,index,edit) {
+      if(edit)
+        $scope.home.OfertasDestacadas.splice(index,1);
+      else{
+        $scope.OfertasDestacadas.splice(index,1);
+        $scope.ofertas.queue[index].remove();
+      }
     };
 
-    $scope.removeFav = function(index) {
+    $scope.removeFav = function(iFav,index,edit) {
       console.log('index',index,iFav);
-      console.log('fav',$scope.Favoritos[iFav]);
-
-      $scope.Favoritos[iFav].Items.splice(index,1);
-      $scope.favoritos.queue[index].remove();
+      console.log('fav',$scope.favoritos.queue);
+      if(edit)
+        $scope.home.Favoritos[iFav].Items.splice(index,1);
+      else{
+        $scope.Favoritos[iFav].Items.splice(index,1);
+        $scope.favoritos.queue[index].remove();
+      }
+      
     };
 
   }

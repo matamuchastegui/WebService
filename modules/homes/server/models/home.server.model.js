@@ -59,7 +59,11 @@ var HomeSchema = new Schema({
         trim: true
       }
     }]
-  }]
+  }],
+  Orden: {
+    type: Number,
+    default: 0
+  }
 
 });
 

@@ -7,11 +7,11 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Home = mongoose.model('Home'),
   Comercio = mongoose.model('Comercio'),
+  _ = require('lodash'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 exports.getHome = function(req, res){
-  console.log('hoome',req.home,req.homes);
-  Comercio.find().sort('-created').limit(1).exec(function (err, comercios) {
+  Comercio.find().sort('-created').limit(8).exec(function (err, comercios) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -24,7 +24,7 @@ exports.getHome = function(req, res){
           Image: comercios[i].UrlImageLogo,
           _id: comercios[i]._id});
       }
-      Home.find().sort('-created').limit(1).exec(function (err, homes) {
+      Home.find().sort('-Orden').limit(1).exec(function (err, homes) {
         if (err) {
           return res.status(400).send({
             message: errorHandler.getErrorMessage(err)
@@ -33,8 +33,10 @@ exports.getHome = function(req, res){
           res.json({
             respCode: 0,
             respMessage: "OK",
-            Home: homes,
-            UltimosAdheridos: UltimosAdheridos
+            Banners: homes[0].Banners,
+            UltimosAdheridos: UltimosAdheridos,
+            OfertasDestacadas: homes[0].OfertasDestacadas,
+            Favoritos: homes[0].Favoritos,
           });
         }
       });
@@ -81,9 +83,8 @@ exports.read = function (req, res) {
  */
 exports.update = function (req, res) {
   var home = req.home;
-
-  // home.title = req.body.title;
-  home.content = req.body.content;
+  home = _.extend(home, req.body);
+  console.log('home',home.Favoritos[0].Items);
   home.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -118,7 +119,8 @@ exports.delete = function (req, res) {
 exports.list = function (req, res) {
   var RegXPag = req.query.RegXPag;
   var Pag = req.query.Pag;
-  Home.find().sort('-created').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, homes) {
+  Home.find().sort('-Orden').limit(RegXPag).skip(RegXPag * Pag).populate('user', 'displayName').exec(function (err, homes) {
+    console.log('home',homes);
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

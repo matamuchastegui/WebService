@@ -167,8 +167,8 @@ fieldset fieldset {
       margin: auto;
       position: relative; }
   .miniatures i {
-    opacity: 0;
-    color: #F18E00;
+    opacity: .8;
+    /*color:#F18E00;*/
     font-size: 20px;
     cursor: pointer; }
 
