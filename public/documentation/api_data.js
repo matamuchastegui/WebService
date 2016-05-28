@@ -1,5 +1,81 @@
 define({ "api": [
   {
+    "type": "POST",
+    "url": "/getCabeceras",
+    "title": "POST Cabeceras",
+    "name": "GetCabeceras",
+    "group": "Comercios",
+    "sampleRequest": [
+      {
+        "url": "http://52.36.173.82/api/getCabeceras"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "RegXPag",
+            "description": "<p>Cantidad de registros por página.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Pag",
+            "description": "<p>Número de página.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "Cabeceras",
+            "description": "<p>Devuelve principales datos de comercios.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "UltimosAdheridos.Image",
+            "description": "<p>Logo del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "UltimosAdheridos.Slogan",
+            "description": "<p>Slogan del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "UltimosAdheridos.PuntuacionEstrellas",
+            "description": "<p>Puntuación del comercio.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "UltimosAdheridos._id",
+            "description": "<p>Id del comercio.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/homes/server/routes/homes.server.routes.js",
+    "groupTitle": "Comercios"
+  },
+  {
     "type": "get",
     "url": "/comercios/:id",
     "title": "GET Comercio",
@@ -501,6 +577,15 @@ define({ "api": [
           }
         ]
       }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"RegXPag\": 5,\n  \"Pag\": 0\n}",
+          "type": "json"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "modules/comercios/server/routes/comercios.server.routes.js",

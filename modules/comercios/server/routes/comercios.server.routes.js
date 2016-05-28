@@ -6,6 +6,11 @@
  * @apiName GetComercios
  * @apiGroup Comercios
  * @apiSuccess {Object[]} Comercio Devuelve todos los comercios.
+ * @apiParamExample {json} Request-Example:
+ *     {
+ *       "RegXPag": 5,
+ *       "Pag": 0
+ *     }
  */
 /**
  * @api {get} /comercios/:id GET Comercio
@@ -238,9 +243,6 @@ module.exports = function (app) {
 
   app.route('/api/getProductosPorComercio').all(comerciosPolicy.isAllowed)
     .post(comercios.getProductosPorComercio);
-
-  app.route('/api/comercios/upload').all(comerciosPolicy.isAllowed)
-    .post(comercios.uploadImage);
 
   // Finish by binding the comercio middleware
   app.param('IdComercio', comercios.comercioByID);

@@ -235,7 +235,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     $scope.uploader = new FileUploader({
-      url: 'api/comercios/upload'
+      url: 'api/files/upload'
     });
 
     $scope.uploader.filters.push({
@@ -284,7 +284,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     $scope.uploaderLogo = new FileUploader({
-      url: 'api/comercios/upload'
+      url: 'api/files/upload'
     });
 
     $scope.uploaderLogo.filters.push({
@@ -332,7 +332,7 @@ angular.module('comercios').controller('ComerciosController', ['$scope', '$state
     };
 
     var banners = $scope.banners = new FileUploader({
-      url: '/api/comercios/upload'
+      url: '/api/files/upload'
     });
 
     banners.filters.push({

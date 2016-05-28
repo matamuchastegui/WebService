@@ -68,7 +68,8 @@
     "swig": "^1.4.2",
     "validator": "^3.41.2",
     "connect-busboy": "^0.0.1",
-    "apidoc": "*"
+    "apidoc": "*",
+    "imagemagick": "*"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

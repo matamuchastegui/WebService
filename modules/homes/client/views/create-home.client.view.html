@@ -4,9 +4,22 @@
       <h1 class="col-md-4">Nuevo Home</h1>
     </div>
   </div>
+  
   <div class="col-md-12">
     <form name="homeForm" class="form-horizontal" ng-submit="create(homeForm.$valid)" novalidate>
       <fieldset>
+        <h3>CROP</h3>
+        <div><input type="file" id="fileInput" /></div><br>
+        <div class="row">
+          <div class="cropArea col-md-6">
+          <img-crop area-type="circle" 
+                    result-image-size="350" 
+                    image="myImage" result-image="myCroppedImage"></img-crop>
+          </div>
+          <div class="col-md-5">
+            <img ng-src="{{myCroppedImage}}" />
+          </div>
+        </div>
         <h3>Favoritos</h3>
         <div class="row" ng-repeat="(indexFav,fav) in Favoritos">
           <div class="form-group" show-errors>

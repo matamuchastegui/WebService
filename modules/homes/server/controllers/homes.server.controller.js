@@ -45,6 +45,30 @@ exports.getHome = function(req, res){
   
 };
 
+exports.getCabeceras = function(req, res){
+  var RegXPag = req.body.RegXPag;
+  var Pag = req.body.Pag;
+  Comercio.find().sort('-Orden').limit(RegXPag).skip(RegXPag * Pag).exec(function (err, comercios) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      var UltimosAdheridos = [];
+      for (var i = comercios.length - 1; i >= 0; i--) {
+        UltimosAdheridos.push({
+          NombreComercio: comercios[i].NombreComercio,
+          Image: comercios[i].UrlImageLogo,
+          Slogan: comercios[i].Slogan,
+          PuntuacionEstrellas: comercios[i].PuntuacionEstrellas,
+          _id: comercios[i]._id}) ;
+      }
+      res.json({respCode: 0,
+                respMessage: "OK",
+                Cabeceras:UltimosAdheridos});
+    }
+  });
+};
 /**
  * Create a home
  */

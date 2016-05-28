@@ -7,6 +7,21 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     $scope.Favoritos = [];
     $scope.Banners = [];
     $scope.OfertasDestacadas = [];
+
+    $scope.myImage='';
+    $scope.myCroppedImage='';
+    var handleFileSelect=function(evt) {
+      var file=evt.currentTarget.files[0];
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        $scope.$apply(function($scope){
+          $scope.myImage=evt.target.result;
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+
     var iFav = -1;
 
     $scope.addFav = function(edit) {
@@ -114,12 +129,7 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
 
     // Find a list of Homes
     $scope.find = function () {
-      $scope.homes = Homes.query(function(){
-        $scope.tableParams = new NgTableParams({
-          count:10,
-          sorting: { name: 'asc' }
-        }, { data: $scope.homes });
-      });
+      $scope.homes = Homes.query();
     };
 
     // Find existing Home
@@ -134,7 +144,7 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     };
 
     var uploader = $scope.uploader = new FileUploader({
-      url: '/api/comercios/upload'
+      url: '/api/files/upload'
     });
 
     uploader.filters.push({
@@ -181,7 +191,7 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     };
 
     var ofertas = $scope.ofertas = new FileUploader({
-      url: '/api/comercios/upload'
+      url: '/api/files/upload'
     });
 
     ofertas.filters.push({
@@ -226,7 +236,7 @@ angular.module('homes').controller('HomesController', ['$scope', '$stateParams',
     };
 
     var favoritos = $scope.favoritos = new FileUploader({
-      url: '/api/comercios/upload'
+      url: '/api/files/upload'
     });
 
     favoritos.filters.push({

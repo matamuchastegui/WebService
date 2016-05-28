@@ -370,40 +370,6 @@ exports.getProductosPorComercio = function (req, res) {
   });
 };
 
-exports.uploadImage = function (req, res) {
-  var user = req.user;
-  var message = null;
-  var dir = './public/uploads/' + req.user._id + '/';
-  if (!fs.existsSync(dir))
-    fs.mkdirSync(dir);
-  fs.writeFile(dir + req.files.file.name, req.files.file.buffer, function (uploadError) {
-    if (uploadError) {
-      return res.status(400).send({
-        message: 'Error al subir la imagen'
-      });
-    } else {
-      res.json({ message:'Imagen subida con éxito', url: 'uploads/' + req.user._id + '/' + req.files.file.name });
-    }
-  });
-};
-
-exports.uploadImage2 = function (req, res) {  
-  var message = null;
-
-  var upload = multer({ dest:'./public/uploads/', limits: { fileSize: 1048576 } }).single('newProfilePicture');
-  var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
-
-  upload.fileFilter = profileUploadFileFilter;
-  upload(req, res, function (uploadError) {    
-    if(uploadError) {
-      return res.status(400).send({
-        message: 'Error al subir la imagen'
-      });
-    } else {
-      res.json({ message:'Imagen subida con éxito', url: '/uploads/' + req.file.filename });
-    }
-  });
-};
 
 /**
  * Comercio middleware

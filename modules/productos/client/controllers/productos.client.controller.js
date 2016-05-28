@@ -151,7 +151,7 @@ angular.module('productos').controller('ProductosController', ['$scope', '$state
     };
 
     var uploader = $scope.uploader = new FileUploader({
-      url: '/api/comercios/upload'
+      url: '/api/files/upload'
     });
 
     uploader.filters.push({
